@@ -2,17 +2,20 @@ package com.aoeai.spin.accelerator.refining.db.service;
 
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.refining.db.bean.Table;
-import com.aoeai.spin.accelerator.refining.db.config.DbConfiguration;
+import com.aoeai.spin.accelerator.refining.db.config.IDbConfiguration;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class MySqlAllTablesImpl implements AllTables {
+/**
+ * MySQL（数据库）表的工具类
+ */
+public class MySqlTableTools implements ITableTools {
 
     @Override
-    public Map<String, Table> allTables(DbConfiguration dbConf) {
+    public Map<String, Table> allTables(IDbConfiguration dbConf) {
         String sql = "select table_name , column_name ,  column_type , column_key , extra , is_nullable ,column_comment, "
                 + "( select tables.table_comment from tables where tables.table_name = columns.table_name and tables.table_schema = '"
                 + dbConf.database()

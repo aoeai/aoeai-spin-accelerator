@@ -3,7 +3,7 @@ package com.aoeai.spin.accelerator.generate.common;
 /**
  * （生成时的）基础规则
  */
-public interface BaseRule {
+public interface IBaseRule {
 
     /**
      * @return 工程根路径的包名

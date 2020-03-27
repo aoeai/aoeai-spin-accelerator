@@ -1,6 +1,9 @@
 package com.aoeai.spin.accelerator.refining.db.config;
 
-public class MysqlConfiguration implements DbConfiguration {
+/**
+ * MySQL数据库配置
+ */
+public class MysqlDbConfiguration implements IDbConfiguration {
 
     private String host;
 
@@ -12,7 +15,7 @@ public class MysqlConfiguration implements DbConfiguration {
 
     private String database;
 
-    public MysqlConfiguration(String host, String port, String user, String password, String database) {
+    public MysqlDbConfiguration(String host, String port, String user, String password, String database) {
         this.host = host;
         this.port = port;
         this.user = user;

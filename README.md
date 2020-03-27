@@ -6,5 +6,6 @@
 
 
 - [名词解释](doc/名词解释.md)
+- [原始版本](https://github.com/aoeai/mybatis-mysql-generator)
 
 

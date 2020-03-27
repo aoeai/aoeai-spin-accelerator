@@ -8,7 +8,7 @@ import java.util.List;
  * （数据库对应的）持久对象
  */
 @Data
-public class Po {
+public class PO {
 
     /**
      * 包名
@@ -33,5 +33,5 @@ public class Po {
     /**
      * 字段列表
      */
-    private List<PoField> fieldList;
+    private List<POField> fieldList;
 }
