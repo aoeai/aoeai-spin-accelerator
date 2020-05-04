@@ -6,7 +6,7 @@ package com.aoeai.spin.accelerator.generate.dao;
 public interface IDaoRule {
 
     /**
-     * @return PO(持久对象)类的包名后缀
+     * @return PO(持久对象)类所在位置的包名后缀
      */
     String poPackageSuffix();
 

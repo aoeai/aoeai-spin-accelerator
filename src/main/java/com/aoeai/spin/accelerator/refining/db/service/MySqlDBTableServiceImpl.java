@@ -10,12 +10,21 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * MySQL（数据库）表的工具类
+ * MySQL 数据库的表的服务
  */
-public class MySqlTableTools implements ITableTools {
+public class MySqlDBTableServiceImpl implements DBTableService {
+
+    /**
+     * 数据库配置信息
+     */
+    private IDbConfiguration dbConf;
+
+    public MySqlDBTableServiceImpl(IDbConfiguration dbConf) {
+        this.dbConf = dbConf;
+    }
 
     @Override
-    public Map<String, Table> allTables(IDbConfiguration dbConf) {
+    public Map<String, Table> allTables() {
         String sql = "select table_name , column_name ,  column_type , column_key , extra , is_nullable ,column_comment, "
                 + "( select tables.table_comment from tables where tables.table_name = columns.table_name and tables.table_schema = '"
                 + dbConf.database()
