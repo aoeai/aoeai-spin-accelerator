@@ -46,14 +46,13 @@ public enum MySQLType2JavaTypeEnum {
      * @return Java类型
      * @throws UnkonwMySqlTypeException
      */
-    public static JavaTypeEnum javaType(String dbType) {
+    public static JavaTypeEnum javaType(String dbType) throws UnkonwMySqlTypeException {
         for (MySQLType2JavaTypeEnum mysqlType : values()) {
             if (dbType.startsWith(mysqlType.dbType)) {
                 return mysqlType.javaType;
             }
         }
 
-        new UnkonwMySqlTypeException();
-        return null;
+        throw new UnkonwMySqlTypeException(dbType);
     }
 }

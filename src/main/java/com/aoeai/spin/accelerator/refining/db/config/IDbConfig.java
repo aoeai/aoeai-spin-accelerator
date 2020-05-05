@@ -3,7 +3,7 @@ package com.aoeai.spin.accelerator.refining.db.config;
 /**
  * 数据库配置信息
  */
-public interface IDbConfiguration {
+public interface IDbConfig {
 
     /**
      * @return 主机地址

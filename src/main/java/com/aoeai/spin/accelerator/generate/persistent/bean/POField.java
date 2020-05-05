@@ -1,4 +1,4 @@
-package com.aoeai.spin.accelerator.generate.dao.bean;
+package com.aoeai.spin.accelerator.generate.persistent.bean;
 
 import lombok.Data;
 

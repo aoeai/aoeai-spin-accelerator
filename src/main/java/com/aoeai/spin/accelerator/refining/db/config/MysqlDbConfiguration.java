@@ -3,7 +3,7 @@ package com.aoeai.spin.accelerator.refining.db.config;
 /**
  * MySQL数据库配置
  */
-public class MysqlDbConfiguration implements IDbConfiguration {
+public class MysqlDbConfiguration implements IDbConfig {
 
     private String host;
 

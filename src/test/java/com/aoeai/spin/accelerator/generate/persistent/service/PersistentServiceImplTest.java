@@ -1,10 +1,11 @@
-package com.aoeai.spin.accelerator.generate.execute;
+package com.aoeai.spin.accelerator.generate.persistent.service;
 
-import com.aoeai.spin.accelerator.generate.constant.BuildPOServiceEnum;
-import com.aoeai.spin.accelerator.generate.dao.bean.PO;
-import com.aoeai.spin.accelerator.generate.dao.bean.POField;
+import com.aoeai.spin.accelerator.generate.config.GenerateRuleConfig;
 import com.aoeai.spin.accelerator.generate.factory.DefaultExecuteServiceFactory;
 import com.aoeai.spin.accelerator.generate.factory.ExecuteServiceFactory;
+import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
+import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
+import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -16,29 +17,18 @@ import java.util.Set;
 /**
  * 创建持久对象-默认实现 测试类
  */
-public class DefaultBuildPOServiceImplTest {
+public class PersistentServiceImplTest {
 
     @Test
-    public void test(){
+    public void allPOMapTest(){
         String rootPath = this.getClass().getResource("/").getPath();
-        DefaultExecuteServiceFactory defaultExecuteServiceFactory
-                = new DefaultExecuteServiceFactory(BuildPOServiceEnum.DEFAULT)
-                // IDbConfiguration 数据库配置信息
-                .host("localhost").port("3306")
-                .user("root").password("root")
-                .database("spin-accelerator-test")
-                // IBaseRule （生成时的）基础规则
-                .rootPackageName("com.aoeai.test") // 工程根路径的包名
-                .generatorRootPath(rootPath) // 生成文件的主文件夹路径 为空时，默认为当前工程路径下的target/build/ 必须有结束的"/"
-                // IDaoRule （生成时的）Dao规则
-                .poPackageSuffix("po") // PO(持久对象)类所在位置的包名后缀
-                .tablePrefixFilter(""); // 生成Java文件时需要过滤掉的表名前缀（,分割）
-        ExecuteServiceFactory executeServiceFactory = defaultExecuteServiceFactory;
-        BuildPOService buildPOService = executeServiceFactory.buildPOService();
+        GenerateRuleConfig grConfig = ConfigTools.getGenerateRuleConfig("/default-generate-rule-config.yml");
+        ExecuteServiceFactory executeServiceFactory = new DefaultExecuteServiceFactory(grConfig);
+        PersistentService buildPOService = executeServiceFactory.buildPersistentService();
 
         Map<String, PO> poMap = buildPOService.allPOMap();
         PO po = poMap.get("satest_problem");
-        Assert.assertEquals(po.getClassName(), "SatestProblem");
+        Assert.assertEquals(po.getClassName(), "SatestProblemPO");
         Assert.assertEquals(po.getPackageName(), "com.aoeai.test.po");
         Assert.assertEquals(po.getClassComment(), "LeetCode问题");
 

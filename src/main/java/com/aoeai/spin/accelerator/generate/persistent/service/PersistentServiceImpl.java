@@ -1,11 +1,11 @@
-package com.aoeai.spin.accelerator.generate.execute;
+package com.aoeai.spin.accelerator.generate.persistent.service;
 
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.constant.JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
-import com.aoeai.spin.accelerator.generate.dao.IDaoRule;
-import com.aoeai.spin.accelerator.generate.dao.bean.PO;
-import com.aoeai.spin.accelerator.generate.dao.bean.POField;
+import com.aoeai.spin.accelerator.generate.persistent.rule.IPersistentRule;
+import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
+import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
 import com.aoeai.spin.accelerator.generate.utils.ClassTools;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.refining.db.bean.Table;
@@ -19,16 +19,16 @@ import java.util.Map;
 /**
  * 创建持久对象-默认实现
  */
-public class DefaultBuildPOServiceImpl implements BuildPOService {
+public class PersistentServiceImpl implements PersistentService {
 
     private DBTableService dbTableService;
     private IBaseRule baseRule;
-    private IDaoRule daoRule;
+    private IPersistentRule persistentRule;
 
-    public DefaultBuildPOServiceImpl(DBTableService dbTableService, IBaseRule baseRule, IDaoRule daoRule) {
+    public PersistentServiceImpl(DBTableService dbTableService, IBaseRule baseRule, IPersistentRule persistentRule) {
         this.dbTableService = dbTableService;
         this.baseRule = baseRule;
-        this.daoRule = daoRule;
+        this.persistentRule = persistentRule;
     }
 
     @Override
@@ -37,17 +37,27 @@ public class DefaultBuildPOServiceImpl implements BuildPOService {
         Map<String, PO> resultMap = new HashMap<>(allTables.size());
         for (Map.Entry<String, Table> map : allTables.entrySet()) {
             Table table = map.getValue();
-            PO po = buildPO(table, baseRule, daoRule);
+            PO po = buildPO(table, baseRule, persistentRule);
             resultMap.put(table.getName(), po);
         }
 
         return resultMap;
     }
 
-    private PO buildPO(Table table, IBaseRule baseRule, IDaoRule daoRule) {
+    @Override
+    public void generatePOJavaBean(String templatePath) {
+
+    }
+
+    @Override
+    public void generateMapperXml(String templatePath) {
+
+    }
+
+    private PO buildPO(Table table, IBaseRule baseRule, IPersistentRule persistentRule) {
         PO po = new PO();
-        po.setPackageName(ClassTools.buildPackageName(baseRule.rootPackageName(), daoRule.poPackageSuffix()));
-        po.setClassName(ClassTools.getPoClassName(table.getName(), daoRule.tablePrefixFilter()));
+        po.setPackageName(ClassTools.buildPackageName(baseRule.rootPackageName(), persistentRule.poPackageSuffix()));
+        po.setClassName(ClassTools.getPoClassName(table.getName(), persistentRule.tablePrefixFilter(), persistentRule.poClassNameSuffix()));
         po.setClassComment(table.getComment());
         po.setImportList(buildImportList(table.getColumns()));
         po.setFieldList(buildFieldList(table.getColumns()));

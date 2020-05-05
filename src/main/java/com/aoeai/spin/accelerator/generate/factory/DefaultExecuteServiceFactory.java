@@ -1,163 +1,69 @@
 package com.aoeai.spin.accelerator.generate.factory;
 
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
-import com.aoeai.spin.accelerator.generate.constant.BuildPOServiceEnum;
-import com.aoeai.spin.accelerator.generate.dao.IDaoRule;
-import com.aoeai.spin.accelerator.generate.execute.BuildPOService;
-import com.aoeai.spin.accelerator.generate.execute.DefaultBuildPOServiceImpl;
-import com.aoeai.spin.accelerator.refining.db.config.IDbConfiguration;
+import com.aoeai.spin.accelerator.generate.config.GenerateRuleConfig;
+import com.aoeai.spin.accelerator.generate.persistent.rule.IPersistentRule;
+import com.aoeai.spin.accelerator.generate.persistent.service.PersistentService;
+import com.aoeai.spin.accelerator.generate.persistent.service.PersistentServiceImpl;
+import com.aoeai.spin.accelerator.refining.db.config.IDbConfig;
 import com.aoeai.spin.accelerator.refining.db.config.MysqlDbConfiguration;
 import com.aoeai.spin.accelerator.refining.db.service.DBTableService;
 import com.aoeai.spin.accelerator.refining.db.service.MySqlDBTableServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * (默认实现)执行生成的服务类工厂
  */
 public class DefaultExecuteServiceFactory implements ExecuteServiceFactory {
 
-    // IDbConfiguration 数据库配置信息
-    /**
-     * 主机地址
-     */
-    private String host;
+    private GenerateRuleConfig grConfig;
 
-    /**
-     * 端口
-     */
-    private String port;
-
-    /**
-     * 用户名
-     */
-    private String user;
-
-    /**
-     * 密码
-     */
-    private String password;
-
-    /**
-     * 数据库名
-     */
-    private String database;
-
-    // IBaseRule （生成时的）基础规则
-    /**
-     * 工程根路径的包名
-     */
-    private String rootPackageName;
-
-    /**
-     * 生成文件的主文件夹路径 为空时，默认为当前工程路径下的target/build/ 必须有结束的"/"
-     */
-    private String generatorRootPath;
-
-    // IDaoRule （生成时的）Dao规则
-    /**
-     * PO(持久对象)类所在位置的包名后缀
-     */
-    private String poPackageSuffix;
-
-    /**
-     * 生成Java文件时需要过滤掉的表名前缀（,分割）
-     */
-    private String tablePrefixFilter;
-
-    private BuildPOService buildPOService;
-
-    private BuildPOServiceEnum buildPOServiceEnum;
-
-    public DefaultExecuteServiceFactory(BuildPOServiceEnum buildPOServiceEnum) {
-        this.buildPOServiceEnum = buildPOServiceEnum;
+    public DefaultExecuteServiceFactory(GenerateRuleConfig grConfig) {
+        this.grConfig = grConfig;
     }
 
     @Override
-    public BuildPOService buildPOService() {
-        IDbConfiguration dbConf = new MysqlDbConfiguration(host, port, user, password, database);
+    public PersistentService buildPersistentService() {
+        IDbConfig dbConf = new MysqlDbConfiguration(grConfig.getHost(), grConfig.getPort(),
+                grConfig.getUser(), grConfig.getPassword(), grConfig.getDatabase());
         DBTableService dbTableService = new MySqlDBTableServiceImpl(dbConf);
-        return getBuildPOService(dbTableService);
+        return buildPersistentService(dbTableService);
     }
 
     /**
      * 获得持久对象服务实现类
      * @return 持久对象服务实现类
      */
-    private BuildPOService getBuildPOService(DBTableService dbTableService){
+    private PersistentService buildPersistentService(DBTableService dbTableService){
         IBaseRule baseRule = new IBaseRule() {
             @Override
             public String rootPackageName() {
-                return rootPackageName;
+                return grConfig.getRootPackageName();
             }
 
             @Override
             public String generatorRootPath() {
-                return generatorRootPath;
+                return grConfig.getGeneratorRootPath();
             }
         };
-        IDaoRule daoRule = new IDaoRule() {
+        IPersistentRule persistentRule = new IPersistentRule() {
             @Override
             public String poPackageSuffix() {
-                return poPackageSuffix;
+                return StringUtils.isBlank(grConfig.getPoPackageName()) ? "" : grConfig.getPoPackageName();
+            }
+
+            @Override
+            public String poClassNameSuffix() {
+                return StringUtils.isBlank(grConfig.getPoClassNameSuffix()) ? "" : grConfig.getPoClassNameSuffix();
             }
 
             @Override
             public String tablePrefixFilter() {
-                return tablePrefixFilter;
+                return grConfig.getTablePrefixFilter();
             }
         };
 
-        switch (buildPOServiceEnum) {
-            case DEFAULT:
-                return new DefaultBuildPOServiceImpl(dbTableService,
-                        baseRule, daoRule);
-        }
-
-        return null;
-    }
-
-    public DefaultExecuteServiceFactory host(String host) {
-        this.host = host;
-        return this;
-    }
-
-    public DefaultExecuteServiceFactory port(String port) {
-        this.port = port;
-        return this;
-    }
-
-    public DefaultExecuteServiceFactory user(String user) {
-        this.user = user;
-        return this;
-    }
-
-    public DefaultExecuteServiceFactory password(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public DefaultExecuteServiceFactory database(String database) {
-        this.database = database;
-        return this;
-    }
-
-    public DefaultExecuteServiceFactory rootPackageName(String rootPackageName) {
-        this.rootPackageName = rootPackageName;
-        return this;
-    }
-
-    public DefaultExecuteServiceFactory generatorRootPath(String generatorRootPath) {
-        this.generatorRootPath = generatorRootPath;
-        return this;
-    }
-
-    public DefaultExecuteServiceFactory poPackageSuffix(String poPackageSuffix) {
-        this.poPackageSuffix = poPackageSuffix;
-        return this;
-    }
-
-    public DefaultExecuteServiceFactory tablePrefixFilter(String tablePrefixFilter) {
-        this.tablePrefixFilter = tablePrefixFilter;
-        return this;
+        return new PersistentServiceImpl(dbTableService, baseRule, persistentRule);
     }
 
 }

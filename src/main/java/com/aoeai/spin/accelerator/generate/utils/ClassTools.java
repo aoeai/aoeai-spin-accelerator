@@ -25,16 +25,17 @@ public class ClassTools {
      *
      * @param tableName 表名
      * @param filterPrefix 生成Java文件时需要过滤掉的表名前缀（,分割）
+     * @param poClassNameSuffix PO(持久对象)类名后缀，不填写默认为空；生成后类名后缀与填写的一致
      * @return
      */
-    public static String getPoClassName(String tableName, String filterPrefix) {
+    public static String getPoClassName(String tableName, String filterPrefix, String poClassNameSuffix) {
         if (filterPrefix != null) {
             for (String str : filterPrefix.split(",")) {
                 tableName = tableName.toLowerCase().replace(str.toLowerCase(), "");
             }
         }
 
-        return StringUtils.capitalize(humpName(tableName));
+        return StringUtils.capitalize(humpName(tableName)) + poClassNameSuffix;
     }
 
     /**

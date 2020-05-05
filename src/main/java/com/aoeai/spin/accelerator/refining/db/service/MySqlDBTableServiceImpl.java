@@ -2,7 +2,7 @@ package com.aoeai.spin.accelerator.refining.db.service;
 
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.refining.db.bean.Table;
-import com.aoeai.spin.accelerator.refining.db.config.IDbConfiguration;
+import com.aoeai.spin.accelerator.refining.db.config.IDbConfig;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,9 +17,9 @@ public class MySqlDBTableServiceImpl implements DBTableService {
     /**
      * 数据库配置信息
      */
-    private IDbConfiguration dbConf;
+    private IDbConfig dbConf;
 
-    public MySqlDBTableServiceImpl(IDbConfiguration dbConf) {
+    public MySqlDBTableServiceImpl(IDbConfig dbConf) {
         this.dbConf = dbConf;
     }
 
