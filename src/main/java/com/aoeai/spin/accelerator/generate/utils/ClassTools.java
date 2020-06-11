@@ -44,6 +44,10 @@ public class ClassTools {
      * @return 驼峰试命名
      */
     public static String humpName(String name) {
+        if (!name.contains("_")) {
+            return name;
+        }
+
         name = name.toLowerCase();
         while (name.contains("_")) {
             int i = name.indexOf("_");

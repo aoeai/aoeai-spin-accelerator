@@ -1,20 +1,12 @@
 package com.aoeai.spin.accelerator.generate.factory;
 
-import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.config.GenerateRuleConfig;
-import com.aoeai.spin.accelerator.generate.persistent.rule.IPersistentRule;
-import com.aoeai.spin.accelerator.generate.persistent.service.PersistentService;
-import com.aoeai.spin.accelerator.generate.persistent.service.PersistentServiceImpl;
-import com.aoeai.spin.accelerator.refining.db.config.IDbConfig;
-import com.aoeai.spin.accelerator.refining.db.config.MysqlDbConfiguration;
-import com.aoeai.spin.accelerator.refining.db.service.DBTableService;
-import com.aoeai.spin.accelerator.refining.db.service.MySqlDBTableServiceImpl;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * (默认实现)执行生成的服务类工厂
  */
-public class DefaultExecuteServiceFactory implements ExecuteServiceFactory {
+@Deprecated
+public class DefaultExecuteServiceFactory  {
 
     private GenerateRuleConfig grConfig;
 
@@ -22,19 +14,11 @@ public class DefaultExecuteServiceFactory implements ExecuteServiceFactory {
         this.grConfig = grConfig;
     }
 
-    @Override
-    public PersistentService buildPersistentService() {
-        IDbConfig dbConf = new MysqlDbConfiguration(grConfig.getHost(), grConfig.getPort(),
-                grConfig.getUser(), grConfig.getPassword(), grConfig.getDatabase());
-        DBTableService dbTableService = new MySqlDBTableServiceImpl(dbConf);
-        return buildPersistentService(dbTableService);
-    }
-
     /**
      * 获得持久对象服务实现类
      * @return 持久对象服务实现类
      */
-    private PersistentService buildPersistentService(DBTableService dbTableService){
+    /*private PersistentService buildPersistentService(DBTableService dbTableService){
         IBaseRule baseRule = new IBaseRule() {
             @Override
             public String rootPackageName() {
@@ -64,6 +48,6 @@ public class DefaultExecuteServiceFactory implements ExecuteServiceFactory {
         };
 
         return new PersistentServiceImpl(dbTableService, baseRule, persistentRule);
-    }
+    }*/
 
 }

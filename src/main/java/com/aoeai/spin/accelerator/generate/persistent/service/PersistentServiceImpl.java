@@ -1,60 +1,42 @@
 package com.aoeai.spin.accelerator.generate.persistent.service;
 
+import cn.hutool.core.util.StrUtil;
+import com.aoeai.spin.accelerator.admin.service.FreemarkerService;
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.constant.JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
-import com.aoeai.spin.accelerator.generate.persistent.rule.IPersistentRule;
 import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
+import com.aoeai.spin.accelerator.generate.persistent.rule.IPersistentRule;
 import com.aoeai.spin.accelerator.generate.utils.ClassTools;
+import com.aoeai.spin.accelerator.generate.utils.FileTools;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.refining.db.bean.Table;
-import com.aoeai.spin.accelerator.refining.db.service.DBTableService;
+import com.aoeai.spin.accelerator.refining.db.service.DBService;
+import freemarker.template.TemplateException;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 创建持久对象-默认实现
  */
+@Service
 public class PersistentServiceImpl implements PersistentService {
 
-    private DBTableService dbTableService;
-    private IBaseRule baseRule;
-    private IPersistentRule persistentRule;
+    @Resource
+    private DBService dbService;
 
-    public PersistentServiceImpl(DBTableService dbTableService, IBaseRule baseRule, IPersistentRule persistentRule) {
-        this.dbTableService = dbTableService;
-        this.baseRule = baseRule;
-        this.persistentRule = persistentRule;
-    }
+    @Resource
+    private FreemarkerService freemarkerService;
 
     @Override
-    public Map<String, PO> allPOMap() {
-        Map<String, Table> allTables = dbTableService.allTables();
-        Map<String, PO> resultMap = new HashMap<>(allTables.size());
-        for (Map.Entry<String, Table> map : allTables.entrySet()) {
-            Table table = map.getValue();
-            PO po = buildPO(table, baseRule, persistentRule);
-            resultMap.put(table.getName(), po);
-        }
-
-        return resultMap;
-    }
-
-    @Override
-    public void generatePOJavaBean(String templatePath) {
-
-    }
-
-    @Override
-    public void generateMapperXml(String templatePath) {
-
-    }
-
-    private PO buildPO(Table table, IBaseRule baseRule, IPersistentRule persistentRule) {
+    public PO buildPO(String tableName, IBaseRule baseRule, IPersistentRule persistentRule) {
+        Table table = dbService.getTable(tableName);
         PO po = new PO();
         po.setPackageName(ClassTools.buildPackageName(baseRule.rootPackageName(), persistentRule.poPackageSuffix()));
         po.setClassName(ClassTools.getPoClassName(table.getName(), persistentRule.tablePrefixFilter(), persistentRule.poClassNameSuffix()));
@@ -62,7 +44,18 @@ public class PersistentServiceImpl implements PersistentService {
         po.setImportList(buildImportList(table.getColumns()));
         po.setFieldList(buildFieldList(table.getColumns()));
 
+        po.setTemplates(StrUtil.format("{}/bean_po.ftl", baseRule.themes()));
+        String fileName = StrUtil.format("{}{}.java",
+                baseRule.generatorRootPath(), po.getClassName());
+        po.setFile(new File(fileName));
+        po.setTable(table);
+
         return po;
+    }
+
+    @Override
+    public void createPOFile(PO po) throws IOException, TemplateException {
+        FileTools.buildFile(po.getFile(), freemarkerService.getTemplate(po.getTemplates()), po);
     }
 
     /**

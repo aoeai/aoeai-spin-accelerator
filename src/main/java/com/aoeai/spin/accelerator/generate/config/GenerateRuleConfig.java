@@ -4,35 +4,10 @@ import lombok.Data;
 
 /**
  * 生成规则配置
+ * @author aoe
  */
 @Data
 public class GenerateRuleConfig {
-
-    // IDbConfig 数据库配置信息
-    /**
-     * 主机地址
-     */
-    private String host;
-
-    /**
-     * 端口
-     */
-    private String port;
-
-    /**
-     * 用户名
-     */
-    private String user;
-
-    /**
-     * 密码
-     */
-    private String password;
-
-    /**
-     * 数据库名
-     */
-    private String database;
 
     // IBaseRule （生成时的）基础规则
     /**
@@ -44,6 +19,11 @@ public class GenerateRuleConfig {
      * 生成文件的主文件夹路径 为空时，默认为当前工程路径下的target/build/ 必须有结束的"/"
      */
     private String generatorRootPath;
+
+    /**
+     * 主题文件夹名称（例如：resources/themes/base，返回 base)
+     */
+    private String themes;
 
     // IPersistentRule （生成时的）Persistent规则
     /**

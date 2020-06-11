@@ -7,6 +7,7 @@ import java.util.Map;
 /**
  *  数据库的表的服务
  */
+@Deprecated
 public interface DBTableService {
 
     /**

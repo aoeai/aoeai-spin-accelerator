@@ -18,6 +18,7 @@ public enum MySQLType2JavaTypeEnum {
     BIGINT("bigint", JavaTypeEnum.Big_Integer),
 
     FLOAT("float", JavaTypeEnum.FLOAT),
+    DOUBLE("double", JavaTypeEnum.DOUBLE),
     DECIMAL("decimal", JavaTypeEnum.BIG_DECIMAL),
 
     DATE("date", JavaTypeEnum.DATE),

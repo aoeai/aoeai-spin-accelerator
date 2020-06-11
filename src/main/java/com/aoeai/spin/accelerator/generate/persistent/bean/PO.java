@@ -1,7 +1,9 @@
 package com.aoeai.spin.accelerator.generate.persistent.bean;
 
+import com.aoeai.spin.accelerator.refining.db.bean.Table;
 import lombok.Data;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -34,4 +36,20 @@ public class PO {
      * 字段列表
      */
     private List<POField> fieldList;
+
+    /**
+     * Java文件
+     */
+    private File file;
+
+    /**
+     * 模板文件路径
+     */
+    private String templates;
+
+    // 自定义规则时用
+    /**
+     * （数据库的）表
+     */
+    private Table table;
 }

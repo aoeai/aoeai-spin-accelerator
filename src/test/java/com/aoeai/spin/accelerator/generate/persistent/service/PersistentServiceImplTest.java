@@ -1,8 +1,6 @@
 package com.aoeai.spin.accelerator.generate.persistent.service;
 
 import com.aoeai.spin.accelerator.generate.config.GenerateRuleConfig;
-import com.aoeai.spin.accelerator.generate.factory.DefaultExecuteServiceFactory;
-import com.aoeai.spin.accelerator.generate.factory.ExecuteServiceFactory;
 import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
 import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
@@ -11,7 +9,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -21,13 +18,9 @@ public class PersistentServiceImplTest {
 
     @Test
     public void allPOMapTest(){
-        String rootPath = this.getClass().getResource("/").getPath();
         GenerateRuleConfig grConfig = ConfigTools.getGenerateRuleConfig("/default-generate-rule-config.yml");
-        ExecuteServiceFactory executeServiceFactory = new DefaultExecuteServiceFactory(grConfig);
-        PersistentService buildPOService = executeServiceFactory.buildPersistentService();
 
-        Map<String, PO> poMap = buildPOService.allPOMap();
-        PO po = poMap.get("satest_problem");
+        PO po = null; // TODO poMap.get("satest_problem");
         Assert.assertEquals(po.getClassName(), "SatestProblemPO");
         Assert.assertEquals(po.getPackageName(), "com.aoeai.test.po");
         Assert.assertEquals(po.getClassComment(), "LeetCode问题");

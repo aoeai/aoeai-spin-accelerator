@@ -14,4 +14,9 @@ public interface IBaseRule {
      * @return 生成文件的主文件夹路径 为空时，默认为当前工程路径下的target/build/ 必须有结束的"/"
      */
     String generatorRootPath();
+
+    /**
+     * @return 主题文件夹名称（例如：resources/themes/base，返回 base)
+     */
+    String themes();
 }

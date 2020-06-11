@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  * MySQL 数据库的表的服务
  */
+@Deprecated
 public class MySqlDBTableServiceImpl implements DBTableService {
 
     /**
