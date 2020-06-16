@@ -28,7 +28,11 @@ public class RuleFactory {
 
             @Override
             public String generatorRootPath() {
-                return grConfig.getGeneratorRootPath();
+                String path = grConfig.getGeneratorRootPath();
+                if (StringUtils.isBlank(path)) {
+                    path = System.getProperty("user.dir") + "/target/GENERATE/";
+                }
+                return path;
             }
 
             @Override

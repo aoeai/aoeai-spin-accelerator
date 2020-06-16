@@ -1,8 +1,8 @@
 # IBaseRule （生成时的）基础规则
 # 工程根路径的包名
 rootPackageName: com.aoeai.test
-# 生成文件的主文件夹路径 必填 必须有结束的"/"
-generatorRootPath: xx/
+# 生成文件的主文件夹路径 必填 必须有结束的"/"，不填写则默认路径为 target/GENERATE/
+#generatorRootPath:
 # 主题文件夹名称（例如：resources/themes/base)
 themes: base
 

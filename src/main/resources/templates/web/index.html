@@ -134,6 +134,7 @@
                                         <th>表注释</th>
                                         <th>Engine</th>
                                         <th>创建时间</th>
+                                        <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -142,6 +143,11 @@
                                         <td th:text="${table.tableComment}">-</td>
                                         <td th:text="${table.engine}">-</td>
                                         <td th:text="${table.createTime}">-</td>
+                                        <td>
+                                            <button type="button" class="btn btn-block btn-outline-primary"
+                                                    th:onclick="createPO([[${table.tableName}]])">生成
+                                            </button>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -204,6 +210,11 @@
             "responsive": true,
         });
     });
+
+    function createPO(tableName) {
+        this.href='/createPO?tableName=' + tableName;
+        window.open(this.href, '_blank')
+    }
 </script>
 </body>
 </html>
