@@ -1,15 +1,26 @@
 # IBaseRule （生成时的）基础规则
 # 工程根路径的包名
-rootPackageName: com.aoeai.test
+rootPackageName: com.wazhima
 # 生成文件的主文件夹路径 必填 必须有结束的"/"，不填写则默认路径为 target/GENERATE/
-#generatorRootPath:
-# 主题文件夹名称（例如：resources/themes/base)
+# 生成文件的根路径
+generatorRootPath: /Users/aoe/IdeaProjects/paqu/wazhima/src/main/java/com/wazhima/
+# 主题文件夹名称（例如：resources/themes/base 配置为 themes: base)
 themes: base
 
 # IPersistentRule （生成时的）Persistent规则
-# PO(持久对象)类所在位置的包名后缀
-poPackageName: po
+# PO(持久对象)类存储位置
+poPath: $ROOT_PATH/user/dao/po/
 # PO(持久对象)类名后缀；不填写默认为空；生成后类名后缀与填写的一致
 poClassNameSuffix: PO
 # 生成Java文件时需要过滤掉的表名前缀（,分割）；不填写默认为空
 tablePrefixFilter: tb
+# Mybatis Mapper 文件路径
+mapperPath: $ROOT_PATH/user/dao/mapper/
+# Mybatis Mapper类名后缀；不填写默认为空；生成后类名后缀与填写的一致
+mapperClassNameSuffix: Mapper
+# Mybatis XML 文件路径
+mapperXmlPath: /Users/aoe/IdeaProjects/paqu/wazhima/src/main/resources/user/mapper/
+# Mybatis Plus Service 类存储位置
+mapperServicePath: $ROOT_PATH/user/dao/service/
+# Mybatis Plus Service 类后缀
+mapperServiceSuffix: POService

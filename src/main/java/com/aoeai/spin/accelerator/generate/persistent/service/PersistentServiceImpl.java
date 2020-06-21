@@ -5,8 +5,7 @@ import com.aoeai.spin.accelerator.admin.service.FreemarkerService;
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.constant.JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
-import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
-import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
+import com.aoeai.spin.accelerator.generate.persistent.bean.*;
 import com.aoeai.spin.accelerator.generate.persistent.rule.IPersistentRule;
 import com.aoeai.spin.accelerator.generate.utils.ClassTools;
 import com.aoeai.spin.accelerator.generate.utils.FileTools;
@@ -39,14 +38,14 @@ public class PersistentServiceImpl implements PersistentService {
         Table table = dbService.getTable(tableName);
         PO po = new PO();
         po.setPackageName(ClassTools.buildPackageName(baseRule.rootPackageName(), persistentRule.poPackageSuffix()));
-        po.setClassName(ClassTools.getPoClassName(table.getName(), persistentRule.tablePrefixFilter(), persistentRule.poClassNameSuffix()));
+        po.setClassName(ClassTools.buildClassName(table.getName(), persistentRule.tablePrefixFilter(), persistentRule.poClassNameSuffix()));
         po.setClassComment(table.getComment());
         po.setImportList(buildImportList(table.getColumns()));
         po.setFieldList(buildFieldList(table.getColumns()));
 
-        po.setTemplates(StrUtil.format("{}/bean_po.ftl", baseRule.themes()));
+        po.setTemplates(StrUtil.format("{}/dao/bean_po.ftl", baseRule.themes()));
         String fileName = StrUtil.format("{}{}.java",
-                baseRule.generatorRootPath(), po.getClassName());
+                persistentRule.poPath(), po.getClassName());
         po.setFile(new File(fileName));
         po.setTable(table);
 
@@ -56,6 +55,70 @@ public class PersistentServiceImpl implements PersistentService {
     @Override
     public void createPOFile(PO po) throws IOException, TemplateException {
         FileTools.buildFile(po.getFile(), freemarkerService.getTemplate(po.getTemplates()), po);
+    }
+
+    @Override
+    public MapperClass buildMapperClass(String tableName, IBaseRule baseRule, IPersistentRule persistentRule) {
+        PO po = buildPO(tableName, baseRule, persistentRule);
+        MapperClass mapperClass = new MapperClass();
+        mapperClass.setPo(po);
+
+        Table table = dbService.getTable(tableName);
+        mapperClass.setPackageName(ClassTools.buildPackageName(baseRule.rootPackageName(), persistentRule.mapperPackageSuffix()));
+        mapperClass.setClassName(ClassTools.buildClassName(table.getName(), persistentRule.tablePrefixFilter(), persistentRule.mapperClassNameSuffix()));
+        mapperClass.setClassComment(table.getComment() + " Mapper");
+        mapperClass.setTemplates(StrUtil.format("{}/dao/mapper.ftl", baseRule.themes()));
+        String fileName = StrUtil.format("{}{}.java",
+                persistentRule.mapperPath(), mapperClass.getClassName());
+        mapperClass.setFile(new File(fileName));
+
+        return mapperClass;
+    }
+
+    @Override
+    public void createMapperClassFile(MapperClass mapperClass) throws IOException, TemplateException {
+        FileTools.buildFile(mapperClass.getFile(), freemarkerService.getTemplate(mapperClass.getTemplates()), mapperClass);
+    }
+
+    @Override
+    public MapperXml buildMapperXml(String tableName, IBaseRule baseRule, IPersistentRule persistentRule) {
+        MapperXml xml = new MapperXml();
+        MapperClass mapperClass = buildMapperClass(tableName, baseRule, persistentRule);
+        xml.setMapperClass(mapperClass);
+        String fileName = StrUtil.format("{}{}.xml",
+                persistentRule.mapperXmlPath(), mapperClass.getClassName());;
+        xml.setTemplates(StrUtil.format("{}/dao/mapper_xml.ftl", baseRule.themes()));
+        xml.setFile(new File(fileName));
+
+        return xml;
+    }
+
+    @Override
+    public void createMapperXmlFile(MapperXml mapperXml) throws IOException, TemplateException {
+        FileTools.buildFile(mapperXml.getFile(), freemarkerService.getTemplate(mapperXml.getTemplates()), mapperXml);
+    }
+
+    @Override
+    public MapperService buildMapperService(String tableName, IBaseRule baseRule, IPersistentRule persistentRule) {
+        MapperService mapperService = new MapperService();
+        PO po = buildPO(tableName, baseRule, persistentRule);
+        mapperService.setPo(po);
+
+        mapperService.setPackageName(ClassTools.buildPackageName(baseRule.rootPackageName(), persistentRule.mapperServicePackageSuffix()));
+        Table table = dbService.getTable(tableName);
+        mapperService.setClassName(ClassTools.buildClassName(table.getName(), persistentRule.tablePrefixFilter(), persistentRule.mapperServiceClassSuffix()));
+        mapperService.setClassComment(table.getComment() + "服务类");
+        mapperService.setTemplates(StrUtil.format("{}/dao/mapper_service.ftl", baseRule.themes()));
+        String fileName = StrUtil.format("{}{}.java",
+                persistentRule.mapperServicePath(), mapperService.getClassName());
+        mapperService.setFile(new File(fileName));
+
+        return mapperService;
+    }
+
+    @Override
+    public void createMapperServiceFile(MapperService mapperService) throws IOException, TemplateException {
+        FileTools.buildFile(mapperService.getFile(), freemarkerService.getTemplate(mapperService.getTemplates()), mapperService);
     }
 
     /**

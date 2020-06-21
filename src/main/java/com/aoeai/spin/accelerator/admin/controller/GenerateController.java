@@ -22,6 +22,9 @@ public class GenerateController {
     @RequestMapping("createPO")
     public String createPO(String tableName) throws IOException, TemplateException {
         poThemesService.createPOFile(tableName);
+        poThemesService.createMapperClassFile(tableName);
+        poThemesService.createMapperXmlFile(tableName);
+        poThemesService.createMapperServiceFile(tableName);
         return "ok";
     }
 }

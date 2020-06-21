@@ -27,9 +27,9 @@ public class GenerateRuleConfig {
 
     // IPersistentRule （生成时的）Persistent规则
     /**
-     * PO(持久对象)类所在位置的包名
+     * PO(持久对象)类存储位置
      */
-    private String poPackageName;
+    private String poPath;
 
     /**
      * PO(持久对象)类名后缀；不填写默认为空；生成后类名后缀与填写的一致
@@ -40,4 +40,29 @@ public class GenerateRuleConfig {
      * 生成Java文件时需要过滤掉的表名前缀（,分割）；不填写默认为空
      */
     private String tablePrefixFilter = "";
+
+    /**
+     * Mybatis Mapper 文件路径
+     */
+    private String mapperPath;
+
+    /**
+     * Mybatis Mapper类名后缀；不填写默认为空；生成后类名后缀与填写的一致
+     */
+    private String mapperClassNameSuffix;
+
+    /**
+     * Mybatis XML 文件路径
+     */
+    private String mapperXmlPath;
+
+    /**
+     * Mybatis Plus Service 类存储位置
+     */
+    private String mapperServicePath;
+
+    /**
+     * Mybatis Plus Service 类后缀
+     */
+    private String mapperServiceSuffix;
 }

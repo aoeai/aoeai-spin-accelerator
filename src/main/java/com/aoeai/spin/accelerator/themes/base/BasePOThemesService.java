@@ -2,7 +2,10 @@ package com.aoeai.spin.accelerator.themes.base;
 
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.factory.RuleFactory;
+import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
+import com.aoeai.spin.accelerator.generate.persistent.bean.MapperXml;
 import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
+import com.aoeai.spin.accelerator.generate.persistent.bean.MapperService;
 import com.aoeai.spin.accelerator.generate.persistent.rule.IPersistentRule;
 import com.aoeai.spin.accelerator.generate.persistent.service.PersistentService;
 import com.aoeai.spin.accelerator.themes.POThemesService;
@@ -42,6 +45,36 @@ public class BasePOThemesService implements POThemesService {
     @Override
     public void createPOFile(String tableName) throws IOException, TemplateException {
         persistentService.createPOFile(getPO(tableName));
+    }
+
+    @Override
+    public MapperClass getMapperClass(String tableName) {
+        return persistentService.buildMapperClass(tableName, baseRule, persistentRule);
+    }
+
+    @Override
+    public void createMapperClassFile(String tableName) throws IOException, TemplateException {
+        persistentService.createMapperClassFile(getMapperClass(tableName));
+    }
+
+    @Override
+    public MapperXml getMapperXml(String tableName) {
+        return persistentService.buildMapperXml(tableName, baseRule, persistentRule);
+    }
+
+    @Override
+    public void createMapperXmlFile(String tableName) throws IOException, TemplateException {
+        persistentService.createMapperXmlFile(getMapperXml(tableName));
+    }
+
+    @Override
+    public MapperService getMapperService(String tableName) {
+        return persistentService.buildMapperService(tableName, baseRule, persistentRule);
+    }
+
+    @Override
+    public void createMapperServiceFile(String tableName) throws IOException, TemplateException {
+        persistentService.createMapperServiceFile(getMapperService(tableName));
     }
 
 }
