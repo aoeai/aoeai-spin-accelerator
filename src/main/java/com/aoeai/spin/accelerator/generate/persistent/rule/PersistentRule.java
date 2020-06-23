@@ -3,7 +3,7 @@ package com.aoeai.spin.accelerator.generate.persistent.rule;
 /**
  * （生成时的）Persistent规则
  */
-public interface IPersistentRule {
+public interface PersistentRule {
 
     /**
      * PO(持久对象)类存储位置
@@ -53,7 +53,7 @@ public interface IPersistentRule {
     String mapperServicePath();
 
     /**
-     * @return PO(持久对象)类所在位置的包名后缀
+     * @return Mybatis Plus Service类所在位置的包名后缀
      */
     String mapperServicePackageSuffix();
 
@@ -62,4 +62,21 @@ public interface IPersistentRule {
      * @return Mybatis Plus Service 类后缀
      */
     String mapperServiceClassSuffix();
+
+    /**
+     *
+     * @return Mybatis Plus ServiceImpl 类存储位置
+     */
+    String mapperServiceImplPath();
+
+    /**
+     * @return Mybatis Plus ServiceImpl类所在位置的包名后缀
+     */
+    String mapperServiceImplPackageSuffix();
+
+    /**
+     *
+     * @return Mybatis Plus Service 类后缀
+     */
+    String mapperServiceImplClassSuffix();
 }

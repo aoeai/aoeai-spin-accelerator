@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class GenerateRuleConfig {
 
-    // IBaseRule （生成时的）基础规则
+    // --------------------------------------- IBaseRule （生成时的）基础规则 ---------------------------------------
     /**
      * 工程根路径的包名
      */
@@ -25,7 +25,7 @@ public class GenerateRuleConfig {
      */
     private String themes;
 
-    // IPersistentRule （生成时的）Persistent规则
+    // --------------------------------------- IPersistentRule （生成时的）Persistent规则 ---------------------------------------
     /**
      * PO(持久对象)类存储位置
      */
@@ -65,4 +65,47 @@ public class GenerateRuleConfig {
      * Mybatis Plus Service 类后缀
      */
     private String mapperServiceSuffix;
+
+    /**
+     * Mybatis Plus ServiceImpl 类存储位置
+     */
+    private String mapperServiceImplPath;
+
+    /**
+     * Mybatis Plus ServiceImpl 类后缀
+     */
+    private String mapperServiceImplSuffix;
+
+    // --------------------------------------- Service  ---------------------------------------
+    /**
+     * Service 类存储位置
+     */
+    private String servicePath;
+
+    /**
+     * Service 类后缀
+     */
+    private String serviceSuffix;
+
+    //  --------------------------------------- Web ---------------------------------------
+
+    /**
+     * 页面查询类存储位置
+     */
+    private String pageListQOPath;
+
+    /**
+     * 页面查询类名后缀
+     */
+    private String pageListQOClassNameSuffix;
+
+    /**
+     * VO 类存储位置
+     */
+    private String voPath;
+
+    /**
+     * VO 类名后缀
+     */
+    private String voClassNameSuffix;
 }

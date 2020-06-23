@@ -2,11 +2,8 @@ package com.aoeai.spin.accelerator.themes.base;
 
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.factory.RuleFactory;
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperXml;
-import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperService;
-import com.aoeai.spin.accelerator.generate.persistent.rule.IPersistentRule;
+import com.aoeai.spin.accelerator.generate.persistent.bean.*;
+import com.aoeai.spin.accelerator.generate.persistent.rule.PersistentRule;
 import com.aoeai.spin.accelerator.generate.persistent.service.PersistentService;
 import com.aoeai.spin.accelerator.themes.POThemesService;
 import freemarker.template.TemplateException;
@@ -25,7 +22,7 @@ public class BasePOThemesService implements POThemesService {
 
     private IBaseRule baseRule;
 
-    private IPersistentRule persistentRule;
+    private PersistentRule persistentRule;
 
     @Resource
     private PersistentService persistentService;
@@ -75,6 +72,16 @@ public class BasePOThemesService implements POThemesService {
     @Override
     public void createMapperServiceFile(String tableName) throws IOException, TemplateException {
         persistentService.createMapperServiceFile(getMapperService(tableName));
+    }
+
+    @Override
+    public MapperServiceImpl getMapperServiceImpl(String tableName) {
+        return persistentService.buildMapperServiceImpl(tableName, baseRule, persistentRule);
+    }
+
+    @Override
+    public void createMapperServiceImplFile(String tableName) throws IOException, TemplateException {
+        persistentService.createMapperServiceImplFile(getMapperServiceImpl(tableName));
     }
 
 }

@@ -30,10 +30,13 @@
 		ORDER BY create_time DESC
 	</select>
 
+    <!--	https://dev.mysql.com/doc/refman/8.0/en/columns-table.html -->
 	<select id="selectColumnList" resultType="com.aoeai.spin.accelerator.refining.db.po.ColumnPO">
 		SELECT
             column_name columnName,
             data_type dataType,
+            character_maximum_length characterMaximumLength,
+            column_type columnType,
             column_comment columnComment,
             column_key columnKey,
             extra

@@ -1,6 +1,7 @@
 package ${packageName};
 
 import lombok.Data;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 <#list importList as classFullName>
 import ${classFullName};
@@ -11,6 +12,7 @@ import ${classFullName};
  *
  */
 @Data
+@TableName("${table.name}")
 public class ${className} {
 
 <#list fieldList as field>

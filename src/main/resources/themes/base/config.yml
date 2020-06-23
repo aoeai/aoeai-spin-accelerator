@@ -24,3 +24,24 @@ mapperXmlPath: /Users/aoe/IdeaProjects/paqu/wazhima/src/main/resources/user/mapp
 mapperServicePath: $ROOT_PATH/user/dao/service/
 # Mybatis Plus Service 类后缀
 mapperServiceSuffix: POService
+# Mybatis Plus ServiceImpl 类存储位置
+mapperServiceImplPath: $ROOT_PATH/user/dao/service/impl/
+# Mybatis Plus ServiceImpl 类后缀
+mapperServiceImplSuffix: POServiceImpl
+
+# Service 生成规则
+# Service 类存储位置
+servicePath: $ROOT_PATH/user/service/
+# Service 类后缀
+serviceSuffix: Service
+
+# web层 生成规则
+# 页面查询类存储位置
+pageListQOPath: $ROOT_PATH/user/web/request/qo/
+# 页面查询类名后缀；不填写默认为空；生成后类名后缀与填写的一致
+pageListQOClassNameSuffix: PageListQO
+
+# VO 类存储位置
+voPath: $ROOT_PATH/user/web/response/
+# VO 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
+voClassNameSuffix: VO

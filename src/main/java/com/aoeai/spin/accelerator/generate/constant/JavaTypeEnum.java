@@ -7,6 +7,7 @@ package com.aoeai.spin.accelerator.generate.constant;
 public enum JavaTypeEnum {
     STRING("String", null),
     INTEGER("Integer", null),
+    LONG("Long", null),
     DATE("Date", "java.util.Date"),
     FLOAT("Float", null),
     DOUBLE("Double", null),

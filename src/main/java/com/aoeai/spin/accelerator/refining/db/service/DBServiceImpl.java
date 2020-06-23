@@ -55,6 +55,14 @@ public class DBServiceImpl implements DBService {
         for (ColumnPO columnPO : columnList) {
             ColumnVO vo = new ColumnVO();
             BeanUtils.copyProperties(columnPO, vo);
+
+            if ("bigint".equals(columnPO.getDataType())) {
+                String lengthStr = columnPO.getColumnType()
+                        .replace("bigint(", "")
+                        .replace(")", "");
+                vo.setIntegersLength(Integer.parseInt(lengthStr));
+            }
+
             voList.add(vo);
         }
         return voList;
@@ -75,6 +83,7 @@ public class DBServiceImpl implements DBService {
             column.setComment(vo.getColumnComment());
             column.setType(vo.getDataType());
             column.setPrimaryKey("PRI".equals(vo.getColumnKey()));
+            column.setLength(vo.getIntegersLength());
 
             columnList.add(column);
         }

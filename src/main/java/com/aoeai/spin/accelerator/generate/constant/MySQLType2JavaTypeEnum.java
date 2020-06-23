@@ -44,11 +44,16 @@ public enum MySQLType2JavaTypeEnum {
     /**
      * 根据MySQL数据类型获得Java类型
      * @param dbType
+     * @param maxLength 字段最大长度
      * @return Java类型
      * @throws UnkonwMySqlTypeException
      */
-    public static JavaTypeEnum javaType(String dbType) throws UnkonwMySqlTypeException {
+    public static JavaTypeEnum javaType(String dbType, Integer maxLength) throws UnkonwMySqlTypeException {
         for (MySQLType2JavaTypeEnum mysqlType : values()) {
+            if (MySQLType2JavaTypeEnum.BIGINT.dbType.equals(dbType)
+            && maxLength != null && maxLength < 14) {
+                return JavaTypeEnum.LONG;
+            }
             if (dbType.startsWith(mysqlType.dbType)) {
                 return mysqlType.javaType;
             }

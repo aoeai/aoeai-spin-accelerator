@@ -1,9 +1,6 @@
 package com.aoeai.spin.accelerator.themes;
 
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperXml;
-import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperService;
+import com.aoeai.spin.accelerator.generate.persistent.bean.*;
 import freemarker.template.TemplateException;
 
 import java.io.IOException;
@@ -61,4 +58,17 @@ public interface POThemesService {
      * @param tableName
      */
     void createMapperServiceFile(String tableName) throws IOException, TemplateException;
+
+    /**
+     * 获得 Mybatis Plus ServiceImpl 对象
+     * @param tableName
+     * @return
+     */
+    MapperServiceImpl getMapperServiceImpl(String tableName);
+
+    /**
+     * 创建 Mybatis Plus ServiceImpl 文件
+     * @param tableName
+     */
+    void createMapperServiceImplFile(String tableName) throws IOException, TemplateException;
 }

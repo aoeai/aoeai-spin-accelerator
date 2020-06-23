@@ -37,4 +37,14 @@ public class Column {
      * 注释
      */
     private String comment;
+
+    /**
+     * For string columns, the maximum length in characters.
+     */
+    private Integer characterMaximumLength;
+
+    /**
+     * 整数类型的最大长度
+     */
+    private Integer integersLength;
 }

@@ -2,8 +2,10 @@ package com.aoeai.spin.accelerator.generate.factory;
 
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.config.GenerateRuleConfig;
-import com.aoeai.spin.accelerator.generate.persistent.rule.IPersistentRule;
+import com.aoeai.spin.accelerator.generate.persistent.rule.PersistentRule;
+import com.aoeai.spin.accelerator.generate.service.rule.ServiceRule;
 import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
+import com.aoeai.spin.accelerator.generate.web.rule.WebRule;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -54,10 +56,10 @@ public class RuleFactory {
      * @param yamlName
      * @return
      */
-    public static IPersistentRule buildPersistentRule(String yamlName){
+    public static PersistentRule buildPersistentRule(String yamlName){
         GenerateRuleConfig grConfig = ConfigTools.getGenerateRuleConfig(yamlName);
         IBaseRule baseRule = buildBaseRule(yamlName);
-        return new IPersistentRule() {
+        return new PersistentRule() {
             @Override
             public String poPath() {
                 return StringUtils.isBlank(grConfig.getPoPath()) ? ""
@@ -102,7 +104,7 @@ public class RuleFactory {
 
             @Override
             public String mapperServicePath() {
-                return StringUtils.isBlank(grConfig.getPoPath()) ? ""
+                return StringUtils.isBlank(grConfig.getMapperServicePath()) ? ""
                         : replaceRootPath(grConfig.getMapperServicePath(), baseRule);
             }
 
@@ -114,6 +116,89 @@ public class RuleFactory {
             @Override
             public String mapperServiceClassSuffix() {
                 return StringUtils.isBlank(grConfig.getMapperServiceSuffix()) ? "" : grConfig.getMapperServiceSuffix();
+            }
+
+            @Override
+            public String mapperServiceImplPath() {
+                return StringUtils.isBlank(grConfig.getMapperServiceImplPath()) ? ""
+                        : replaceRootPath(grConfig.getMapperServiceImplPath(), baseRule);
+            }
+
+            @Override
+            public String mapperServiceImplPackageSuffix() {
+                return getPackageSuffix(mapperServiceImplPath(), baseRule);
+            }
+
+            @Override
+            public String mapperServiceImplClassSuffix() {
+                return StringUtils.isBlank(grConfig.getMapperServiceImplSuffix()) ? "" : grConfig.getMapperServiceImplSuffix();
+            }
+        };
+    }
+
+    /**
+     *
+     * @param yamlName
+     * @return
+     */
+    public static ServiceRule buildServiceRule(String yamlName) {
+        GenerateRuleConfig grConfig = ConfigTools.getGenerateRuleConfig(yamlName);
+        IBaseRule baseRule = buildBaseRule(yamlName);
+
+        return new ServiceRule() {
+            @Override
+            public String servicePath() {
+                return StringUtils.isBlank(grConfig.getServicePath()) ? ""
+                        : replaceRootPath(grConfig.getServicePath(), baseRule);
+            }
+
+            @Override
+            public String servicePackageSuffix() {
+                return getPackageSuffix(servicePath(), baseRule);
+            }
+
+            @Override
+            public String serviceSuffix() {
+                return StringUtils.isBlank(grConfig.getServiceSuffix()) ? "" : grConfig.getServiceSuffix();
+            }
+        };
+    }
+
+    public static WebRule buildWebRule(String yamlName) {
+        GenerateRuleConfig grConfig = ConfigTools.getGenerateRuleConfig(yamlName);
+        IBaseRule baseRule = buildBaseRule(yamlName);
+
+        return new WebRule() {
+            @Override
+            public String pageListQOPath() {
+                return StringUtils.isBlank(grConfig.getPageListQOPath()) ? ""
+                        : replaceRootPath(grConfig.getPageListQOPath(), baseRule);
+            }
+
+            @Override
+            public String pageListQOPackageSuffix() {
+                return getPackageSuffix(pageListQOPath(), baseRule);
+            }
+
+            @Override
+            public String pageListQOSuffix() {
+                return StringUtils.isBlank(grConfig.getPageListQOClassNameSuffix()) ? "" : grConfig.getPageListQOClassNameSuffix();
+            }
+
+            @Override
+            public String voPath() {
+                return StringUtils.isBlank(grConfig.getVoPath()) ? ""
+                        : replaceRootPath(grConfig.getVoPath(), baseRule);
+            }
+
+            @Override
+            public String voPackageSuffix() {
+                return getPackageSuffix(voPath(), baseRule);
+            }
+
+            @Override
+            public String voSuffix() {
+                return StringUtils.isBlank(grConfig.getVoClassNameSuffix()) ? "" : grConfig.getVoClassNameSuffix();
             }
         };
     }

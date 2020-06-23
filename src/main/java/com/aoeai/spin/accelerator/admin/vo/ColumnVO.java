@@ -14,9 +14,21 @@ public class ColumnVO {
 
     private String dataType;
 
+    /**
+     * For string columns, the maximum length in characters.
+     */
+    private Integer characterMaximumLength;
+
+    private String columnType;
+
     private String columnComment;
 
     private String columnKey;
 
     private String extra;
+
+    /**
+     * 整数类型的最大长度
+     */
+    private Integer integersLength;
 }

@@ -6,7 +6,7 @@ import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.constant.JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.persistent.bean.*;
-import com.aoeai.spin.accelerator.generate.persistent.rule.IPersistentRule;
+import com.aoeai.spin.accelerator.generate.persistent.rule.PersistentRule;
 import com.aoeai.spin.accelerator.generate.utils.ClassTools;
 import com.aoeai.spin.accelerator.generate.utils.FileTools;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
@@ -34,7 +34,7 @@ public class PersistentServiceImpl implements PersistentService {
     private FreemarkerService freemarkerService;
 
     @Override
-    public PO buildPO(String tableName, IBaseRule baseRule, IPersistentRule persistentRule) {
+    public PO buildPO(String tableName, IBaseRule baseRule, PersistentRule persistentRule) {
         Table table = dbService.getTable(tableName);
         PO po = new PO();
         po.setPackageName(ClassTools.buildPackageName(baseRule.rootPackageName(), persistentRule.poPackageSuffix()));
@@ -58,7 +58,7 @@ public class PersistentServiceImpl implements PersistentService {
     }
 
     @Override
-    public MapperClass buildMapperClass(String tableName, IBaseRule baseRule, IPersistentRule persistentRule) {
+    public MapperClass buildMapperClass(String tableName, IBaseRule baseRule, PersistentRule persistentRule) {
         PO po = buildPO(tableName, baseRule, persistentRule);
         MapperClass mapperClass = new MapperClass();
         mapperClass.setPo(po);
@@ -81,7 +81,7 @@ public class PersistentServiceImpl implements PersistentService {
     }
 
     @Override
-    public MapperXml buildMapperXml(String tableName, IBaseRule baseRule, IPersistentRule persistentRule) {
+    public MapperXml buildMapperXml(String tableName, IBaseRule baseRule, PersistentRule persistentRule) {
         MapperXml xml = new MapperXml();
         MapperClass mapperClass = buildMapperClass(tableName, baseRule, persistentRule);
         xml.setMapperClass(mapperClass);
@@ -99,7 +99,7 @@ public class PersistentServiceImpl implements PersistentService {
     }
 
     @Override
-    public MapperService buildMapperService(String tableName, IBaseRule baseRule, IPersistentRule persistentRule) {
+    public MapperService buildMapperService(String tableName, IBaseRule baseRule, PersistentRule persistentRule) {
         MapperService mapperService = new MapperService();
         PO po = buildPO(tableName, baseRule, persistentRule);
         mapperService.setPo(po);
@@ -121,6 +121,31 @@ public class PersistentServiceImpl implements PersistentService {
         FileTools.buildFile(mapperService.getFile(), freemarkerService.getTemplate(mapperService.getTemplates()), mapperService);
     }
 
+    @Override
+    public MapperServiceImpl buildMapperServiceImpl(String tableName, IBaseRule baseRule, PersistentRule persistentRule) {
+        MapperServiceImpl impl = new MapperServiceImpl();
+        MapperService mapperService = buildMapperService(tableName, baseRule, persistentRule);
+        impl.setMapperService(mapperService);
+        MapperClass mapperClass = buildMapperClass(tableName, baseRule, persistentRule);
+        impl.setMapperClass(mapperClass);
+        impl.setPackageName(ClassTools.buildPackageName(baseRule.rootPackageName(), persistentRule.mapperServiceImplPackageSuffix()));
+
+        Table table = dbService.getTable(tableName);
+        impl.setClassName(ClassTools.buildClassName(table.getName(), persistentRule.tablePrefixFilter(), persistentRule.mapperServiceImplClassSuffix()));
+        impl.setClassComment(table.getComment() + "服务类");
+        impl.setTemplates(StrUtil.format("{}/dao/mapper_service_impl.ftl", baseRule.themes()));
+        String fileName = StrUtil.format("{}{}.java",
+                persistentRule.mapperServiceImplPath(), impl.getClassName());
+        impl.setFile(new File(fileName));
+
+        return impl;
+    }
+
+    @Override
+    public void createMapperServiceImplFile(MapperServiceImpl mapperServiceImpl) throws IOException, TemplateException {
+        FileTools.buildFile(mapperServiceImpl.getFile(), freemarkerService.getTemplate(mapperServiceImpl.getTemplates()), mapperServiceImpl);
+    }
+
     /**
      * 组装import语句列表
      * @param columns
@@ -130,7 +155,7 @@ public class PersistentServiceImpl implements PersistentService {
         List<String> result = new ArrayList<>();
         for (Column column : columns) {
             String dbType = column.getType();
-            String fullName = MySQLType2JavaTypeEnum.javaType(dbType).fullName();
+            String fullName = MySQLType2JavaTypeEnum.javaType(dbType, column.getLength()).fullName();
             if (fullName == null) {
                 continue;
             }
@@ -149,7 +174,7 @@ public class PersistentServiceImpl implements PersistentService {
         for (Column column : columns) {
             POField poField = new POField();
             poField.setName(ClassTools.humpName(column.getName()));
-            JavaTypeEnum javaType =  MySQLType2JavaTypeEnum.javaType(column.getType());
+            JavaTypeEnum javaType =  MySQLType2JavaTypeEnum.javaType(column.getType(), column.getLength());
             poField.setClassShortName(javaType.shortName());
             poField.setClassFullName(javaType.fullName());
             poField.setComment(column.getComment());
