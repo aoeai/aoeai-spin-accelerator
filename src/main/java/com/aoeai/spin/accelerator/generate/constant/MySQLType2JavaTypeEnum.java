@@ -61,4 +61,8 @@ public enum MySQLType2JavaTypeEnum {
 
         throw new UnkonwMySqlTypeException(dbType);
     }
+
+    public String dbType(){
+        return dbType;
+    }
 }

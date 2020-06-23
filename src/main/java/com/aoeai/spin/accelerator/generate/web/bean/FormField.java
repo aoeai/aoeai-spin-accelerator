@@ -1,12 +1,14 @@
-package com.aoeai.spin.accelerator.generate.persistent.bean;
+package com.aoeai.spin.accelerator.generate.web.bean;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
- * （数据库对应的）实体类字段
+ * 表单字段
  */
 @Data
-public class POField {
+public class FormField {
 
     /**
      * 字段类型：类名简称（无包名）
@@ -29,7 +31,7 @@ public class POField {
     private String comment;
 
     /**
-     * 是否主键
+     * 效验标签列表
      */
-    private Boolean isPrimaryKey;
+    private List<String> checkTagList;
 }

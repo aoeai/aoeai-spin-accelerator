@@ -3,7 +3,7 @@ package com.aoeai.spin.accelerator.generate.common;
 import lombok.Data;
 
 import java.io.File;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 类的基本属性
@@ -21,7 +21,7 @@ public class BaseClassProperty {
     /**
      * import语句
      */
-    private List<String> importList;
+    private Set<String> importList;
 
     /**
      * 类名

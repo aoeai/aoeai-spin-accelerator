@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.aoeai.spin.accelerator.generate.utils.ClassTools.buildImportList;
+
 /**
  * 创建持久对象-默认实现
  */
@@ -147,24 +149,6 @@ public class PersistentServiceImpl implements PersistentService {
     }
 
     /**
-     * 组装import语句列表
-     * @param columns
-     * @return
-     */
-    private List<String> buildImportList(List<Column> columns){
-        List<String> result = new ArrayList<>();
-        for (Column column : columns) {
-            String dbType = column.getType();
-            String fullName = MySQLType2JavaTypeEnum.javaType(dbType, column.getLength()).fullName();
-            if (fullName == null) {
-                continue;
-            }
-            result.add(fullName);
-        }
-        return result;
-    }
-
-    /**
      * 组装（数据库对应的）实体类字段列表
      * @param columns
      * @return
@@ -178,6 +162,7 @@ public class PersistentServiceImpl implements PersistentService {
             poField.setClassShortName(javaType.shortName());
             poField.setClassFullName(javaType.fullName());
             poField.setComment(column.getComment());
+            poField.setIsPrimaryKey(column.isPrimaryKey());
 
             result.add(poField);
         }

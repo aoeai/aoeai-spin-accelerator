@@ -3,6 +3,7 @@ package com.aoeai.spin.accelerator.refining.db.service;
 import cn.hutool.core.date.DateTime;
 import com.aoeai.spin.accelerator.admin.vo.ColumnVO;
 import com.aoeai.spin.accelerator.admin.vo.TableVO;
+import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.refining.db.bean.Table;
 import com.aoeai.spin.accelerator.refining.db.mapper.DBMapper;
@@ -56,11 +57,21 @@ public class DBServiceImpl implements DBService {
             ColumnVO vo = new ColumnVO();
             BeanUtils.copyProperties(columnPO, vo);
 
+            String dataType = columnPO.getDataType();
+            String columnType = columnPO.getColumnType();
+            String dbMaxLengthStr = "0";
+            if (MySQLType2JavaTypeEnum.DECIMAL.dbType().equals(dataType)) {
+                dbMaxLengthStr = columnType.substring(8, columnType.indexOf(","));
+            }else if (MySQLType2JavaTypeEnum.DOUBLE.dbType().equals(dataType)){
+                dbMaxLengthStr = columnType.substring(7, columnType.indexOf(","));
+            }else {
+                dbMaxLengthStr = columnType.substring(columnType.indexOf("(") + 1, columnType.indexOf(")"));
+            }
+            Integer dbMaxLength = Integer.parseInt(dbMaxLengthStr);
+            vo.setDbMaxLength(dbMaxLength);
+
             if ("bigint".equals(columnPO.getDataType())) {
-                String lengthStr = columnPO.getColumnType()
-                        .replace("bigint(", "")
-                        .replace(")", "");
-                vo.setIntegersLength(Integer.parseInt(lengthStr));
+                vo.setIntegersLength(dbMaxLength);
             }
 
             voList.add(vo);
@@ -79,6 +90,7 @@ public class DBServiceImpl implements DBService {
         List<Column> columnList = new ArrayList<>(columnVOList.size());
         for (ColumnVO vo : columnVOList) {
             Column column = new Column();
+            BeanUtils.copyProperties(vo, column);
             column.setName(vo.getColumnName());
             column.setComment(vo.getColumnComment());
             column.setType(vo.getDataType());

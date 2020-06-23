@@ -5,7 +5,7 @@ import com.wazhima.common.annotation.QueryTag;
 import com.wazhima.common.response.page.PageQO;
 
 <#list po.importList as classFullName>
-    import ${classFullName};
+import ${classFullName};
 </#list>
 
 /**
@@ -23,4 +23,15 @@ public class ${className} extends PageQO {
     private ${field.classShortName} ${field.name};
 
 </#list>
+    /**
+    * 开始时间
+    */
+    @QueryTag
+    private Long startTime;
+
+    /**
+    * 结束时间
+    */
+    @QueryTag
+    private Long endTime;
 }

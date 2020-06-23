@@ -20,23 +20,20 @@ import java.io.IOException;
 @Service
 public class BasePOThemesService implements POThemesService {
 
-    private IBaseRule baseRule;
-
-    private PersistentRule persistentRule;
-
     @Resource
     private PersistentService persistentService;
 
+    private String yamlName;
+
     @PostConstruct
     private void init(){
-        String yamlName = "/themes/base/config.yml";
-        baseRule = RuleFactory.buildBaseRule(yamlName);
-        persistentRule = RuleFactory.buildPersistentRule(yamlName);
+        yamlName = "/themes/base/config.yml";
     }
 
     @Override
     public PO getPO(String tableName) {
-        return persistentService.buildPO(tableName, baseRule, persistentRule);
+        IBaseRule baseRule = RuleFactory.buildBaseRule(yamlName, tableName);
+        return persistentService.buildPO(tableName, baseRule, getPersistentRule(baseRule));
     }
 
     @Override
@@ -46,7 +43,8 @@ public class BasePOThemesService implements POThemesService {
 
     @Override
     public MapperClass getMapperClass(String tableName) {
-        return persistentService.buildMapperClass(tableName, baseRule, persistentRule);
+        IBaseRule baseRule = RuleFactory.buildBaseRule(yamlName, tableName);
+        return persistentService.buildMapperClass(tableName, baseRule, getPersistentRule(baseRule));
     }
 
     @Override
@@ -56,7 +54,8 @@ public class BasePOThemesService implements POThemesService {
 
     @Override
     public MapperXml getMapperXml(String tableName) {
-        return persistentService.buildMapperXml(tableName, baseRule, persistentRule);
+        IBaseRule baseRule = RuleFactory.buildBaseRule(yamlName, tableName);
+        return persistentService.buildMapperXml(tableName, baseRule, getPersistentRule(baseRule));
     }
 
     @Override
@@ -66,7 +65,8 @@ public class BasePOThemesService implements POThemesService {
 
     @Override
     public MapperService getMapperService(String tableName) {
-        return persistentService.buildMapperService(tableName, baseRule, persistentRule);
+        IBaseRule baseRule = RuleFactory.buildBaseRule(yamlName, tableName);
+        return persistentService.buildMapperService(tableName, baseRule, getPersistentRule(baseRule));
     }
 
     @Override
@@ -76,7 +76,8 @@ public class BasePOThemesService implements POThemesService {
 
     @Override
     public MapperServiceImpl getMapperServiceImpl(String tableName) {
-        return persistentService.buildMapperServiceImpl(tableName, baseRule, persistentRule);
+        IBaseRule baseRule = RuleFactory.buildBaseRule(yamlName, tableName);
+        return persistentService.buildMapperServiceImpl(tableName, baseRule, getPersistentRule(baseRule));
     }
 
     @Override
@@ -84,4 +85,7 @@ public class BasePOThemesService implements POThemesService {
         persistentService.createMapperServiceImplFile(getMapperServiceImpl(tableName));
     }
 
+    private PersistentRule getPersistentRule(IBaseRule baseRule) {
+        return RuleFactory.buildPersistentRule(baseRule);
+    }
 }

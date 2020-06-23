@@ -1,6 +1,12 @@
 package com.aoeai.spin.accelerator.generate.utils;
 
+import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
+import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * （生成）类的工具类
@@ -59,4 +65,32 @@ public class ClassTools {
         return name;
     }
 
+    /**
+     * 组装import语句列表
+     * @param columns
+     * @return
+     */
+    public static Set<String> buildImportList(List<Column> columns){
+        Set<String> result = new LinkedHashSet<>();
+        for (Column column : columns) {
+            String dbType = column.getType();
+            String fullName = MySQLType2JavaTypeEnum.javaType(dbType, column.getLength()).fullName();
+            if (fullName == null) {
+                continue;
+            }
+            result.add(fullName);
+        }
+        return result;
+    }
+
+    /**
+     * 根据表名获得模块名称
+     * @param tableName
+     * @param filterPrefix
+     * @return
+     */
+    public static String getModelName(String tableName, String filterPrefix) {
+        String className = buildClassName(tableName, filterPrefix, "");
+        return className.toLowerCase();
+    }
 }

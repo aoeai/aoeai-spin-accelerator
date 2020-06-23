@@ -108,4 +108,39 @@ public class GenerateRuleConfig {
      * VO 类名后缀
      */
     private String voClassNameSuffix;
+
+    /**
+     * Form 表单类存储位置
+     */
+    private String formPath;
+
+    /**
+     * Form 表单类名后缀
+     */
+    private String formClassNameSuffix;
+
+    /**
+     * 控制器类存储位置
+     */
+    private String controllerPath;
+
+    /**
+     * 控制器类名后缀
+     */
+    private String controllerClassNameSuffix;
+
+    /**
+     * 控制器测试类存储位置
+     */
+    private String controllerTestPath;
+
+    /**
+     * 控制器测试类名后缀
+     */
+    private String controllerTestClassNameSuffix;
+
+    /**
+     * 测试主机地址
+     */
+    private String hostTest;
 }

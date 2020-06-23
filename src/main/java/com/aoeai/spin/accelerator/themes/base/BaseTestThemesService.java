@@ -3,11 +3,11 @@ package com.aoeai.spin.accelerator.themes.base;
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.factory.RuleFactory;
 import com.aoeai.spin.accelerator.generate.persistent.rule.PersistentRule;
-import com.aoeai.spin.accelerator.generate.service.bean.ServiceClass;
-import com.aoeai.spin.accelerator.generate.service.rule.ServiceRule;
-import com.aoeai.spin.accelerator.generate.service.service.ServiceClassService;
+import com.aoeai.spin.accelerator.generate.test.bean.ControllerTest;
+import com.aoeai.spin.accelerator.generate.test.rule.TestRule;
+import com.aoeai.spin.accelerator.generate.test.service.TestService;
 import com.aoeai.spin.accelerator.generate.web.rule.WebRule;
-import com.aoeai.spin.accelerator.themes.ServiceThemesService;
+import com.aoeai.spin.accelerator.themes.TestThemesService;
 import freemarker.template.TemplateException;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +17,13 @@ import java.io.IOException;
 
 /**
  * @author aoe
- * @date 2020/6/22
+ * @date 2020/6/23
  */
 @Service
-public class BaseServiceThemesService implements ServiceThemesService {
+public class BaseTestThemesService implements TestThemesService {
 
     @Resource
-    private ServiceClassService serviceClassService;
+    private TestService testService;
 
     private String yamlName;
 
@@ -33,16 +33,16 @@ public class BaseServiceThemesService implements ServiceThemesService {
     }
 
     @Override
-    public ServiceClass getServiceClass(String tableName) {
+    public ControllerTest getControllerTest(String tableName) {
         IBaseRule baseRule = RuleFactory.buildBaseRule(yamlName, tableName);
         PersistentRule persistentRule = RuleFactory.buildPersistentRule(baseRule);
-        ServiceRule serviceRule = RuleFactory.buildServiceRule(baseRule);
         WebRule webRule = RuleFactory.buildWebRule(baseRule);
-        return serviceClassService.buildServiceClass(tableName, baseRule, persistentRule, serviceRule, webRule);
+        TestRule testRule = RuleFactory.buildTestRule(baseRule);
+        return testService.buildControllerTest(tableName, baseRule, persistentRule, webRule, testRule);
     }
 
     @Override
-    public void createServiceClassFile(String tableName) throws IOException, TemplateException {
-        serviceClassService.createServiceClassFile(getServiceClass(tableName));
+    public void createControllerTestFile(String tableName) throws IOException, TemplateException {
+        testService.createControllerTestFile(getControllerTest(tableName));
     }
 }

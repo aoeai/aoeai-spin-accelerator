@@ -31,4 +31,9 @@ public class ColumnVO {
      * 整数类型的最大长度
      */
     private Integer integersLength;
+
+    /**
+     * 数据库设置的最大长度
+     */
+    private Integer dbMaxLength;
 }

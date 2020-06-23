@@ -4,6 +4,8 @@ import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.config.GenerateRuleConfig;
 import com.aoeai.spin.accelerator.generate.persistent.rule.PersistentRule;
 import com.aoeai.spin.accelerator.generate.service.rule.ServiceRule;
+import com.aoeai.spin.accelerator.generate.test.rule.TestRule;
+import com.aoeai.spin.accelerator.generate.utils.ClassTools;
 import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
 import com.aoeai.spin.accelerator.generate.web.rule.WebRule;
 import org.apache.commons.lang3.StringUtils;
@@ -23,13 +25,24 @@ public class RuleFactory {
     private final static String SYMBOL_ROOT_PATH = "\\$ROOT_PATH";
 
     /**
+     * 模块路径符号
+     */
+    private final static String SYMBOL_MODEL_PATH = "\\$MODEL_PATH";
+
+    /**
      *
      * @param yamlName yaml文件名称 "/default-generate-rule-config.yml"
+     * @param tableName 表名
      * @return
      */
-    public static IBaseRule buildBaseRule(String yamlName) {
+    public static IBaseRule buildBaseRule(String yamlName, String tableName) {
         GenerateRuleConfig grConfig = ConfigTools.getGenerateRuleConfig(yamlName);
         return new IBaseRule() {
+            @Override
+            public GenerateRuleConfig grConfig() {
+                return grConfig;
+            }
+
             @Override
             public String rootPackageName() {
                 return grConfig.getRootPackageName();
@@ -48,17 +61,31 @@ public class RuleFactory {
             public String themes() {
                 return grConfig.getThemes();
             }
+
+            @Override
+            public String tableName() {
+                return tableName;
+            }
+
+            @Override
+            public String tablePrefixFilter() {
+                return grConfig.getTablePrefixFilter();
+            }
+
+            @Override
+            public String yamlName() {
+                return yamlName;
+            }
         };
     }
 
     /**
      *
-     * @param yamlName
+     * @param baseRule
      * @return
      */
-    public static PersistentRule buildPersistentRule(String yamlName){
-        GenerateRuleConfig grConfig = ConfigTools.getGenerateRuleConfig(yamlName);
-        IBaseRule baseRule = buildBaseRule(yamlName);
+    public static PersistentRule buildPersistentRule(IBaseRule baseRule){
+        GenerateRuleConfig grConfig = baseRule.grConfig();
         return new PersistentRule() {
             @Override
             public String poPath() {
@@ -138,13 +165,11 @@ public class RuleFactory {
 
     /**
      *
-     * @param yamlName
+     * @param baseRule
      * @return
      */
-    public static ServiceRule buildServiceRule(String yamlName) {
-        GenerateRuleConfig grConfig = ConfigTools.getGenerateRuleConfig(yamlName);
-        IBaseRule baseRule = buildBaseRule(yamlName);
-
+    public static ServiceRule buildServiceRule(IBaseRule baseRule) {
+        GenerateRuleConfig grConfig = baseRule.grConfig();
         return new ServiceRule() {
             @Override
             public String servicePath() {
@@ -164,10 +189,8 @@ public class RuleFactory {
         };
     }
 
-    public static WebRule buildWebRule(String yamlName) {
-        GenerateRuleConfig grConfig = ConfigTools.getGenerateRuleConfig(yamlName);
-        IBaseRule baseRule = buildBaseRule(yamlName);
-
+    public static WebRule buildWebRule(IBaseRule baseRule) {
+        GenerateRuleConfig grConfig = baseRule.grConfig();
         return new WebRule() {
             @Override
             public String pageListQOPath() {
@@ -200,6 +223,64 @@ public class RuleFactory {
             public String voSuffix() {
                 return StringUtils.isBlank(grConfig.getVoClassNameSuffix()) ? "" : grConfig.getVoClassNameSuffix();
             }
+
+            @Override
+            public String formPath() {
+                return StringUtils.isBlank(grConfig.getFormPath()) ? ""
+                        : replaceRootPath(grConfig.getFormPath(), baseRule);
+            }
+
+            @Override
+            public String formPackageSuffix() {
+                return getPackageSuffix(formPath(), baseRule);
+            }
+
+            @Override
+            public String formSuffix() {
+                return StringUtils.isBlank(grConfig.getFormClassNameSuffix()) ? "" : grConfig.getFormClassNameSuffix();
+            }
+
+            @Override
+            public String controllerPath() {
+                return StringUtils.isBlank(grConfig.getControllerPath()) ? ""
+                        : replaceRootPath(grConfig.getControllerPath(), baseRule);
+            }
+
+            @Override
+            public String controllerPackageSuffix() {
+                return getPackageSuffix(controllerPath(), baseRule);
+            }
+
+            @Override
+            public String controllerSuffix() {
+                return StringUtils.isBlank(grConfig.getControllerClassNameSuffix()) ? "" : grConfig.getControllerClassNameSuffix();
+            }
+        };
+    }
+
+    public static TestRule buildTestRule(IBaseRule baseRule){
+        GenerateRuleConfig grConfig = baseRule.grConfig();
+        return new TestRule() {
+            @Override
+            public String controllerTestPath() {
+                return StringUtils.isBlank(grConfig.getControllerTestPath()) ? ""
+                        : replaceRootPath(grConfig.getControllerTestPath(), baseRule).replaceFirst("main", "test");
+            }
+
+            @Override
+            public String controllerTestPackageSuffix() {
+                return getPackageSuffix(controllerTestPath().replaceFirst("test", "main"), baseRule).replaceFirst("main", "test");
+            }
+
+            @Override
+            public String controllerTestSuffix() {
+                return StringUtils.isBlank(grConfig.getControllerTestClassNameSuffix()) ? "" : grConfig.getControllerTestClassNameSuffix();
+            }
+
+            @Override
+            public String hostTest() {
+                return grConfig.getHostTest();
+            }
         };
     }
 
@@ -210,8 +291,10 @@ public class RuleFactory {
      * @return
      */
     private static String replaceRootPath(String absolutePath, IBaseRule baseRule) {
-        return absolutePath.replaceFirst(SYMBOL_ROOT_PATH, baseRule.generatorRootPath())
-                .replaceFirst(File.separator + File.separator, File.separator);
+        return absolutePath
+                .replaceFirst(SYMBOL_ROOT_PATH, baseRule.generatorRootPath())
+                .replaceFirst(SYMBOL_MODEL_PATH, ClassTools.getModelName(baseRule.tableName(), baseRule.tablePrefixFilter()))
+                .replaceAll("//", "/");
     }
 
     /**
