@@ -31,7 +31,7 @@ public class GenerateController {
     @Resource
     private TestThemesService testThemesService;
 
-    @RequestMapping("createPO")
+    @RequestMapping("createAll")
     public String createPO(String tableName) throws IOException, TemplateException {
         // dao
         poThemesService.createPOFile(tableName);

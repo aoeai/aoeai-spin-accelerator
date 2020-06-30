@@ -91,6 +91,19 @@ public class ClassTools {
      */
     public static String getModelName(String tableName, String filterPrefix) {
         String className = buildClassName(tableName, filterPrefix, "");
-        return className.toLowerCase();
+        int secondUpper = -1;
+        int upperIndex = 0;
+        for (char c : className.toCharArray()) {
+            if (upperIndex > 1) {
+                break;
+            }
+            if (Character.isUpperCase(c)) {
+                upperIndex++;
+            }
+            secondUpper++;
+        }
+        secondUpper = upperIndex == 1 ? ++secondUpper : secondUpper;
+        return className.substring(0, secondUpper).toLowerCase();
     }
+
 }

@@ -44,4 +44,10 @@ public interface IBaseRule {
      * @return
      */
     String yamlName();
+
+    /**
+     *
+     * @return 模块名称
+     */
+    String modelName();
 }

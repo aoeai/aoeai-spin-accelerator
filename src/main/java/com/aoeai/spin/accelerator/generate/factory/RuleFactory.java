@@ -76,6 +76,11 @@ public class RuleFactory {
             public String yamlName() {
                 return yamlName;
             }
+
+            @Override
+            public String modelName() {
+                return ClassTools.getModelName(tableName(), tablePrefixFilter());
+            }
         };
     }
 
@@ -126,7 +131,8 @@ public class RuleFactory {
 
             @Override
             public String mapperXmlPath() {
-                return grConfig.getMapperXmlPath();
+                return StringUtils.isBlank(grConfig.getMapperXmlPath()) ? ""
+                        : replaceRootPath(grConfig.getMapperXmlPath(), baseRule);
             }
 
             @Override
@@ -293,7 +299,7 @@ public class RuleFactory {
     private static String replaceRootPath(String absolutePath, IBaseRule baseRule) {
         return absolutePath
                 .replaceFirst(SYMBOL_ROOT_PATH, baseRule.generatorRootPath())
-                .replaceFirst(SYMBOL_MODEL_PATH, ClassTools.getModelName(baseRule.tableName(), baseRule.tablePrefixFilter()))
+                .replaceFirst(SYMBOL_MODEL_PATH, baseRule.modelName())
                 .replaceAll("//", "/");
     }
 

@@ -62,4 +62,4 @@ controllerTestPath: $ROOT_PATH/$MODEL_PATH/web/controller/
 # 控制器测试类名后缀；不填写默认为空；生成后类名后缀与填写的一致
 controllerTestClassNameSuffix: ControllerTest
 # 测试主机地址
-hostTest: http://localhost:9990/
+hostTest: http://localhost:9990/wazhima/

@@ -28,7 +28,7 @@ public class ${className} {
         </#list>
 
         String res = OkHttpTools.post(HOST + action, params);
-        log.debug(res);
+        log.info(res);
         checkSuccess(res);
     }
 
@@ -36,16 +36,16 @@ public class ${className} {
     public void existTest() throws IOException {
         String action = "exist";
         String res = OkHttpTools.get(HOST + action);
-        log.debug(res);
+        log.info(res);
         checkFail(res);
 
         res = OkHttpTools.get(HOST + action + "?id=1");
-        log.debug(res);
+        log.info(res);
         checkSuccess(res);
         checkDataTrue(res);
 
         res = OkHttpTools.get(HOST + action + "?id=" + Long.MAX_VALUE);
-        log.debug(res);
+        log.info(res);
         checkSuccess(res);
         checkDataFalse(res);
     }
@@ -59,7 +59,7 @@ public class ${className} {
         </#list>
 
         String res = OkHttpTools.post(HOST + action, params);
-        log.debug(res);
+        log.info(res);
         checkSuccess(res);
 
         params.put("tid", "1");
@@ -67,7 +67,7 @@ public class ${className} {
         ${param}
         </#list>
         res = OkHttpTools.post(HOST + action, params);
-        log.debug(res);
+        log.info(res);
         checkSuccess(res);
     }
 
@@ -80,7 +80,7 @@ public class ${className} {
         </#list>
 
         String res = OkHttpTools.post(HOST + action, params);
-        log.debug(res);
+        log.info(res);
         checkDataFalse(res);
 
         params.put("tid", "1");
@@ -88,7 +88,7 @@ public class ${className} {
         ${param}
         </#list>
         res = OkHttpTools.post(HOST + action, params);
-        log.debug(res);
+        log.info(res);
         checkSuccess(res);
     }
 
@@ -98,12 +98,12 @@ public class ${className} {
         Map<String, String> params = new HashMap<>();
 
         String res = OkHttpTools.post(HOST + action, params);
-        log.debug(res);
+        log.info(res);
         checkFail(res);
 
         params.put("id", "1");
         res = OkHttpTools.post(HOST + action, params);
-        log.debug(res);
+        log.info(res);
         checkDataTrue(res);
     }
 
@@ -111,11 +111,11 @@ public class ${className} {
     public void getByIdTest() throws IOException {
         String action = "getById";
         String res = OkHttpTools.get(HOST + action);
-        log.debug(res);
+        log.info(res);
         checkFail(res);
 
         res = OkHttpTools.get(HOST + action + "?id=1");
-        log.debug(res);
+        log.info(res);
         checkSuccess(res);
         checkDataIsNotNull(res);
     }
@@ -127,17 +127,17 @@ public class ${className} {
         params.put("pageIndex", "1");
 
         String res = OkHttpTools.post(HOST + action, params);
-        log.debug(res);
+        log.info(res);
         checkFail(res);
 
         params.put("pageSize", "10");
         res = OkHttpTools.post(HOST + action, params);
-        log.debug(res);
+        log.info(res);
         checkSuccess(res);
 
         params.put("tid", "1");
         res = OkHttpTools.post(HOST + action, params);
-        log.debug(res);
+        log.info(res);
         checkSuccess(res);
     }
 }

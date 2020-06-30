@@ -1,7 +1,7 @@
 package ${packageName};
 
 import com.alibaba.fastjson.JSON;
-import com.wazhima.pojo.response.Result;
+import com.wazhima.common.pojo.response.Result;
 import ${po.packageName}.${po.className};
 import ${serviceClass.packageName}.${serviceClass.className};
 import ${form.packageName}.${form.className};
@@ -33,7 +33,7 @@ public class ${className} {
     @PostMapping("/create")
     public Result create(@Validated ${form.className} form, BindingResult bindingResult) {
         long traceId = System.currentTimeMillis();
-            if (log.isDebugEnabled()) {
+        if (log.isDebugEnabled()) {
             log.debug("创建对象-接收数据 traceId={} form={}", traceId, JSON.toJSONString(form));
         }
 
