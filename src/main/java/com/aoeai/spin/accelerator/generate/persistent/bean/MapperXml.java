@@ -1,5 +1,6 @@
 package com.aoeai.spin.accelerator.generate.persistent.bean;
 
+import com.aoeai.spin.accelerator.generate.common.ITemplates;
 import lombok.Data;
 
 import java.io.File;
@@ -9,7 +10,7 @@ import java.io.File;
  * @date 2020/6/21
  */
 @Data
-public class MapperXml {
+public class MapperXml implements ITemplates {
 
     /**
      * xml文件

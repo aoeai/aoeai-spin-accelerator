@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <th:block th:replace="web/fragments/common :: header"></th:block>
+    <link href="../../prism/prism.css" rel="stylesheet" />
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -45,27 +46,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>生成模块</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th>PO</th>
-                                        <td class="project-actions text-right">
-                                            <button type="button" class="btn btn-outline-primary"
-                                                    th:onclick="create('po')">生成
-                                            </button>
-                                            <button type="button" class="btn btn-outline-info"
-                                                    th:onclick="preview('po')">预览
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <pre><code class="language-java">[[${writer}]]</code></pre>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -84,16 +65,12 @@
 <!-- ./wrapper -->
 
 <th:block th:replace="web/fragments/common :: script"></th:block>
+<script src="../../prism/prism.js"></script>
 
 <!-- page script -->
 <script>
     function create(type) {
         this.href='/create?tableName=[[${tableName}]]&theme=[[${theme.theme}]]' + "&type=" + type;
-        window.open(this.href, '_blank')
-    }
-
-    function preview(type) {
-        this.href='/preview?tableName=[[${tableName}]]&theme=[[${theme.theme}]]' + "&type=" + type;
         window.open(this.href, '_blank')
     }
 </script>
