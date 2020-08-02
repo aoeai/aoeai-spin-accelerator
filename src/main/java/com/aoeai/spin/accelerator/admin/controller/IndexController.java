@@ -27,11 +27,21 @@ public class IndexController {
      * @return 数据库列表
      */
     @GetMapping("/")
-    public String index(@RequestParam(required = false) String tableName, Model model){
+    public String index(@RequestParam(required = false) String tableName, @RequestParam(required = false) String theme, Model model){
         List tableList =  dbService.getTableList(tableName);
-        model.addAttribute("tableName", tableName);
         model.addAttribute("tableList", tableList);
         model.addAttribute("themeList", ThemeTypeEnum.values());
+
+        // 搜索条件
+        model.addAttribute("tableName", tableName);
+        model.addAttribute("themeHis", theme);
         return "web/index";
+    }
+
+    @GetMapping("/detail")
+    public String detail(String tableName, String theme, Model model) {
+        model.addAttribute("tableName", tableName);
+        model.addAttribute("theme", ThemeTypeEnum.toEnum(theme));
+        return "web/table-detail";
     }
 }

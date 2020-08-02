@@ -7,28 +7,6 @@
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
         <ul th:replace="web/fragments/common :: left-navbar-links"></ul>
-
-        <!-- SEARCH FORM -->
-        <form action="/" class="form-inline ml-3">
-            <div class="input-group input-group-sm">
-                <!-- select -->
-                <select id="themeId" name="theme" class="form-control">
-                    <option>选择模板</option>
-                    <option th:each="theme : ${themeList}"
-                            th:value="${theme.theme}"
-                            th:text="${theme.themeName}"
-                            th:selected="${themeHis == theme.theme}">
-                    </option>
-                </select>
-                &nbsp;&nbsp;
-                <input name="tableName" th:value="${tableName}" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
     </nav>
     <!-- /.navbar -->
 
@@ -42,7 +20,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+                        <h1>[[${theme.themeName}]] 💨 [[${tableName}]]</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -61,29 +39,23 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">数据库的表</h3>
+                                <h3 class="card-title">[[${tableName}]]</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>表名</th>
-                                        <th>表注释</th>
-                                        <th>Engine</th>
-                                        <th>创建时间</th>
+                                        <th>生成模块</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="table : ${tableList}">
-                                        <td><a href="#" th:onclick="detail([[${table.tableName}]])">[[${table.tableName}]]</a></td>
-                                        <td th:text="${table.tableComment}">-</td>
-                                        <td th:text="${table.engine}">-</td>
-                                        <td th:text="${table.createTime}">-</td>
+                                    <tr>
+                                        <th>PO</th>
                                         <td>
                                             <button type="button" class="btn btn-block btn-outline-primary"
-                                                    th:onclick="createPO([[${table.tableName}]])">生成
+                                                    th:onclick="create('po')">生成
                                             </button>
                                         </td>
                                     </tr>
@@ -108,32 +80,10 @@
 
 <th:block th:replace="web/fragments/common :: script"></th:block>
 
+<!-- page script -->
 <script>
-    <!-- page script -->
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
-        });
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
-
-    function createPO(tableName) {
-        this.href='/createAll?tableName=' + tableName;
-        window.open(this.href, '_blank')
-    }
-
-    function detail(tableName) {
-        var theme = $("#themeId").val();
-        this.href='/detail?tableName=' + tableName + "&theme=" + theme;
+    function create(type) {
+        this.href='/create?tableName=[[${tableName}]]&theme=[[${theme.theme}]]' + "&type=" + type;
         window.open(this.href, '_blank')
     }
 </script>

@@ -1,6 +1,8 @@
 package com.aoeai.spin.accelerator.themes.xy.channel;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
+import com.aoeai.spin.accelerator.generate.constant.JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.factory.RuleFactory;
 import com.aoeai.spin.accelerator.generate.persistent.bean.*;
 import com.aoeai.spin.accelerator.generate.persistent.rule.PersistentRule;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author aoe
@@ -33,7 +37,23 @@ public class XyChPOThemesService implements POThemesService {
     @Override
     public PO getPO(String tableName) {
         IBaseRule baseRule = RuleFactory.buildBaseRule(yamlName, tableName);
-        return persistentService.buildPO(tableName, baseRule, getPersistentRule(baseRule));
+        PO po = persistentService.buildPO(tableName, baseRule, getPersistentRule(baseRule));
+        // 用Long替换BigInteger
+        Set<String> importList = po.getImportList();
+        if (!CollectionUtil.isEmpty(importList)) {
+            importList.remove("java.math.BigInteger");
+        }
+        List<POField> fieldList = po.getFieldList();
+        if (!CollectionUtil.isEmpty(fieldList)) {
+            for (POField field : fieldList) {
+                if ("BigInteger".equals(field.getClassShortName())) {
+                    field.setClassShortName(JavaTypeEnum.LONG.shortName());
+                    field.setClassFullName(JavaTypeEnum.LONG.fullName());
+                }
+            }
+        }
+
+        return po;
     }
 
     @Override

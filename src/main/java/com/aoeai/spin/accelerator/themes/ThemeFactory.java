@@ -1,9 +1,9 @@
 package com.aoeai.spin.accelerator.themes;
 
 import com.aoeai.spin.accelerator.themes.constant.ThemeTypeEnum;
-import com.aoeai.spin.accelerator.themes.xy.channel.XyChPOThemesService;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +15,11 @@ import java.util.Map;
 @Component
 public class ThemeFactory {
 
+    @Resource
+    private POThemesService xyWzmPOThemesService;
+
+    @Resource
+    private POThemesService xyChPOThemesService;
 
     /**
      * 创建PO 主题服务
@@ -23,10 +28,9 @@ public class ThemeFactory {
      */
     public POThemesService buildPOThemesService(String theme) {
         Map<ThemeTypeEnum, POThemesService> map = new HashMap<>();
-//        map.put(ThemeTypeEnum.XY_WA_ZHI_MA, new XyWzmPOThemesService());
-        map.put(ThemeTypeEnum.XY_CHANNEL, new XyChPOThemesService());
-
-        return map.get(theme);
+        map.put(ThemeTypeEnum.XY_WA_ZHI_MA, xyWzmPOThemesService);
+        map.put(ThemeTypeEnum.XY_CHANNEL, xyChPOThemesService);
+        return map.get(ThemeTypeEnum.toEnum(theme));
     }
 
 }
