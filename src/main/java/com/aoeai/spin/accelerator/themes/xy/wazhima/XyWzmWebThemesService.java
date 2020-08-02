@@ -1,4 +1,4 @@
-package com.aoeai.spin.accelerator.themes.base;
+package com.aoeai.spin.accelerator.themes.xy.wazhima;
 
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.factory.RuleFactory;
@@ -23,7 +23,7 @@ import java.io.IOException;
  * @date 2020/6/22
  */
 @Service
-public class BaseWebThemesService implements WebThemesService {
+public class XyWzmWebThemesService implements WebThemesService {
 
     @Resource
     private WebService webService;
@@ -32,7 +32,7 @@ public class BaseWebThemesService implements WebThemesService {
 
     @PostConstruct
     private void init(){
-        yamlName = "/themes/base/config.yml";
+        yamlName = "/themes/xy/wazhima/config.yml";
     }
 
 

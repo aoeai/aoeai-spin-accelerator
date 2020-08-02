@@ -35,6 +35,15 @@
         <!-- SEARCH FORM -->
         <form action="/" class="form-inline ml-3">
             <div class="input-group input-group-sm">
+                <!-- select -->
+                <select name="theme" class="form-control">
+                    <option>选择模板</option>
+                    <option th:each="theme : ${themeList}"
+                            th:value="${theme.theme}"
+                            th:text="${theme.themeName}">
+                    </option>
+                </select>
+                &nbsp;&nbsp;
                 <input name="tableName" th:value="${tableName}" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
                     <button class="btn btn-navbar" type="submit">

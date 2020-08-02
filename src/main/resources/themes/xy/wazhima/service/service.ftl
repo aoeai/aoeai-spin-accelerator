@@ -94,7 +94,7 @@ public class ${className} {
 
     public PageList getPageList(${pageListQO.className} qo){
         QueryWrapper qw = buildPageListQueryWrapper(qo);
-        Page<${mapperService.po.className}> page = new Page<>(qo.getPageIndex(),qo.getPageSize());;
+        Page<${mapperService.po.className}> page = new Page<>(qo.getPageIndex(),qo.getPageSize());
         List<${mapperService.po.className}> records = ${mapperServiceVariable}.page(page, qw).getRecords();
 
         List<${vo.className}> voList = new ArrayList<>(records.size());
@@ -109,4 +109,7 @@ public class ${className} {
         pageList.setTotal(page.getTotal());
         return pageList;
     }
+
+// 手动编码开始
+
 }

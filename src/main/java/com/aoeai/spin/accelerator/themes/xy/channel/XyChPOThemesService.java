@@ -1,4 +1,4 @@
-package com.aoeai.spin.accelerator.themes.base;
+package com.aoeai.spin.accelerator.themes.xy.channel;
 
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.factory.RuleFactory;
@@ -18,7 +18,7 @@ import java.io.IOException;
  * @date 2020/6/7
  */
 @Service
-public class BasePOThemesService implements POThemesService {
+public class XyChPOThemesService implements POThemesService {
 
     @Resource
     private PersistentService persistentService;
@@ -27,7 +27,7 @@ public class BasePOThemesService implements POThemesService {
 
     @PostConstruct
     private void init(){
-        yamlName = "/themes/base/config.yml";
+        yamlName = "/themes/xy/channel/config.yml";
     }
 
     @Override

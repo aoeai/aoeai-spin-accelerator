@@ -8,20 +8,19 @@ import com.baomidou.mybatisplus.annotation.IdType;
 <#list importList as classFullName>
 import ${classFullName};
 </#list>
+import java.io.Serializable;
 
 /**
  * ${classComment}
  *
  */
 @Data
-@TableName("${table.name}")
-public class ${className} {
+public class ${className} implements Serializable {
 
 <#list fieldList as field>
 	/**
 	 * ${field.comment}
 	 */
-	<#if field.isPrimaryKey>@TableId(type = IdType.AUTO)</#if>
 	private ${field.classShortName} ${field.name};
 
 </#list>

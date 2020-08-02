@@ -1,6 +1,7 @@
 package com.aoeai.spin.accelerator.admin.controller;
 
 import com.aoeai.spin.accelerator.refining.db.service.DBService;
+import com.aoeai.spin.accelerator.themes.constant.ThemeTypeEnum;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ public class IndexController {
         List tableList =  dbService.getTableList(tableName);
         model.addAttribute("tableName", tableName);
         model.addAttribute("tableList", tableList);
+        model.addAttribute("themeList", ThemeTypeEnum.values());
         return "web/index";
     }
 }

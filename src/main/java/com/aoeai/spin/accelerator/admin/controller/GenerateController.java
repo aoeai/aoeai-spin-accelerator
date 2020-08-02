@@ -1,9 +1,6 @@
 package com.aoeai.spin.accelerator.admin.controller;
 
-import com.aoeai.spin.accelerator.themes.POThemesService;
-import com.aoeai.spin.accelerator.themes.ServiceThemesService;
-import com.aoeai.spin.accelerator.themes.TestThemesService;
-import com.aoeai.spin.accelerator.themes.WebThemesService;
+import com.aoeai.spin.accelerator.themes.*;
 import freemarker.template.TemplateException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +17,7 @@ import java.io.IOException;
 public class GenerateController {
 
     @Resource
-    private POThemesService poThemesService;
+    private ThemeFactory themeFactory;
 
     @Resource
     private ServiceThemesService serviceThemesService;
@@ -32,8 +29,9 @@ public class GenerateController {
     private TestThemesService testThemesService;
 
     @RequestMapping("createAll")
-    public String createPO(String tableName) throws IOException, TemplateException {
+    public String createPO(String tableName, String theme) throws IOException, TemplateException {
         // dao
+        POThemesService poThemesService = themeFactory.buildPOThemesService(theme);
         poThemesService.createPOFile(tableName);
         poThemesService.createMapperClassFile(tableName);
         poThemesService.createMapperXmlFile(tableName);
@@ -56,7 +54,8 @@ public class GenerateController {
     }
 
     @RequestMapping("create")
-    public String create(String tableName, String type) throws IOException, TemplateException {
+    public String create(String tableName, String type, String theme) throws IOException, TemplateException {
+        POThemesService poThemesService = themeFactory.buildPOThemesService(theme);
         switch (type) {
             // dao
             case "po":
