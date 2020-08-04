@@ -53,14 +53,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th>PO</th>
+                                    <tr th:each="type : ${typeList}">
+                                        <td th:text="${type}">-</td>
                                         <td class="project-actions text-right">
                                             <button type="button" class="btn btn-outline-primary"
-                                                    th:onclick="create('po')">生成
+                                                    th:onclick="create([[${type}]])">生成
                                             </button>
                                             <button type="button" class="btn btn-outline-info"
-                                                    th:onclick="preview('po')">预览
+                                                    th:onclick="preview([[${type}]])">预览
                                             </button>
                                         </td>
                                     </tr>

@@ -15,11 +15,11 @@ poClassNameSuffix: DO
 # 生成Java文件时需要过滤掉的表名前缀（,分割）；不填写默认为空
 tablePrefixFilter: tb
 # Mybatis Mapper 文件路径
-mapperPath: $ROOT_PATH/$MODEL_PATH/dao/mapper/
+mapperPath: $ROOT_PATH/service/admin/dao/
 # Mybatis Mapper类名后缀；不填写默认为空；生成后类名后缀与填写的一致
-mapperClassNameSuffix: Mapper
+mapperClassNameSuffix: DAO
 # Mybatis XML 文件路径
-mapperXmlPath: /Users/aoe/IdeaProjects/paqu/wazhima/src/main/resources/$MODEL_PATH/mapper/
+mapperXmlPath: /Users/aoe/IdeaProjects/paqu/api-channel/src/main/resources/mapper/
 # Mybatis Plus Service 类存储位置
 mapperServicePath: $ROOT_PATH/$MODEL_PATH/dao/service/
 # Mybatis Plus Service 类后缀

@@ -162,7 +162,7 @@ public class PersistentServiceImpl implements PersistentService {
             poField.setClassShortName(javaType.shortName());
             poField.setClassFullName(javaType.fullName());
             poField.setComment(column.getComment());
-            poField.setIsPrimaryKey(column.isPrimaryKey());
+            poField.setIsPrimaryKey(column.getIsPrimaryKey());
 
             result.add(poField);
         }

@@ -21,7 +21,11 @@ public class ${className} {
 	/**
 	 * ${field.comment}
 	 */
-	<#if field.isPrimaryKey>@TableId(type = IdType.AUTO)<#else></#if>
+	<#if field.isPrimaryKey>
+	@TableId(type = IdType.AUTO)
+	<#else>
+		<#lt><#rt>
+	</#if>
 	private ${field.classShortName} ${field.name};
 
 </#list>

@@ -94,7 +94,7 @@ public class DBServiceImpl implements DBService {
             column.setName(vo.getColumnName());
             column.setComment(vo.getColumnComment());
             column.setType(vo.getDataType());
-            column.setPrimaryKey("PRI".equals(vo.getColumnKey()));
+            column.setIsPrimaryKey("PRI".equals(vo.getColumnKey()));
             column.setLength(vo.getIntegersLength());
 
             columnList.add(column);

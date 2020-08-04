@@ -11,7 +11,7 @@ import java.util.Set;
  * @date 2020/6/21
  */
 @Data
-public class BaseClassProperty implements ITemplates {
+public class BaseClassProperty implements IGenerateProperty {
 
     /**
      * 包名

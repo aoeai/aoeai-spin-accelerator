@@ -62,7 +62,7 @@ public class MySqlDBTableServiceImpl implements DBTableService {
                 Column column = new Column();
                 column.setName(resultSet.getString("column_name"));
                 column.setType(resultSet.getString("column_type"));
-                column.setPrimaryKey(resultSet.getString("column_key").equals("PRI"));
+                column.setIsPrimaryKey(resultSet.getString("column_key").equals("PRI"));
                 column.setNullable("YES".equals(resultSet.getString("is_nullable")));
                 column.setComment(resultSet.getString("column_comment"));
                 table.getColumns().add(column);

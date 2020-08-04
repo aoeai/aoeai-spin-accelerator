@@ -1,7 +1,7 @@
 package com.aoeai.spin.accelerator.admin.controller;
 
 import com.aoeai.spin.accelerator.admin.service.FreemarkerService;
-import com.aoeai.spin.accelerator.generate.common.ITemplates;
+import com.aoeai.spin.accelerator.generate.common.IGenerateProperty;
 import com.aoeai.spin.accelerator.refining.db.service.DBService;
 import com.aoeai.spin.accelerator.themes.POThemesService;
 import com.aoeai.spin.accelerator.themes.ThemeFactory;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,8 +62,22 @@ public class IndexController {
      */
     @GetMapping("/detail")
     public String detail(String tableName, String theme, Model model) {
+        List<String> typeList = new ArrayList<>();
+        typeList.add("po");
+        typeList.add("mapperClass");
+        typeList.add("mapperXml");
+        typeList.add("mapperService");
+        typeList.add("mapperServiceImpl");
+        typeList.add("service");
+        typeList.add("pageListQO");
+        typeList.add("vo");
+        typeList.add("form");
+        typeList.add("controller");
+
+        model.addAttribute("typeList", typeList);
         model.addAttribute("tableName", tableName);
         model.addAttribute("theme", ThemeTypeEnum.toEnum(theme));
+
         return "web/table-detail";
     }
 
@@ -79,7 +94,7 @@ public class IndexController {
         model.addAttribute("tableName", tableName);
         model.addAttribute("theme", ThemeTypeEnum.toEnum(theme));
 
-        ITemplates content = null;
+        IGenerateProperty content = null;
         POThemesService poThemesService = themeFactory.buildPOThemesService(theme);
         switch (type) {
             // dao
@@ -98,7 +113,6 @@ public class IndexController {
             case "mapperServiceImpl":
                 content = poThemesService.getMapperServiceImpl(tableName);
                 break;
-
             /*// service
             case "service":
                 serviceThemesService.createServiceClassFile(tableName);
@@ -128,6 +142,7 @@ public class IndexController {
         StringWriter writer = new StringWriter();
         template.process(content, writer);
         model.addAttribute("writer", writer.toString());
+        model.addAttribute("file", content.getFile());
 
         return "web/preview";
     }

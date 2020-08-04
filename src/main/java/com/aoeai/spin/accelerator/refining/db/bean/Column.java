@@ -26,7 +26,7 @@ public class Column {
     /**
      * 是否主键 true:是
      */
-    private boolean isPrimaryKey;
+    private Boolean isPrimaryKey;
 
     /**
      * 允许为空 true:是

@@ -107,7 +107,7 @@ public class WebServiceImpl implements WebService {
         Set<String> importList =  buildImportList(table.getColumns());
         Map<String, List<String>> checkTagListMap = new HashMap<>();
         for (Column column : table.getColumns()) {
-            if (column.isPrimaryKey()) {
+            if (column.getIsPrimaryKey()) {
                 checkTagListMap.put(column.getName(), Collections.EMPTY_LIST);
                 continue;
             }
