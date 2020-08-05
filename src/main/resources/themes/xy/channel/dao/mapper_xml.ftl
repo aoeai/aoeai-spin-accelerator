@@ -4,49 +4,108 @@
 
     <!-- 插入数据 -->
     <insert id="insert" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO ${mapperClass.po.table.name}
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-        <#list mapperClass.po.table.columns as column>
-            <if test="${column.name} != null">
-                ${column.name},
-            </if>
-		</#list>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-        <#list mapperClass.po.table.columns as column>
-            <if test="${column.name} != null">
-                #${r'{'}${column.name}},
-            </if>
-		</#list>
-        </trim>
+        <include refid="insertSQL" />
     </insert>
 
-    <!-- 更新数据 -->
-    <update id="update" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}">
-        UPDATE ${mapperClass.po.table.name}
-        <set>
+    <!-- 插入批量数据 -->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ${mapperClass.po.table.name}
+            <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list mapperClass.po.table.columns as column>
-                <#if column.isPrimaryKey == false>
+            ${column.name},
+		    </#list>
+            </trim>
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+            <#list mapperClass.po.table.columns as column>
+            #${r'{'}item.${column.name}},
+		    </#list>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 插入或更新数据 -->
+    <insert id="insertOrUpdate" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}" useGeneratedKeys="true" keyProperty="id">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            SELECT COUNT(*)
+            FROM ${mapperClass.po.table.name}
+            <#list mapperClass.po.table.columns as column>
+                <#if column.isPrimaryKey == true>
+            WHERE ${column.name} = #${r'{'}${column.name}}
+                </#if>
+            </#list>
+        </selectKey>
+        <if test="count == 0">
+            <include refid="insertSQL" />
+        </if>
+        <if test="count > 0">
+            UPDATE ${mapperClass.po.table.name}
+            <set>
+            <#list mapperClass.po.table.columns as column>
+            <#if column.isPrimaryKey == false && column.name != 'createTime'>
             <if test="${column.name} != null">
                 ${column.name} = #${r'{'}${column.name}},
             </if>
-                </#if>
+            </#if>
             </#list>
         </set>
-        <where>
-        <#list mapperClass.po.table.columns as column>
-        <#if column.name == "version">
+            <#list mapperClass.po.table.columns as column>
+                <#if column.isPrimaryKey == true>
+            WHERE ${column.name} = #${r'{'}${column.name}}
+                </#if>
+            </#list>
+        </if>
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update">
+        UPDATE ${mapperClass.po.table.name}
+        <set>
+            <#list mapperClass.po.table.columns as column>
+            <#if column.isPrimaryKey == false && column.name != 'createTime'>
             <if test="${column.name} != null">
-                AND ${column.name} = #${r'{'}${column.name}} - 1
+                ${column.name} = #${r'{'}uw.${column.name}},
             </if>
-        <#else>
-            <if test="${column.name} != null">
-                AND ${column.name} = #${r'{'}${column.name}}
-            </if>
-        </#if>
-        </#list>
-        </where>
+            </#if>
+            </#list>
+        </set>
+        <include refid="queryCondition" />
     </update>
+
+    <!-- 查询一条记录 -->
+    <select id="selectOne" resultType="${mapperClass.po.packageName}.${mapperClass.po.className}">
+        SELECT
+        <include refid="ALL_COLUMNS" />
+        FROM ${mapperClass.po.table.name}
+        <include refid="queryCondition" />
+        LIMIT 1
+    </select>
+
+    <!-- 查询所有记录 -->
+    <select id="selectList" resultType="${mapperClass.po.packageName}.${mapperClass.po.className}">
+        SELECT
+        <include refid="ALL_COLUMNS" />
+        FROM ${mapperClass.po.table.name}
+        <include refid="queryCondition" />
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="selectCount" resultType="int">
+        SELECT COUNT(*)
+        FROM ${mapperClass.po.table.name}
+        <include refid="queryCondition" />
+    </select>
+
+    <!-- 查询列表(分页) -->
+    <select id="selectPageList" resultType="${mapperClass.po.packageName}.${mapperClass.po.className}">
+        SELECT
+        <include refid="ALL_COLUMNS" />
+        FROM ${mapperClass.po.table.name}
+        <include refid="queryCondition" />
+        ORDER BY createTime DESC
+        LIMIT #${r'{'}pageCursor} , #${r'{'}pageSize}
+    </select>
 
     <!-- 所有列 -->
     <sql id="ALL_COLUMNS">
@@ -55,46 +114,36 @@
         </#list>
     </sql>
 
-    <!-- 根据相等条件查询数据 -->
-    <select id="selectByEQ" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}">
-        SELECT
-        <include refid="ALL_COLUMNS" />
-        FROM ${mapperClass.po.table.name}
+    <!-- 查询条件 -->
+    <sql id="queryCondition">
         <where>
-        <#list mapperClass.po.table.columns as column>
-            <if test="${column.name} != null">
-                AND ${column.name} = #${r'{'}${column.name}}
-            </if>
-	    </#list>
-        </where>
-    </select>
-
-    <!-- 分页搜索条件 -->
-    <sql id="selectPageListWhere">
-        <where>
-        <#list mapperClass.po.table.columns as column>
-            <if test="${column.name} != null">
-                AND ${column.name} = #${r'{'}${column.name}}
-            </if>
-        </#list>
+            <foreach collection="conditionList" index="index" item="item">
+                <choose>
+                    <when test="item.condition == 'AND'">
+                        ${r'AND ${item.column} = #{item.value}'}
+                    </when>
+                </choose>
+            </foreach>
         </where>
     </sql>
 
-    <!-- 查询列表总数 -->
-    <select id="selectCountPageList" resultType="int">
-        SELECT COUNT(1)
-        FROM ${mapperClass.po.table.name}
-        <include refid="selectPageListWhere" />
-    </select>
-
-    <!-- 查询列表(分页) -->
-    <select id="selectPageList" resultType="${mapperClass.po.packageName}.${mapperClass.po.className}">
-        SELECT
-        <include refid="ALL_COLUMNS" />
-        FROM ${mapperClass.po.table.name}
-        <include refid="selectPageListWhere" />
-        ORDER BY createTime DESC
-        LIMIT #${r'{'}pageCursor} , #${r'{'}pageSize}
-    </select>
+    <!-- 插入语句 -->
+    <sql id="insertSQL">
+        INSERT INTO ${mapperClass.po.table.name}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <#list mapperClass.po.table.columns as column>
+            <if test="${column.name} != null">
+                ${column.name},
+            </if>
+		</#list>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+        <#list mapperClass.po.table.columns as column>
+            <if test="${column.name} != null">
+                #${r'{'}${column.name}},
+            </if>
+		</#list>
+        </trim>
+    </sql>
 
 </mapper>

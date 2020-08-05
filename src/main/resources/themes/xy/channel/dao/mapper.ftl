@@ -6,6 +6,8 @@ import com.starbuds.server.common.pojo.qw.QueryWrapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  *  ${classComment}
  *
@@ -15,24 +17,39 @@ import org.springframework.stereotype.Repository;
 public interface ${className} {
 
     /**
-	 * 新增
+	 * 插入数据
 	 */
 	int insert(${po.className} po);
 
     /**
+	 * 插入批量数据
+	 */
+	int insertBatch(List<${po.className}> list);
+
+    /**
+	 * 插入或更新数据
+	 */
+	int insertOrUpdate(${po.className} po);
+
+    /**
 	 * 更新数据
 	 */
-	int update(${po.className} po);
+	int update(UpdateWrapper uw);
 
     /**
-	 * 根据相等条件查询数据
+	 * 查询一条记录
 	 */
-	${po.className} selectByEQ(Long id);
+	${po.className} selectOne(QueryWrapper qw);
 
     /**
-    * 查询列表总数
-    */
-    int selectCountPageList(QueryWrapper qw);
+	 * 查询所有记录
+	 */
+	${po.className} selectList(QueryWrapper qw);
+
+    /**
+	 * 查询总数
+	 */
+	int selectCount(QueryWrapper qw);
 
 	/**
 	 * 查询列表(分页)
