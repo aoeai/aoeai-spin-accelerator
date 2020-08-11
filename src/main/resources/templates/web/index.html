@@ -85,7 +85,7 @@
                                         <td th:text="${table.createTime}">-</td>
                                         <td>
                                             <button type="button" class="btn btn-block btn-outline-primary"
-                                                    th:onclick="createPO([[${table.tableName}]])">生成
+                                                    th:onclick="createAll([[${table.tableName}]])">生成
                                             </button>
                                         </td>
                                     </tr>
@@ -128,8 +128,9 @@
         });
     });
 
-    function createPO(tableName) {
-        this.href='/createAll?tableName=' + tableName;
+    function createAll(tableName) {
+        var theme = $("#themeId").val();
+        this.href='/createAll?tableName=' + tableName + "&theme=" + theme;
         window.open(this.href, '_blank')
     }
 

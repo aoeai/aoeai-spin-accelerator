@@ -10,6 +10,7 @@ import com.aoeai.spin.accelerator.refining.db.mapper.DBMapper;
 import com.aoeai.spin.accelerator.refining.db.mapper.MySQLMapper;
 import com.aoeai.spin.accelerator.refining.db.po.ColumnPO;
 import com.aoeai.spin.accelerator.refining.db.po.TablePO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ import java.util.List;
  * @date 2020/6/7
  */
 @Service
+@Slf4j
 public class DBServiceImpl implements DBService {
 
     private DBMapper dbMapper;
@@ -65,7 +67,12 @@ public class DBServiceImpl implements DBService {
             }else if (MySQLType2JavaTypeEnum.DOUBLE.dbType().equals(dataType)){
                 dbMaxLengthStr = columnType.substring(7, columnType.indexOf(","));
             }else {
-                dbMaxLengthStr = columnType.substring(columnType.indexOf("(") + 1, columnType.indexOf(")"));
+                if (columnType.contains("(")) {
+                    dbMaxLengthStr = columnType.substring(columnType.indexOf("(") + 1, columnType.indexOf(")"));
+                } else {
+                    dbMaxLengthStr = "1000";
+                    log.warn("{} 数据中没有设置长度，验证时使用最大长度 {}", columnType, dbMaxLengthStr);
+                }
             }
             Integer dbMaxLength = Integer.parseInt(dbMaxLengthStr);
             vo.setDbMaxLength(dbMaxLength);

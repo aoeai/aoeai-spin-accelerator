@@ -3,8 +3,7 @@ package com.aoeai.spin.accelerator.admin.controller;
 import com.aoeai.spin.accelerator.admin.service.FreemarkerService;
 import com.aoeai.spin.accelerator.generate.common.IGenerateProperty;
 import com.aoeai.spin.accelerator.refining.db.service.DBService;
-import com.aoeai.spin.accelerator.themes.POThemesService;
-import com.aoeai.spin.accelerator.themes.ThemeFactory;
+import com.aoeai.spin.accelerator.themes.*;
 import com.aoeai.spin.accelerator.themes.constant.ThemeTypeEnum;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -96,6 +95,9 @@ public class IndexController {
 
         IGenerateProperty content = null;
         POThemesService poThemesService = themeFactory.buildPOThemesService(theme);
+        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService(theme);
+        WebThemesService webThemesService = themeFactory.buildWebThemesService(theme);
+        TestThemesService testThemesService = themeFactory.buildTestThemesService(theme);
         switch (type) {
             // dao
             case "po":
@@ -113,7 +115,7 @@ public class IndexController {
             case "mapperServiceImpl":
                 content = poThemesService.getMapperServiceImpl(tableName);
                 break;
-            /*// service
+            // service
             case "service":
                 serviceThemesService.createServiceClassFile(tableName);
                 break;
@@ -135,7 +137,7 @@ public class IndexController {
             // Test
             case "controllerTest":
                 testThemesService.createControllerTestFile(tableName);
-                break;*/
+                break;
         }
 
         Template template = freemarkerService.getTemplate(content.getTemplates());

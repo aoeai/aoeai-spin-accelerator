@@ -5,7 +5,7 @@ rootPackageName: com.wazhima
 # 生成文件的根路径
 generatorRootPath: /Users/aoe/IdeaProjects/paqu/wazhima/src/main/java/com/wazhima/
 # 主题文件夹名称（例如：resources/themes/base 配置为 themes: base)
-themes: xy/channel
+themes: xy/wazhima
 
 # IPersistentRule （生成时的）Persistent规则
 # PO(持久对象)类存储位置

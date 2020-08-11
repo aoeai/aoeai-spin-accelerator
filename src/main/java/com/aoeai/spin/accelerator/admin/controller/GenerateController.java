@@ -19,15 +19,6 @@ public class GenerateController {
     @Resource
     private ThemeFactory themeFactory;
 
-    @Resource
-    private ServiceThemesService serviceThemesService;
-
-    @Resource
-    private WebThemesService webThemesService;
-
-    @Resource
-    private TestThemesService testThemesService;
-
     @RequestMapping("createAll")
     public String createPO(String tableName, String theme) throws IOException, TemplateException {
         // dao
@@ -39,15 +30,18 @@ public class GenerateController {
         poThemesService.createMapperServiceImplFile(tableName);
 
         // service
+        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService(theme);
         serviceThemesService.createServiceClassFile(tableName);
 
         // web
+        WebThemesService webThemesService = themeFactory.buildWebThemesService(theme);
         webThemesService.createPageListQOFile(tableName);
         webThemesService.createVOFile(tableName);
         webThemesService.createFormFile(tableName);
         webThemesService.createControllerFile(tableName);
 
         // Test
+        TestThemesService testThemesService = themeFactory.buildTestThemesService(theme);
         testThemesService.createControllerTestFile(tableName);
 
         return "ok";
@@ -56,6 +50,10 @@ public class GenerateController {
     @RequestMapping("create")
     public String create(String tableName, String type, String theme) throws IOException, TemplateException {
         POThemesService poThemesService = themeFactory.buildPOThemesService(theme);
+        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService(theme);
+        WebThemesService webThemesService = themeFactory.buildWebThemesService(theme);
+        TestThemesService testThemesService = themeFactory.buildTestThemesService(theme);
+
         switch (type) {
             // dao
             case "po":
