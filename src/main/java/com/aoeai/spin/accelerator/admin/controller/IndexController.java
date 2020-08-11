@@ -32,7 +32,7 @@ public class IndexController {
     private FreemarkerService freemarkerService;
 
     @Resource
-    private ThemeFactory themeFactory;
+    private ThemeTools themeTools;
 
     /**
      * 首页
@@ -67,6 +67,7 @@ public class IndexController {
         typeList.add("mapperXml");
         typeList.add("mapperService");
         typeList.add("mapperServiceImpl");
+        typeList.add("iservice");
         typeList.add("service");
         typeList.add("pageListQO");
         typeList.add("vo");
@@ -94,10 +95,13 @@ public class IndexController {
         model.addAttribute("theme", ThemeTypeEnum.toEnum(theme));
 
         IGenerateProperty content = null;
-        POThemesService poThemesService = themeFactory.buildPOThemesService(theme);
-        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService(theme);
-        WebThemesService webThemesService = themeFactory.buildWebThemesService(theme);
-        TestThemesService testThemesService = themeFactory.buildTestThemesService(theme);
+        ThemeFactory themeFactory = themeTools.themeFactory(theme);
+        POThemesService poThemesService = themeFactory.buildPOThemesService();
+        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService();
+        ServiceThemesService iServiceThemesService = themeFactory.buildIServiceThemesService();
+        WebThemesService webThemesService = themeFactory.buildWebThemesService();
+        TestThemesService testThemesService = themeFactory.buildTestThemesService();
+
         switch (type) {
             // dao
             case "po":
@@ -117,26 +121,31 @@ public class IndexController {
                 break;
             // service
             case "service":
-                serviceThemesService.createServiceClassFile(tableName);
+                content = serviceThemesService.getServiceClass(tableName);
+                break;
+            case "iservice":
+                if (iServiceThemesService != null) {
+                    content = iServiceThemesService.getServiceClass(tableName);
+                }
                 break;
 
             // web
             case "pageListQO":
-                webThemesService.createPageListQOFile(tableName);
+                content = webThemesService.getPageListQO(tableName);
                 break;
             case "vo":
-                webThemesService.createVOFile(tableName);
+                content = webThemesService.getVO(tableName);
                 break;
             case "form":
-                webThemesService.createFormFile(tableName);
+                content = webThemesService.getForm(tableName);
                 break;
             case "controller":
-                webThemesService.createControllerFile(tableName);
+                content = webThemesService.getController(tableName);
                 break;
 
             // Test
             case "controllerTest":
-                testThemesService.createControllerTestFile(tableName);
+                content = testThemesService.getControllerTest(tableName);
                 break;
         }
 

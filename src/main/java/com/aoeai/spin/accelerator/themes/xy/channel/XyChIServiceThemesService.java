@@ -41,7 +41,7 @@ public class XyChIServiceThemesService implements ServiceThemesService {
         WebRule webRule = RuleFactory.buildWebRule(baseRule);
         ServiceClass serviceClass = serviceClassService.buildServiceClass(tableName, baseRule, persistentRule, serviceRule, webRule);
         // 自定义模板
-        serviceClass.setTemplates("channel/service/i_service.ftl");
+        serviceClass.setTemplates("xy/channel/service/i_service.ftl");
         return serviceClass;
     }
 

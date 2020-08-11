@@ -17,12 +17,13 @@ import java.io.IOException;
 public class GenerateController {
 
     @Resource
-    private ThemeFactory themeFactory;
+    private ThemeTools themeTools;
 
     @RequestMapping("createAll")
     public String createPO(String tableName, String theme) throws IOException, TemplateException {
+        ThemeFactory themeFactory = themeTools.themeFactory(theme);
         // dao
-        POThemesService poThemesService = themeFactory.buildPOThemesService(theme);
+        POThemesService poThemesService = themeFactory.buildPOThemesService();
         poThemesService.createPOFile(tableName);
         poThemesService.createMapperClassFile(tableName);
         poThemesService.createMapperXmlFile(tableName);
@@ -30,18 +31,18 @@ public class GenerateController {
         poThemesService.createMapperServiceImplFile(tableName);
 
         // service
-        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService(theme);
+        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService();
         serviceThemesService.createServiceClassFile(tableName);
 
         // web
-        WebThemesService webThemesService = themeFactory.buildWebThemesService(theme);
+        WebThemesService webThemesService = themeFactory.buildWebThemesService();
         webThemesService.createPageListQOFile(tableName);
         webThemesService.createVOFile(tableName);
         webThemesService.createFormFile(tableName);
         webThemesService.createControllerFile(tableName);
 
         // Test
-        TestThemesService testThemesService = themeFactory.buildTestThemesService(theme);
+        TestThemesService testThemesService = themeFactory.buildTestThemesService();
         testThemesService.createControllerTestFile(tableName);
 
         return "ok";
@@ -49,10 +50,12 @@ public class GenerateController {
 
     @RequestMapping("create")
     public String create(String tableName, String type, String theme) throws IOException, TemplateException {
-        POThemesService poThemesService = themeFactory.buildPOThemesService(theme);
-        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService(theme);
-        WebThemesService webThemesService = themeFactory.buildWebThemesService(theme);
-        TestThemesService testThemesService = themeFactory.buildTestThemesService(theme);
+        ThemeFactory themeFactory = themeTools.themeFactory(theme);
+        POThemesService poThemesService = themeFactory.buildPOThemesService();
+        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService();
+        ServiceThemesService iServiceThemesService = themeFactory.buildIServiceThemesService();
+        WebThemesService webThemesService = themeFactory.buildWebThemesService();
+        TestThemesService testThemesService = themeFactory.buildTestThemesService();
 
         switch (type) {
             // dao
@@ -75,6 +78,11 @@ public class GenerateController {
             // service
             case "service":
                 serviceThemesService.createServiceClassFile(tableName);
+                break;
+            case "iservice":
+                if (iServiceThemesService != null) {
+                    serviceThemesService.createServiceClassFile(tableName);
+                }
                 break;
 
             // web
