@@ -31,4 +31,9 @@ public class Controller extends BaseClassProperty {
 
     private PageListQO pageListQO;
 
+    /**
+     * 接口类（不需要时为null）
+     */
+    // 非必须
+    private Controller interfaceClass;
 }

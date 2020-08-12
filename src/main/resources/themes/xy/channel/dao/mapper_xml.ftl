@@ -3,12 +3,12 @@
 <mapper namespace="${mapperClass.packageName}.${mapperClass.className}">
 
     <!-- 插入数据 -->
-    <insert id="insert" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}">
         <include refid="insertSQL" />
     </insert>
 
     <!-- 插入批量数据 -->
-    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertBatch">
         INSERT INTO ${mapperClass.po.table.name}
             <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list mapperClass.po.table.columns as column>
@@ -26,7 +26,7 @@
     </insert>
 
     <!-- 插入或更新数据 -->
-    <insert id="insertOrUpdate" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertOrUpdate" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}">
         <selectKey keyProperty="count" resultType="int" order="BEFORE">
             SELECT COUNT(*)
             FROM ${mapperClass.po.table.name}

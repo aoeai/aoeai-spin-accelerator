@@ -54,12 +54,12 @@ formClassNameSuffix: Form
 # 控制器类存储位置
 controllerPath: $ROOT_PATH/$MODEL_PATH/web/controller/
 # 控制器类名后缀；不填写默认为空；生成后类名后缀与填写的一致
-controllerClassNameSuffix: Controller
+controllerClassNameSuffix: Facade
 
 # 单元测试
 # 控制器测试类存储位置
-controllerTestPath: $ROOT_PATH/$MODEL_PATH/web/controller/
+controllerTestPath: /Users/aoe/IdeaProjects/paqu/api-app/src/test/java/com/starbuds/apichannel/
 # 控制器测试类名后缀；不填写默认为空；生成后类名后缀与填写的一致
-controllerTestClassNameSuffix: ControllerTest
+controllerTestClassNameSuffix: FacadeTest
 # 测试主机地址
 hostTest: http://localhost:9990/wazhima/

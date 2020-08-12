@@ -18,6 +18,18 @@ public class XyChThemeFactory implements ThemeFactory {
     @Resource
     private ServiceThemesService xyChIServiceThemesService;
 
+    @Resource
+    private ServiceThemesService xyChServiceThemesService;
+
+    @Resource
+    private WebThemesService xyChWebThemesService;
+
+    @Resource
+    private WebThemesService xyChIWebThemesService;
+
+    @Resource
+    private TestThemesService xyChTestThemesService;
+
     @Override
     public POThemesService buildPOThemesService() {
         return xyChPOThemesService;
@@ -30,16 +42,21 @@ public class XyChThemeFactory implements ThemeFactory {
 
     @Override
     public ServiceThemesService buildServiceThemesService() {
-        return null;
+        return xyChServiceThemesService;
+    }
+
+    @Override
+    public WebThemesService buildIWebThemesService() {
+        return xyChIWebThemesService;
     }
 
     @Override
     public WebThemesService buildWebThemesService() {
-        return null;
+        return xyChWebThemesService;
     }
 
     @Override
     public TestThemesService buildTestThemesService() {
-        return null;
+        return xyChTestThemesService;
     }
 }

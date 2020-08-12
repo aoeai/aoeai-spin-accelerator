@@ -1,7 +1,8 @@
 package ${packageName};
 
 import ${po.packageName}.${po.className};
-import com.starbuds.server.common.pojo.qw.QueryWrapper;
+import com.starbuds.server.common.pojo.daoplus.QueryWrapper;
+import com.starbuds.server.common.pojo.daoplus.UpdateWrapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

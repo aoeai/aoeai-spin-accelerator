@@ -1,114 +1,64 @@
 package ${packageName};
 
 import ${mapperService.po.packageName}.${mapperService.po.className};
-import ${mapperService.packageName}.${mapperService.className};
 import ${pageListQO.packageName}.${pageListQO.className};
 import ${vo.packageName}.${vo.className};
-import com.wazhima.common.constant.DB;
-import com.wazhima.common.response.page.PageList;
 
-import lombok.extern.slf4j.Slf4j;
-import javax.annotation.Resource;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
-import static com.wazhima.common.utils.DaoUtil.setDefaultValue;
-import static com.wazhima.common.utils.PageUtil.buildPageListQueryWrapper;
+import com.starbuds.server.common.pojo.daoplus.UpdateWrapper;
 
 /**
 * ${classComment}
 */
-@Service
-@Slf4j
 public interface ${className} {
 
-    @Resource
-    private ${mapperService.className} ${mapperServiceVariable};
+    /**
+	 * 插入数据
+	 */
+    boolean create(${mapperService.po.className} po);
 
-    public boolean create(${mapperService.po.className} po) {
-        po.setTid(null);
-        po.setCreateTime(System.currentTimeMillis());
-        po.setUpdateTime(po.getCreateTime());
-        po.setIsDelete(DB.IS_DELETE_NO);
-        po = setDefaultValue(po);
-        return ${mapperServiceVariable}.save(po);
-    }
+    /**
+	 * 插入批量数据
+	 */
+	boolean createBatch(List<${mapperService.po.className}> list);
 
-    public boolean createOrUpdate(${mapperService.po.className} po){
-        if (po == null) {
-            return false;
-        }
-        if (exist(po.getTid())) {
-            return updateById(po);
-        }
+    /**
+	 * 插入或更新数据
+	 */
+    boolean createOrUpdate(${mapperService.po.className} po);
 
-        return create(po);
-    }
+    /**
+	 * 更新数据
+	 */
+    boolean update(UpdateWrapper uw);
 
-    public boolean updateById(${mapperService.po.className} po) {
-        UpdateWrapper wapper = new UpdateWrapper();
-        wapper.eq("tid", po.getTid());
+    /**
+	 * 根据id查询
+	 */
+    ${po.className} getById(Long id);
 
-        po.setUpdateTime(System.currentTimeMillis());
+    /**
+	 * 根据id查询
+	 */
+    ${vo.className} getVOById(Long id);
 
-        return ${mapperServiceVariable}.update(po, wapper);
-     }
+    /**
+	 * 判断是否存在
+     * @param id 主键
+     * @return true:存在
+	 */
+    boolean exist(Long id);
 
-    public boolean delete(BigInteger id) {
-        ${mapperService.po.className} po = new ${mapperService.po.className}();
-        po.setTid(id);
-        po.setIsDelete(DB.IS_DELETE_YES);
-        po.setUpdateTime(System.currentTimeMillis());
+    /**
+	 * 分页查询
+	 */
+    PageList<${po.className}> getPageList(${pageListQO.className} qo);
 
-        return updateById(po);
-    }
-
-    public ${vo.className} getById(BigInteger id) {
-        ${mapperService.po.className} po = ${mapperServiceVariable}.getById(id);
-        if (po == null) {
-            return null;
-        }
-
-        ${vo.className} vo = new ${vo.className}();
-        BeanUtils.copyProperties(po, vo);
-        return vo;
-    }
-
-    public boolean exist(BigInteger id) {
-        if (id == null) {
-            return false;
-        }
-        QueryWrapper qw = new QueryWrapper();
-        qw.eq("tid", id);
-        qw.eq("isDelete", DB.IS_DELETE_NO);
-
-        return ${mapperServiceVariable}.count(qw) > 0;
-    }
-
-    public PageList getPageList(${pageListQO.className} qo){
-        QueryWrapper qw = buildPageListQueryWrapper(qo);
-        Page<${mapperService.po.className}> page = new Page<>(qo.getPageIndex(),qo.getPageSize());
-        List<${mapperService.po.className}> records = ${mapperServiceVariable}.page(page, qw).getRecords();
-
-        List<${vo.className}> voList = new ArrayList<>(records.size());
-        for (${mapperService.po.className} po : records) {
-            ${vo.className} vo = new ${vo.className}();
-            BeanUtils.copyProperties(po, vo);
-            voList.add(vo);
-        }
-
-        PageList pageList = new PageList(qo);
-        pageList.setList(voList);
-        pageList.setTotal(page.getTotal());
-        return pageList;
-    }
+    /**
+	 * 分页查询
+	 */
+    PageList<${vo.className}> getVOPageList(${pageListQO.className} qo);
 
 // 手动编码开始
 

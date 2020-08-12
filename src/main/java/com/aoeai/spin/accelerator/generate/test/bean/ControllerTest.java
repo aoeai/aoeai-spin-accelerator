@@ -25,6 +25,11 @@ public class ControllerTest extends BaseClassProperty {
      */
     private String urlPrefix;
 
+    /**
+     * url公共路径
+     */
+    private String urlCommonPath;
+
     private Form form;
 
     private PageListQO pageListQO;
@@ -43,4 +48,5 @@ public class ControllerTest extends BaseClassProperty {
      * 更新方法参数
      */
     private List<String> updateParamList;
+
 }

@@ -40,6 +40,11 @@ public class XyWzmThemeFactory implements ThemeFactory {
     }
 
     @Override
+    public WebThemesService buildIWebThemesService() {
+        return null;
+    }
+
+    @Override
     public WebThemesService buildWebThemesService() {
         return xyWzmWebThemesService;
     }

@@ -24,7 +24,13 @@ public interface ThemeFactory {
     ServiceThemesService buildServiceThemesService();
 
     /**
-     * 创建Web层主题服务
+     * 创建Web层主题服务（接口）
+     * @return
+     */
+    WebThemesService buildIWebThemesService();
+
+    /**
+     * 创建Web层主题服务（实现类）
      * @return
      */
     WebThemesService buildWebThemesService();

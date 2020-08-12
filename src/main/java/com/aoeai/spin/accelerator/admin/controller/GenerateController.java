@@ -34,12 +34,22 @@ public class GenerateController {
         ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService();
         serviceThemesService.createServiceClassFile(tableName);
 
+        ServiceThemesService iServiceThemesService = themeFactory.buildIServiceThemesService();
+        if (iServiceThemesService != null) {
+            iServiceThemesService.createServiceClassFile(tableName);
+        }
+
         // web
         WebThemesService webThemesService = themeFactory.buildWebThemesService();
         webThemesService.createPageListQOFile(tableName);
         webThemesService.createVOFile(tableName);
         webThemesService.createFormFile(tableName);
         webThemesService.createControllerFile(tableName);
+
+        WebThemesService iwebThemesService = themeFactory.buildIWebThemesService();
+        if (iwebThemesService != null) {
+            iwebThemesService.createControllerFile(tableName);
+        }
 
         // Test
         TestThemesService testThemesService = themeFactory.buildTestThemesService();
@@ -54,6 +64,7 @@ public class GenerateController {
         POThemesService poThemesService = themeFactory.buildPOThemesService();
         ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService();
         ServiceThemesService iServiceThemesService = themeFactory.buildIServiceThemesService();
+        WebThemesService iwebThemesService = themeFactory.buildIWebThemesService();
         WebThemesService webThemesService = themeFactory.buildWebThemesService();
         TestThemesService testThemesService = themeFactory.buildTestThemesService();
 
@@ -79,10 +90,11 @@ public class GenerateController {
             case "service":
                 serviceThemesService.createServiceClassFile(tableName);
                 break;
-            case "iservice":
-                if (iServiceThemesService != null) {
-                    serviceThemesService.createServiceClassFile(tableName);
+            case "Iservice":
+                if (iServiceThemesService == null) {
+                    return "没有iServiceThemesService模板";
                 }
+                iServiceThemesService.createServiceClassFile(tableName);
                 break;
 
             // web
@@ -94,6 +106,12 @@ public class GenerateController {
                 break;
             case "form":
                 webThemesService.createFormFile(tableName);
+                break;
+            case "Icontroller":
+                if (iwebThemesService == null) {
+                    return "没有iwebThemesService模板";
+                }
+                iwebThemesService.createControllerFile(tableName);
                 break;
             case "controller":
                 webThemesService.createControllerFile(tableName);

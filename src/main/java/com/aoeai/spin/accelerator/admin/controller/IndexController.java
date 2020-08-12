@@ -67,12 +67,14 @@ public class IndexController {
         typeList.add("mapperXml");
         typeList.add("mapperService");
         typeList.add("mapperServiceImpl");
-        typeList.add("iservice");
+        typeList.add("Iservice");
         typeList.add("service");
         typeList.add("pageListQO");
         typeList.add("vo");
         typeList.add("form");
+        typeList.add("Icontroller");
         typeList.add("controller");
+        typeList.add("controllerTest");
 
         model.addAttribute("typeList", typeList);
         model.addAttribute("tableName", tableName);
@@ -92,6 +94,7 @@ public class IndexController {
     @GetMapping("/preview")
     public String preview(String tableName, String type, String theme, Model model) throws IOException, TemplateException {
         model.addAttribute("tableName", tableName);
+        model.addAttribute("type", type);
         model.addAttribute("theme", ThemeTypeEnum.toEnum(theme));
 
         IGenerateProperty content = null;
@@ -99,6 +102,7 @@ public class IndexController {
         POThemesService poThemesService = themeFactory.buildPOThemesService();
         ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService();
         ServiceThemesService iServiceThemesService = themeFactory.buildIServiceThemesService();
+        WebThemesService iwebThemesService = themeFactory.buildIWebThemesService();
         WebThemesService webThemesService = themeFactory.buildWebThemesService();
         TestThemesService testThemesService = themeFactory.buildTestThemesService();
 
@@ -123,7 +127,7 @@ public class IndexController {
             case "service":
                 content = serviceThemesService.getServiceClass(tableName);
                 break;
-            case "iservice":
+            case "Iservice":
                 if (iServiceThemesService != null) {
                     content = iServiceThemesService.getServiceClass(tableName);
                 }
@@ -138,6 +142,11 @@ public class IndexController {
                 break;
             case "form":
                 content = webThemesService.getForm(tableName);
+                break;
+            case "Icontroller":
+                if (iwebThemesService != null) {
+                    content = iwebThemesService.getController(tableName);
+                }
                 break;
             case "controller":
                 content = webThemesService.getController(tableName);
