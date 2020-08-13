@@ -91,7 +91,7 @@ public class XyChPOThemesService implements POThemesService {
 
     @Override
     public void createMapperServiceFile(String tableName) throws IOException, TemplateException {
-        persistentService.createMapperServiceFile(getMapperService(tableName));
+//        persistentService.createMapperServiceFile(getMapperService(tableName));
     }
 
     @Override
@@ -102,7 +102,7 @@ public class XyChPOThemesService implements POThemesService {
 
     @Override
     public void createMapperServiceImplFile(String tableName) throws IOException, TemplateException {
-        persistentService.createMapperServiceImplFile(getMapperServiceImpl(tableName));
+//        persistentService.createMapperServiceImplFile(getMapperServiceImpl(tableName));
     }
 
     private PersistentRule getPersistentRule(IBaseRule baseRule) {

@@ -6,13 +6,17 @@ import ${form.packageName}.${form.className};
 import ${pageListQO.packageName}.${pageListQO.className};
 import ${interfaceClass.packageName}.${interfaceClass.className};
 
+import javax.annotation.Resource;
 import javax.ws.rs.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 
 import com.starbuds.server.common.pojo.api.Result;
 import com.starbuds.server.common.constant.common.GlobalApiError;
 
 import org.apache.dubbo.rpc.protocol.rest.support.ContentType;
+import static com.starbuds.server.common.utils.CheckFormUtil.*;
 
 /**
 *
@@ -34,14 +38,17 @@ public class ${className} extends BaseFacade implements ${interfaceClass.classNa
     @Path("create") 
     @Override
     public Result create(@BeanParam ${form.className} form){
-        ${po.className} po = new ${po.className}();
-        BeanUtils.copyProperties(form, po);
-        boolean flag = ${serviceClassVariable}.create(po);
-
-        if (!flag) {
-            return new Result(GlobalApiError.BadRequest, "创建失败");
+        String check = checkCreate(form);
+        if (check != null) {
+            return new Result(GlobalApiError.BadRequest, check);
         }
 
+        ${po.className} po = new ${po.className}();
+        BeanUtils.copyProperties(form, po);
+
+        if (${serviceClassVariable}.create(po) == null) {
+            return new Result(GlobalApiError.OperationFailed, "创建失败");
+        }
         return new Result("创建成功");
     }
 
@@ -49,10 +56,22 @@ public class ${className} extends BaseFacade implements ${interfaceClass.classNa
 	 * 更新数据
 	 */
     @POST
-    @Path("update") 
+    @Path("update")
     @Override 
     public Result update(@BeanParam ${form.className} form){
-        return new Result();
+        String check = checkUpdate(form);
+        if (check != null) {
+            return new Result(GlobalApiError.BadRequest, check);
+        }
+
+        ${po.className} po = new ${po.className}();
+        BeanUtils.copyProperties(form, po);
+        boolean flag = ${serviceClassVariable}.updateById(po);
+
+        if (!flag) {
+            return new Result(GlobalApiError.OperationFailed, "更新失败");
+        }
+        return new Result("更新成功");
     }
 
     /**
@@ -62,8 +81,11 @@ public class ${className} extends BaseFacade implements ${interfaceClass.classNa
     @GET
     @Path("getInfo") 
     @Override 
-    public Result getInfo(Long id){
-        return new Result();
+    public Result getInfo(@QueryParam("id") Long id){
+        if (id == null) {
+            return new Result(GlobalApiError.BadRequest, "id不能为空");
+        }
+        return new Result(${serviceClassVariable}.getVOById(id));
     }
 
     /**
@@ -74,8 +96,11 @@ public class ${className} extends BaseFacade implements ${interfaceClass.classNa
     @GET
     @Path("exist")  
     @Override 
-    public Result exist(Long id){
-        return new Result();
+    public Result exist(@QueryParam("id") Long id){
+        if (id == null) {
+            return new Result(GlobalApiError.BadRequest, "id不能为空");
+        }
+        return new Result(${serviceClassVariable}.exist(id));
     }
 
     /**
@@ -85,7 +110,7 @@ public class ${className} extends BaseFacade implements ${interfaceClass.classNa
     @Path("getPageList") 
     @Override 
     public Result getPageList(@BeanParam ${pageListQO.className} qo){
-        return new Result();
+        return new Result(${serviceClassVariable}.getVOPageList(qo));
     }
 
     // 手动编码开始

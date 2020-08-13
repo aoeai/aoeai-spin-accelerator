@@ -20,6 +20,7 @@ import static com.starbuds.server.common.pojo.util.PageListUtil.buildPageListQue
 
 import org.springframework.stereotype.Service;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
 * ${classComment}
@@ -40,7 +41,8 @@ public class ${className} implements ${interfaceClass.className} {
     private ${mapperClass.className} ${mapperClassVariable};
 
     @Override
-    public boolean create(${mapperClass.po.className} po){
+    @Transactional(rollbackFor = Exception.class)
+    public ${mapperClass.po.className} create(${mapperClass.po.className} po){
         po.${setPkMethod}(identityService.getId());
         po.setCreateTime(System.currentTimeMillis());
         po.setUpdateTime(po.getCreateTime());
@@ -49,25 +51,42 @@ public class ${className} implements ${interfaceClass.className} {
         String json = JSON.toJSONString(po);
         if (flag) {
             log.info("创建成功 {}", json);
-        } else {
-            log.warn("创建失败 {}", json);
+            return po;
         }
-        return flag;
+        log.warn("创建失败 {}", json);
+        return null;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean createBatch(List<${mapperClass.po.className}> list){
         boolean flag = ${mapperClassVariable}.insertBatch(list) > 0;
         return flag;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean createOrUpdate(${mapperClass.po.className} po){
         boolean flag = ${mapperClassVariable}.insertOrUpdate(po) == 1;
         return flag;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateById(${mapperClass.po.className} po) {
+        po.setCreateTime(null);
+        po.setUpdateTime(System.currentTimeMillis());
+        
+        UpdateWrapper uw = new UpdateWrapper();
+        uw.setPo(po);
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq(PRIMARY_KEY, po.${getPkMethod}());
+        uw.setQw(qw);
+        return update(uw);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean update(UpdateWrapper uw){
         boolean flag = ${mapperClassVariable}.update(uw) > 0;
         return flag;
@@ -105,6 +124,8 @@ public class ${className} implements ${interfaceClass.className} {
     public PageList<${po.className}> getPageList(${pageListQO.className} qo){
         QueryWrapper qw = buildPageListQueryWrapper(qo);
         PageList<${po.className}> page = new PageList<>(qo.getPageIndex(),qo.getPageSize());
+        qw.setPageCursor(page.getPageCursor());
+        qw.setPageSize(page.getPageSize());
         page.setList(${mapperClassVariable}.selectPageList(qw));
         page.setTotal(${mapperClassVariable}.selectCount(qw));
         return page;

@@ -64,8 +64,8 @@
         <set>
             <#list mapperClass.po.table.columns as column>
             <#if column.isPrimaryKey == false && column.name != 'createTime'>
-            <if test="${column.name} != null">
-                ${column.name} = #${r'{'}uw.${column.name}},
+            <if test="po.${column.name} != null">
+                ${column.name} = #${r'{'}po.${column.name}},
             </if>
             </#if>
             </#list>

@@ -60,4 +60,10 @@ public class ServiceClass extends BaseClassProperty {
      */
     // 非必须
     private String setPkMethod;
+
+    /**
+     * 获得主键值方法
+     */
+    // 非必须
+    private String getPkMethod;
 }

@@ -73,8 +73,9 @@ public class XyChIServiceThemesService implements ServiceThemesService {
             }
         }
         serviceClass.setPkColumn(pkColumn);
-        String setPkMethod = "set" + WordUtils.capitalize(pkColumn);
-        serviceClass.setSetPkMethod(setPkMethod);
+        String pk = WordUtils.capitalize(pkColumn);
+        serviceClass.setSetPkMethod("set" + pk);
+        serviceClass.setGetPkMethod("get" + pk);
 
         serviceClass.setTemplates("xy/channel/service/i_service.ftl");
         return serviceClass;

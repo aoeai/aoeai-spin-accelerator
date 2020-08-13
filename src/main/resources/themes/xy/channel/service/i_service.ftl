@@ -4,6 +4,8 @@ import ${mapperService.po.packageName}.${mapperService.po.className};
 import ${pageListQO.packageName}.${pageListQO.className};
 import ${vo.packageName}.${vo.className};
 
+import com.starbuds.server.common.pojo.api.PageList;
+
 import java.util.List;
 
 import com.starbuds.server.common.pojo.daoplus.UpdateWrapper;
@@ -15,8 +17,10 @@ public interface ${className} {
 
     /**
 	 * 插入数据
+	 * @param po
+	 * @return null:插入失败
 	 */
-    boolean create(${mapperService.po.className} po);
+    ${mapperService.po.className} create(${mapperService.po.className} po);
 
     /**
 	 * 插入批量数据
@@ -27,6 +31,11 @@ public interface ${className} {
 	 * 插入或更新数据
 	 */
     boolean createOrUpdate(${mapperService.po.className} po);
+
+    /**
+	 * 更新数据
+	 */
+    boolean updateById(${mapperService.po.className} po);
 
     /**
 	 * 更新数据
