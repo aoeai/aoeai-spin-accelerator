@@ -122,6 +122,31 @@
                     <when test="item.condition == 'AND'">
                         ${r'AND ${item.column} = #{item.value}'}
                     </when>
+                    <when test="item.condition == 'GE'">
+                        ${r'AND ${item.column} <![CDATA[>=]]> #{item.value}'}
+                    </when>
+
+                    <when test="item.condition == 'NE'">
+                        ${r'AND ${item.column} <![CDATA[<>]]> #{item.value}'}
+                    </when>
+                    <when test="item.condition == 'GT'">
+                        ${r'AND ${item.column} <![CDATA[>]]> #{item.value}'}
+                    </when>
+                    <when test="item.condition == 'LT'">
+                        ${r'AND ${item.column} <![CDATA[<]]> #{item.value}'}
+                    </when>
+                    <when test="item.condition == 'LE'">
+                        ${r'AND ${item.column} <![CDATA[<=]]> #{item.value}'}
+                    </when>
+                    <when test="item.condition == 'LIKE'">
+                        AND ${r'${item.column}'} LIKE CONCAT('%',${r'#{item.value}'},'%')
+                    </when>
+                    <when test="item.condition == 'IN'">
+                        AND ${r'${item.column}'} IN
+                        <foreach collection="item.value" item="itemValue" index="index" open="(" close=")" separator=",">
+                            ${r'#{itemValue}'}
+                        </foreach>
+                    </when>
                 </choose>
             </foreach>
         </where>

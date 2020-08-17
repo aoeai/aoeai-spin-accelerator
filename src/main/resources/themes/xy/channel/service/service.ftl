@@ -6,6 +6,7 @@ import ${mapperClass.packageName}.${mapperClass.className};
 import ${pageListQO.packageName}.${pageListQO.className};
 import ${vo.packageName}.${vo.className};
 
+import com.starbuds.server.common.pojo.api.PageList;
 import lombok.extern.slf4j.Slf4j;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;

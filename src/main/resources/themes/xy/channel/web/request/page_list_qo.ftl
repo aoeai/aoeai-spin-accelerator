@@ -29,14 +29,14 @@ public class ${className} extends PageQO implements Serializable {
     /**
     * 开始时间
     */
-    @QueryTag
+    @QueryTag(column = "createTime", condition = ">=")
     @QueryParam("startTime")
     private Long startTime;
 
     /**
     * 结束时间
     */
-    @QueryTag
+    @QueryTag(column = "createTime", condition = "<=")
     @QueryParam("endTime")
     private Long endTime;
 }
