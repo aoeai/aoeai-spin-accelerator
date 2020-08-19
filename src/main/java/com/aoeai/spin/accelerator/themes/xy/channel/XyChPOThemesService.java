@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -52,6 +53,11 @@ public class XyChPOThemesService implements POThemesService {
                 }
             }
         }
+        po.setPackageName("com.starbuds.server.common.pojo.db");
+
+        String fileName = po.getFile().toString().replaceFirst("api-channel/src/main/java/com/starbuds/server/api/channel/common/pojo/db",
+                "common/src/main/java/com/starbuds/server/common/pojo/db");
+        po.setFile(new File(fileName));
 
         return po;
     }
@@ -64,7 +70,9 @@ public class XyChPOThemesService implements POThemesService {
     @Override
     public MapperClass getMapperClass(String tableName) {
         IBaseRule baseRule = RuleFactory.buildBaseRule(yamlName, tableName);
-        return persistentService.buildMapperClass(tableName, baseRule, getPersistentRule(baseRule));
+        MapperClass mapperClass = persistentService.buildMapperClass(tableName, baseRule, getPersistentRule(baseRule));
+        mapperClass.setPo(getPO(tableName));
+        return mapperClass;
     }
 
     @Override
@@ -75,7 +83,9 @@ public class XyChPOThemesService implements POThemesService {
     @Override
     public MapperXml getMapperXml(String tableName) {
         IBaseRule baseRule = RuleFactory.buildBaseRule(yamlName, tableName);
-        return persistentService.buildMapperXml(tableName, baseRule, getPersistentRule(baseRule));
+        MapperXml mapperXml = persistentService.buildMapperXml(tableName, baseRule, getPersistentRule(baseRule));
+        mapperXml.setMapperClass(getMapperClass(tableName));
+        return mapperXml;
     }
 
     @Override

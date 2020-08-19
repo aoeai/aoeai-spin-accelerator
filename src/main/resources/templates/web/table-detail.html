@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <th:block th:replace="web/fragments/common :: header"></th:block>
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -84,12 +86,26 @@
 <!-- ./wrapper -->
 
 <th:block th:replace="web/fragments/common :: script"></th:block>
+<!-- SweetAlert2 -->
+<script src="../../plugins/sweetalert2/sweetalert2.min.js"></script>
 
 <!-- page script -->
 <script>
+    var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+
     function create(type) {
-        this.href='/create?tableName=[[${tableName}]]&theme=[[${theme.theme}]]' + "&type=" + type;
-        window.open(this.href, '_blank')
+        var url = '/create?tableName=[[${tableName}]]&theme=[[${theme.theme}]]' + "&type=" + type;
+        $.get( url, function( data ) {
+            Toast.fire({
+                icon: 'success',
+                title: data == 'ok' ? '创建成功' : '创建失败'
+            });
+        });
     }
 
     function preview(type) {

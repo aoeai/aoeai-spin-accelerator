@@ -5,7 +5,6 @@ import com.aoeai.spin.accelerator.generate.service.service.ServiceClassService;
 import com.aoeai.spin.accelerator.themes.POThemesService;
 import com.aoeai.spin.accelerator.themes.ServiceThemesService;
 import freemarker.template.TemplateException;
-import org.apache.commons.text.WordUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,9 +40,6 @@ public class XyChServiceThemesService implements ServiceThemesService {
         fileName = fileName.replaceFirst("common/service/admin", "service/admin/impl")
                 .replaceFirst(serviceClass.getInterfaceClass().getClassName(), serviceClass.getClassName());
         serviceClass.setFile(new File(fileName));
-
-        serviceClass.setMapperClass(xyChPOThemesService.getMapperClass(tableName));
-        serviceClass.setMapperClassVariable(WordUtils.uncapitalize(serviceClass.getMapperClass().getClassName()));
 
         serviceClass.setTemplates("xy/channel/service/service.ftl");
         return serviceClass;

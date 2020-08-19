@@ -1,6 +1,6 @@
 package ${packageName};
 
-import ${mapperService.po.packageName}.${mapperService.po.className};
+import ${po.packageName}.${mapperService.po.className};
 import ${pageListQO.packageName}.${pageListQO.className};
 import ${vo.packageName}.${vo.className};
 

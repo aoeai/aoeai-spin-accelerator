@@ -77,6 +77,9 @@ public class XyChIServiceThemesService implements ServiceThemesService {
         serviceClass.setSetPkMethod("set" + pk);
         serviceClass.setGetPkMethod("get" + pk);
 
+        serviceClass.setMapperClass(xyChPOThemesService.getMapperClass(tableName));
+        serviceClass.setMapperClassVariable(WordUtils.uncapitalize(serviceClass.getMapperClass().getClassName()));
+
         serviceClass.setTemplates("xy/channel/service/i_service.ftl");
         return serviceClass;
     }

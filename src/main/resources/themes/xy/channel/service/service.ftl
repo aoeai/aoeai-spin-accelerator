@@ -1,7 +1,7 @@
 package ${packageName};
 
 import com.alibaba.fastjson.JSON;
-import ${mapperClass.po.packageName}.${mapperClass.po.className};
+import ${po.packageName}.${po.className};
 import ${mapperClass.packageName}.${mapperClass.className};
 import ${pageListQO.packageName}.${pageListQO.className};
 import ${vo.packageName}.${vo.className};
