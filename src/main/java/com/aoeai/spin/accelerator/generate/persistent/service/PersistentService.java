@@ -19,13 +19,13 @@ public interface PersistentService {
      * @param persistentRule
      * @return
      */
-    PO buildPO(String tableName, IBaseRule baseRule, PersistentRule persistentRule);
+    Po buildPO(String tableName, IBaseRule baseRule, PersistentRule persistentRule);
 
     /**
      * 创建PO文件
      * @param po
      */
-    void createPOFile(PO po) throws IOException, TemplateException;
+    void createPOFile(Po po) throws IOException, TemplateException;
 
     /**
      * 建造 Mybatis Mapper 文件对象

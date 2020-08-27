@@ -1,7 +1,7 @@
 package com.aoeai.spin.accelerator.generate.web.bean;
 
 import com.aoeai.spin.accelerator.generate.common.BaseClassProperty;
-import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
+import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import lombok.Data;
 
 /**
@@ -11,5 +11,5 @@ import lombok.Data;
 @Data
 public class VO extends BaseClassProperty {
 
-    private PO po;
+    private Po po;
 }

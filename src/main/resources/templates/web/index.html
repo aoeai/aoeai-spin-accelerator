@@ -86,9 +86,12 @@
                                         <td th:text="${table.engine}">-</td>
                                         <td th:text="${table.createTime}">-</td>
                                         <td>
-                                            <button type="button" class="btn btn-block btn-outline-primary"
-                                                    th:onclick="createAll([[${table.tableName}]])">生成
-                                            </button>
+                                            <div class="overlay-wrapper">
+                                                <i class="fas fa-3x fa-sync-alt fa-spin"></i><div class="text-bold pt-2">生成中...</div>
+                                                <button type="button" class="btn btn-block btn-outline-primary"
+                                                        th:onclick="createAll([[${table.tableName}]])">生成
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>

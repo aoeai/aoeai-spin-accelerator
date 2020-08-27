@@ -8,9 +8,10 @@ import java.util.List;
 
 /**
  * （数据库对应的）持久对象
+ * @author aoe
  */
 @Data
-public class PO extends BaseClassProperty {
+public class Po extends BaseClassProperty {
 
     /**
      * 字段列表
@@ -22,4 +23,9 @@ public class PO extends BaseClassProperty {
      * （数据库的）表
      */
     private Table table;
+
+    /**
+     * 没有后缀的类名
+     */
+    private String classNameWithoutSuffix;
 }

@@ -31,7 +31,7 @@ public class XyWzmPOThemesService implements POThemesService {
     }
 
     @Override
-    public PO getPO(String tableName) {
+    public Po getPO(String tableName) {
         IBaseRule baseRule = RuleFactory.buildBaseRule(yamlName, tableName);
         return persistentService.buildPO(tableName, baseRule, getPersistentRule(baseRule));
     }

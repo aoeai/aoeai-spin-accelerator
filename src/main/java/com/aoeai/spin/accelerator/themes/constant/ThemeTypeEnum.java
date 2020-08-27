@@ -2,6 +2,7 @@ package com.aoeai.spin.accelerator.themes.constant;
 
 /**
  * 模板类型
+ * @author aoe
  */
 public enum ThemeTypeEnum {
 

@@ -3,7 +3,7 @@ package com.aoeai.spin.accelerator.generate.service.bean;
 import com.aoeai.spin.accelerator.generate.common.BaseClassProperty;
 import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
 import com.aoeai.spin.accelerator.generate.persistent.bean.MapperService;
-import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
+import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.web.bean.PageListQO;
 import com.aoeai.spin.accelerator.generate.web.bean.VO;
 import lombok.Data;
@@ -12,7 +12,9 @@ import lombok.Data;
  * 服务类
  * @author aoe
  * @date 2020/6/22
+ * 移动到自定义模块
  */
+@Deprecated
 @Data
 public class ServiceClass extends BaseClassProperty {
 
@@ -32,7 +34,7 @@ public class ServiceClass extends BaseClassProperty {
 
     private VO vo;
 
-    private PO po;
+    private Po po;
 
     /**
      * 接口类（不需要时为null）

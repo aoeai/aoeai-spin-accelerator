@@ -1,7 +1,7 @@
 package com.aoeai.spin.accelerator.generate.persistent.service;
 
 import com.aoeai.spin.accelerator.generate.config.GenerateRuleConfig;
-import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
+import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
 import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +20,7 @@ public class PersistentServiceImplTest {
     public void allPOMapTest(){
         GenerateRuleConfig grConfig = ConfigTools.getGenerateRuleConfig("/default-generate-rule-config.yml");
 
-        PO po = null; // TODO poMap.get("satest_problem");
+        Po po = null; // TODO poMap.get("satest_problem");
         Assert.assertEquals(po.getClassName(), "SatestProblemPO");
         Assert.assertEquals(po.getPackageName(), "com.aoeai.test.po");
         Assert.assertEquals(po.getClassComment(), "LeetCode问题");

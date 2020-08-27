@@ -36,9 +36,9 @@ public class PersistentServiceImpl implements PersistentService {
     private FreemarkerService freemarkerService;
 
     @Override
-    public PO buildPO(String tableName, IBaseRule baseRule, PersistentRule persistentRule) {
+    public Po buildPO(String tableName, IBaseRule baseRule, PersistentRule persistentRule) {
         Table table = dbService.getTable(tableName);
-        PO po = new PO();
+        Po po = new Po();
         po.setPackageName(ClassTools.buildPackageName(baseRule.rootPackageName(), persistentRule.poPackageSuffix()));
         po.setClassName(ClassTools.buildClassName(table.getName(), persistentRule.tablePrefixFilter(), persistentRule.poClassNameSuffix()));
         po.setClassComment(table.getComment());
@@ -55,13 +55,13 @@ public class PersistentServiceImpl implements PersistentService {
     }
 
     @Override
-    public void createPOFile(PO po) throws IOException, TemplateException {
+    public void createPOFile(Po po) throws IOException, TemplateException {
         FileTools.buildFile(po.getFile(), freemarkerService.getTemplate(po.getTemplates()), po);
     }
 
     @Override
     public MapperClass buildMapperClass(String tableName, IBaseRule baseRule, PersistentRule persistentRule) {
-        PO po = buildPO(tableName, baseRule, persistentRule);
+        Po po = buildPO(tableName, baseRule, persistentRule);
         MapperClass mapperClass = new MapperClass();
         mapperClass.setPo(po);
 
@@ -103,7 +103,7 @@ public class PersistentServiceImpl implements PersistentService {
     @Override
     public MapperService buildMapperService(String tableName, IBaseRule baseRule, PersistentRule persistentRule) {
         MapperService mapperService = new MapperService();
-        PO po = buildPO(tableName, baseRule, persistentRule);
+        Po po = buildPO(tableName, baseRule, persistentRule);
         mapperService.setPo(po);
 
         mapperService.setPackageName(ClassTools.buildPackageName(baseRule.rootPackageName(), persistentRule.mapperServicePackageSuffix()));

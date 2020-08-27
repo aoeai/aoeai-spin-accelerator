@@ -2,7 +2,7 @@ package com.aoeai.spin.accelerator.themes.xy.channel;
 
 import com.aoeai.spin.accelerator.generate.common.IBaseRule;
 import com.aoeai.spin.accelerator.generate.factory.RuleFactory;
-import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
+import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
 import com.aoeai.spin.accelerator.generate.persistent.rule.PersistentRule;
 import com.aoeai.spin.accelerator.generate.service.bean.ServiceClass;
@@ -63,7 +63,7 @@ public class XyChIServiceThemesService implements ServiceThemesService {
 
         serviceClass.setPageListQO(xyChIWebThemesService.getPageListQO(tableName));
         serviceClass.setVo(xyChIWebThemesService.getVO(tableName));
-        PO po = xyChPOThemesService.getPO(tableName);
+        Po po = xyChPOThemesService.getPO(tableName);
         serviceClass.setPo(po);
         String pkColumn = "";
         for (POField field : po.getFieldList()) {

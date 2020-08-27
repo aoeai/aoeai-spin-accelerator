@@ -1,7 +1,7 @@
 package com.aoeai.spin.accelerator.generate.web.bean;
 
 import com.aoeai.spin.accelerator.generate.common.BaseClassProperty;
-import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
+import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.service.bean.ServiceClass;
 import lombok.Data;
 
@@ -27,7 +27,7 @@ public class Controller extends BaseClassProperty {
 
     private Form form;
 
-    private PO po;
+    private Po po;
 
     private PageListQO pageListQO;
 

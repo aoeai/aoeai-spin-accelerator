@@ -7,7 +7,6 @@ import com.aoeai.spin.accelerator.themes.*;
 import com.aoeai.spin.accelerator.themes.constant.ThemeTypeEnum;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +21,7 @@ import java.util.List;
  * @author aoe
  * @date 2020/6/5
  */
-@Controller
+//@Controller
 public class IndexController {
 
     @Resource

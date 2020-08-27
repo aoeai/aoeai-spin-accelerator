@@ -36,9 +36,9 @@ public class XyChPOThemesService implements POThemesService {
     }
 
     @Override
-    public PO getPO(String tableName) {
+    public Po getPO(String tableName) {
         IBaseRule baseRule = RuleFactory.buildBaseRule(yamlName, tableName);
-        PO po = persistentService.buildPO(tableName, baseRule, getPersistentRule(baseRule));
+        Po po = persistentService.buildPO(tableName, baseRule, getPersistentRule(baseRule));
         // 用Long替换BigInteger
         Set<String> importList = po.getImportList();
         if (!CollectionUtil.isEmpty(importList)) {

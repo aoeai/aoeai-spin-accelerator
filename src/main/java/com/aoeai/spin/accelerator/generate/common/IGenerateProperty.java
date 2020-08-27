@@ -10,6 +10,7 @@ import java.io.File;
 public interface IGenerateProperty {
 
     /**
+     * 模板文件路径
      * @return 模板文件路径
      */
     String getTemplates();

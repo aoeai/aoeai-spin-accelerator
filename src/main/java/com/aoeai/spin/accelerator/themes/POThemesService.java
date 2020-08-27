@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public interface POThemesService {
 
-    PO getPO(String tableName);
+    Po getPO(String tableName);
 
     /**
      * 创建PO文件

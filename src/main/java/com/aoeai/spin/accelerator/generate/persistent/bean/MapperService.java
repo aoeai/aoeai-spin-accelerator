@@ -9,5 +9,5 @@ import lombok.Data;
  */
 @Data
 public class MapperService extends BaseClassProperty {
-    private PO po;
+    private Po po;
 }

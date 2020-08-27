@@ -1,7 +1,7 @@
 package com.aoeai.spin.accelerator.generate.web.bean;
 
 import com.aoeai.spin.accelerator.generate.common.BaseClassProperty;
-import com.aoeai.spin.accelerator.generate.persistent.bean.PO;
+import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.refining.db.bean.Table;
 import lombok.Data;
 
@@ -19,7 +19,7 @@ public class Form extends BaseClassProperty {
     private List<FormField> fieldList;
 
     // 自定义规则时用
-    private PO po;
+    private Po po;
 
     /**
      * （数据库的）表
