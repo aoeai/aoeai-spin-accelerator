@@ -148,7 +148,7 @@
                         </foreach>
                     </when>
                     <when test="item.condition == 'APPLY'">
-                        AND ${item.value}
+                        AND ${r'${item.value}'}
                     </when>
                 </choose>
             </foreach>

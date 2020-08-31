@@ -3,7 +3,6 @@ package com.aoeai.spin.accelerator.admin.controller;
 import com.aoeai.spin.accelerator.themes.*;
 import freemarker.template.TemplateException;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.io.IOException;
  * @author aoe
  * @date 2020/6/8
  */
-@RestController
+//@RestController
 public class GenerateController {
 
     @Resource

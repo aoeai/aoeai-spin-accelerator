@@ -4,10 +4,7 @@ import com.aoeai.spin.accelerator.generate1.IMapperFactory;
 import com.aoeai.spin.accelerator.generate1.IPoFactory;
 import com.aoeai.spin.accelerator.generate1.MapperFactory;
 import com.aoeai.spin.accelerator.generate1.MapperXmlFactory;
-import com.aoeai.spin.accelerator.themes1.customize.xy.channel.factory.XyChPageListQoFactory;
-import com.aoeai.spin.accelerator.themes1.customize.xy.channel.factory.XyChServiceClassFactory;
-import com.aoeai.spin.accelerator.themes1.customize.xy.channel.factory.XyChServiceImplClassFactory;
-import com.aoeai.spin.accelerator.themes1.customize.xy.channel.factory.XyChVoFactory;
+import com.aoeai.spin.accelerator.themes1.customize.xy.channel.factory.*;
 import com.aoeai.spin.accelerator.themes1.frame.AbstractThemeRegister;
 import com.aoeai.spin.accelerator.themes1.frame.bean.Module;
 import com.aoeai.spin.accelerator.themes1.frame.bean.ThemeType;
@@ -41,9 +38,13 @@ public class XyChannelThemeRegister extends AbstractThemeRegister {
 
         IMapperFactory mapperFactory = new MapperFactory(xyChannelPoFactory, "/themes/xy/channel1/config/mapper.yaml");
         XyChVoFactory voFactory = new XyChVoFactory(xyChannelPoFactory);
+        XyChFormFactory formFactory = new XyChFormFactory(xyChannelPoFactory);
         XyChPageListQoFactory pageListQoFactory = new XyChPageListQoFactory(xyChannelPoFactory);
         XyChServiceClassFactory serviceClassFactory = new XyChServiceClassFactory(xyChannelPoFactory, voFactory, pageListQoFactory);
         XyChServiceImplClassFactory serviceImplClassFactory = new XyChServiceImplClassFactory(xyChannelPoFactory, serviceClassFactory, mapperFactory);
+        XyChFacadeFactory facadeFactory = new XyChFacadeFactory(xyChannelPoFactory, formFactory, pageListQoFactory);
+        XyChFacadeImplFactory facadeImplFactory = new XyChFacadeImplFactory(xyChannelPoFactory, facadeFactory, serviceClassFactory);
+        XyChFacadeTestFactory facadeTestFactory = new XyChFacadeTestFactory(xyChannelPoFactory, formFactory, pageListQoFactory);
 
         List<Module> modules = Arrays.asList(
                 new Module("PO", "持久化对象", xyChannelPoFactory),
@@ -52,8 +53,12 @@ public class XyChannelThemeRegister extends AbstractThemeRegister {
                         new MapperXmlFactory(mapperFactory, "/themes/xy/channel1/config/mapper-xml.yaml")),
                 new Module("Service", "服务接口", serviceClassFactory),
                 new Module("ServiceImpl", "服务实现", serviceImplClassFactory),
+                new Module("Facade", "门面控制器接口", facadeFactory),
+                new Module("FacadeImpl", "门面控制器实现类", facadeImplFactory),
                 new Module("VO", "Web层返回对象", voFactory),
-                new Module("PageListQO", "分页查询对象", pageListQoFactory)
+                new Module("Form", "表单", formFactory),
+                new Module("PageListQO", "分页查询对象", pageListQoFactory),
+                new Module("facadeTest", "门面控制器测试类", facadeTestFactory)
         );
 
         themeType.setModules(modules);
