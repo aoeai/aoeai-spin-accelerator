@@ -38,8 +38,15 @@ public abstract class AbstractJavaFileFactory<T extends BaseClassProperty> imple
         String fileName = StrUtil.format("{}{}.java",
                 cfg.getFilePath(), builder.getClassName());
         builder.setFile(new File(fileName));
+        doEnd(tableName);
         return builder;
     }
+
+    /**
+     * 最后执行的方法
+     * @param tableName
+     */
+    protected void doEnd(String tableName){}
 
     /**
      * 存放配置信息的yaml文件

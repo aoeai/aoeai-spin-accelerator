@@ -1,16 +1,18 @@
-package com.aoeai.spin.accelerator.generate1;
+package com.aoeai.spin.accelerator.themes1.customize.xy.wazhima.factory;
 
 import cn.hutool.core.util.StrUtil;
 import com.aoeai.spin.accelerator.generate.constant.JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
-import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
+import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.utils.ClassTools;
 import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
+import com.aoeai.spin.accelerator.generate1.IPoFactory;
 import com.aoeai.spin.accelerator.generate1.bean.config.PoConfig;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.refining.db.bean.Table;
 import com.aoeai.spin.accelerator.refining.db.service.DBService;
+import com.aoeai.spin.accelerator.themes1.customize.xy.wazhima.XyWzmTools;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -26,16 +28,21 @@ import static com.aoeai.spin.accelerator.generate.utils.ClassTools.buildImportLi
  * @date 2020/8/24
  */
 @Component
-@Deprecated
-public class PoFactory implements IPoFactory {
+public class XyWzmPoFactory implements IPoFactory {
 
     @Resource
     private DBService dbService;
 
+    /**
+     * 创建PO（数据库对应的）持久对象
+     *
+     * @param tableName
+     * @return
+     */
     @Override
     public Po build(String tableName) {
         Po po = new Po();
-        PoConfig cfg = ConfigTools.getConfig("/themes/xy/channel1/config/po.yaml", PoConfig.class);
+        PoConfig cfg = ConfigTools.getConfig("/themes/xy/wazhima1/config/po.yaml", PoConfig.class);
         BeanUtils.copyProperties(cfg, po);
 
         Table table = dbService.getTable(tableName);
@@ -44,9 +51,10 @@ public class PoFactory implements IPoFactory {
         po.setClassComment(table.getComment());
         po.setImportList(buildImportList(table.getColumns()));
         po.setFieldList(buildFieldList(table.getColumns()));
+        po.setPackageName(XyWzmTools.replaceAllModelName(po.getPackageName(), tableName));
 
         String fileName = StrUtil.format("{}{}.java",
-                cfg.getFilePath(), po.getClassName());
+                XyWzmTools.replaceAllModelName(cfg.getFilePath(), tableName), po.getClassName());
         po.setFile(new File(fileName));
         po.setTable(table);
 

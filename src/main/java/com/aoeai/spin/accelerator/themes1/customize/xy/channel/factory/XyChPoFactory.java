@@ -1,12 +1,14 @@
-package com.aoeai.spin.accelerator.generate1;
+package com.aoeai.spin.accelerator.themes1.customize.xy.channel.factory;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.aoeai.spin.accelerator.generate.constant.JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
-import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
+import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.utils.ClassTools;
 import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
+import com.aoeai.spin.accelerator.generate1.IPoFactory;
 import com.aoeai.spin.accelerator.generate1.bean.config.PoConfig;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.refining.db.bean.Table;
@@ -18,6 +20,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static com.aoeai.spin.accelerator.generate.utils.ClassTools.buildImportList;
 
@@ -26,12 +29,17 @@ import static com.aoeai.spin.accelerator.generate.utils.ClassTools.buildImportLi
  * @date 2020/8/24
  */
 @Component
-@Deprecated
-public class PoFactory implements IPoFactory {
+public class XyChPoFactory implements IPoFactory {
 
     @Resource
     private DBService dbService;
 
+    /**
+     * 创建PO（数据库对应的）持久对象
+     *
+     * @param tableName
+     * @return
+     */
     @Override
     public Po build(String tableName) {
         Po po = new Po();
@@ -49,6 +57,21 @@ public class PoFactory implements IPoFactory {
                 cfg.getFilePath(), po.getClassName());
         po.setFile(new File(fileName));
         po.setTable(table);
+
+        // 用Long替换BigInteger
+        Set<String> importList = po.getImportList();
+        if (!CollectionUtil.isEmpty(importList)) {
+            importList.remove("java.math.BigInteger");
+        }
+        List<POField> fieldList = po.getFieldList();
+        if (!CollectionUtil.isEmpty(fieldList)) {
+            for (POField field : fieldList) {
+                if ("BigInteger".equals(field.getClassShortName())) {
+                    field.setClassShortName(JavaTypeEnum.LONG.shortName());
+                    field.setClassFullName(JavaTypeEnum.LONG.fullName());
+                }
+            }
+        }
 
         return po;
     }

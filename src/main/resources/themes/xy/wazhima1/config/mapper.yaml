@@ -1,0 +1,12 @@
+# Mybatis Mapper 文件配置信息
+# 包名
+packageName: com.wazhima.order.$MODEL_PATH.mapper
+
+# 类存储位置
+filePath: /Users/aoe/IdeaProjects/paqu/wazhima/src/main/java/com/wazhima/order/$MODEL_PATH/mapper/
+
+# 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
+suffix: Mapper
+
+# 模板文件路径
+templates: xy/wazhima1/mapper.ftl

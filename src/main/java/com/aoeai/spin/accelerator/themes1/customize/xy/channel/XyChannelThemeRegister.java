@@ -2,8 +2,8 @@ package com.aoeai.spin.accelerator.themes1.customize.xy.channel;
 
 import com.aoeai.spin.accelerator.generate1.IMapperFactory;
 import com.aoeai.spin.accelerator.generate1.IPoFactory;
-import com.aoeai.spin.accelerator.generate1.MapperFactory;
-import com.aoeai.spin.accelerator.generate1.MapperXmlFactory;
+import com.aoeai.spin.accelerator.themes1.customize.xy.channel.factory.XyChMapperFactory;
+import com.aoeai.spin.accelerator.themes1.customize.xy.channel.factory.XyChMapperXmlFactory;
 import com.aoeai.spin.accelerator.themes1.customize.xy.channel.factory.*;
 import com.aoeai.spin.accelerator.themes1.frame.AbstractThemeRegister;
 import com.aoeai.spin.accelerator.themes1.frame.bean.Module;
@@ -22,8 +22,8 @@ import java.util.List;
 @Component
 public class XyChannelThemeRegister extends AbstractThemeRegister {
 
-    @Resource
-    private IPoFactory xyChannelPoFactory;
+    @Resource(name = "xyChPoFactory")
+    private IPoFactory poFactory;
 
     /**
      * 获得模板类型
@@ -36,21 +36,20 @@ public class XyChannelThemeRegister extends AbstractThemeRegister {
         themeType.setCode("xy-channel");
         themeType.setName("星芽-渠道");
 
-        IMapperFactory mapperFactory = new MapperFactory(xyChannelPoFactory, "/themes/xy/channel1/config/mapper.yaml");
-        XyChVoFactory voFactory = new XyChVoFactory(xyChannelPoFactory);
-        XyChFormFactory formFactory = new XyChFormFactory(xyChannelPoFactory);
-        XyChPageListQoFactory pageListQoFactory = new XyChPageListQoFactory(xyChannelPoFactory);
-        XyChServiceClassFactory serviceClassFactory = new XyChServiceClassFactory(xyChannelPoFactory, voFactory, pageListQoFactory);
-        XyChServiceImplClassFactory serviceImplClassFactory = new XyChServiceImplClassFactory(xyChannelPoFactory, serviceClassFactory, mapperFactory);
-        XyChFacadeFactory facadeFactory = new XyChFacadeFactory(xyChannelPoFactory, formFactory, pageListQoFactory);
-        XyChFacadeImplFactory facadeImplFactory = new XyChFacadeImplFactory(xyChannelPoFactory, facadeFactory, serviceClassFactory);
-        XyChFacadeTestFactory facadeTestFactory = new XyChFacadeTestFactory(xyChannelPoFactory, formFactory, pageListQoFactory);
+        IMapperFactory mapperFactory = new XyChMapperFactory(poFactory);
+        XyChVoFactory voFactory = new XyChVoFactory(poFactory);
+        XyChFormFactory formFactory = new XyChFormFactory(poFactory);
+        XyChPageListQoFactory pageListQoFactory = new XyChPageListQoFactory(poFactory);
+        XyChServiceClassFactory serviceClassFactory = new XyChServiceClassFactory(poFactory, voFactory, pageListQoFactory);
+        XyChServiceImplClassFactory serviceImplClassFactory = new XyChServiceImplClassFactory(poFactory, serviceClassFactory, mapperFactory);
+        XyChFacadeFactory facadeFactory = new XyChFacadeFactory(poFactory, formFactory, pageListQoFactory);
+        XyChFacadeImplFactory facadeImplFactory = new XyChFacadeImplFactory(poFactory, facadeFactory, serviceClassFactory);
+        XyChFacadeTestFactory facadeTestFactory = new XyChFacadeTestFactory(poFactory, formFactory, pageListQoFactory);
 
         List<Module> modules = Arrays.asList(
-                new Module("PO", "持久化对象", xyChannelPoFactory),
+                new Module("PO", "持久化对象", poFactory),
                 new Module("MapperClass", "Mybatis Mapper", mapperFactory),
-                new Module("MapperXml", "Mybatis Mapper MXL",
-                        new MapperXmlFactory(mapperFactory, "/themes/xy/channel1/config/mapper-xml.yaml")),
+                new Module("MapperXml", "Mybatis Mapper MXL", new XyChMapperXmlFactory(mapperFactory)),
                 new Module("Service", "服务接口", serviceClassFactory),
                 new Module("ServiceImpl", "服务实现", serviceImplClassFactory),
                 new Module("Facade", "门面控制器接口", facadeFactory),

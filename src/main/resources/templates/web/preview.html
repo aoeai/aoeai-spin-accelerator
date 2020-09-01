@@ -68,6 +68,7 @@
             <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
+        <th:block th:replace="web/fragments/dialog :: dialog"></th:block>
     </div>
     <th:block th:replace="web/fragments/common :: bottom"></th:block>
 </div>
@@ -80,20 +81,19 @@
 
 <!-- page script -->
 <script>
-    var Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000
-    });
-
     function create(type) {
+        $('#staticBackdrop').modal();
         var url = '/create?tableName=[[${tableName}]]&theme=[[${theme.theme}]]' + "&type=" + type;
         $.get( url, function( data ) {
-            Toast.fire({
-                icon: 'success',
-                title: data == 'ok' ? '创建成功' : '创建失败'
-            });
+            setTimeout(function() {
+                $('#staticBackdrop').modal('hide');
+
+                if (data == 'ok') {
+                    $('#modal-success').modal();
+                } else {
+                    $('#modal-danger').modal();
+                }
+            } , 500);
         });
     }
 </script>
