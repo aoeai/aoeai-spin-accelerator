@@ -1,10 +1,7 @@
 package com.aoeai.spin.accelerator.themes1.customize.xy.wazhima.bean;
 
 import com.aoeai.spin.accelerator.generate.common.BaseClassProperty;
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
 import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
-import com.aoeai.spin.accelerator.generate.web.bean.PageListQO;
-import com.aoeai.spin.accelerator.generate.web.bean.VO;
 import lombok.Data;
 
 /**
@@ -26,42 +23,9 @@ public class XyWzmServiceClass extends BaseClassProperty {
     /**
      * 分页查询对象类
      */
-    private PageListQO pageListQO;
+    private XyWzmPageListQo pageListQO;
 
-    private VO vo;
+    private XyWzmVo vo;
 
     private Po po;
-
-    /**
-     * 接口类（不需要时为null）
-     */
-    // 非必须
-    private XyWzmServiceClass interfaceClass;
-
-    // 非必须
-    private MapperClass mapperClass;
-
-    /**
-     * MapperClass变量名称
-     */
-    // 非必须
-    private String mapperClassVariable;
-
-    /**
-     * 主键字段
-     */
-    // 非必须
-    private String pkColumn;
-
-    /**
-     * 设置主键值方法
-     */
-    // 非必须
-    private String setPkMethod;
-
-    /**
-     * 获得主键值方法
-     */
-    // 非必须
-    private String getPkMethod;
 }

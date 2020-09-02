@@ -28,4 +28,9 @@ public class Po extends BaseClassProperty {
      * 没有后缀的类名
      */
     private String classNameWithoutSuffix;
+
+    /**
+     * 生成Java文件时需要过滤掉的表名前缀（,分割）；不填写默认为空
+     */
+    private String tablePrefixFilter = "";
 }

@@ -1,5 +1,6 @@
 package com.aoeai.spin.accelerator.themes1.customize.xy.wazhima;
 
+import com.aoeai.spin.accelerator.generate1.IMapperFactory;
 import com.aoeai.spin.accelerator.generate1.IPoFactory;
 import com.aoeai.spin.accelerator.themes1.customize.xy.wazhima.factory.*;
 import com.aoeai.spin.accelerator.themes1.frame.AbstractThemeRegister;
@@ -33,13 +34,20 @@ public class XyWzmThemeRegister extends AbstractThemeRegister {
         themeType.setCode("xy-wazhima");
         themeType.setName("星芽-挖芝麻");
 
-        XyWzmMapperFactory mapperFactory = new XyWzmMapperFactory(poFactory);
+        IMapperFactory mapperFactory = new XyWzmMapperFactory(poFactory);
         XyWzmMapperXmlFactory mapperXmlFactory = new XyWzmMapperXmlFactory(mapperFactory);
         XyWzmMapperServiceFactory mapperServiceFactory = new XyWzmMapperServiceFactory(poFactory);
         XyWzmMapperServiceImplFactory mapperServiceImplFactory = new XyWzmMapperServiceImplFactory(poFactory,
                 mapperServiceFactory, mapperFactory);
         XyWzmVoFactory voFactory = new XyWzmVoFactory(poFactory);
         XyWzmPageListQoFactory pageListQoFactory = new XyWzmPageListQoFactory(poFactory);
+        XyWzmFormFactory formFactory = new XyWzmFormFactory(poFactory);
+        XyWzmServiceFactory serviceFactory = new XyWzmServiceFactory(poFactory, mapperServiceFactory, voFactory,
+                pageListQoFactory);
+        XyWzmControllerFactory controllerFactory = new XyWzmControllerFactory(poFactory, serviceFactory,
+                pageListQoFactory, formFactory);
+        XyWzmControllerTestFactory controllerTestFactory = new XyWzmControllerTestFactory(poFactory, pageListQoFactory,
+                formFactory);
 
         List<Module> modules = Arrays.asList(
                 new Module("PO", "持久化对象", poFactory),
@@ -47,8 +55,12 @@ public class XyWzmThemeRegister extends AbstractThemeRegister {
                 new Module("MapperXml", "Mybatis Mapper MXL", mapperXmlFactory),
                 new Module("MapperService", "Mybatis Mapper Service", mapperServiceFactory),
                 new Module("MapperServiceImpl", "Mybatis Mapper Service Impl", mapperServiceImplFactory),
+                new Module("Service", "业务逻辑服务", serviceFactory),
+                new Module("Controller", "控制器", controllerFactory),
                 new Module("Vo", "Web层返回对象", voFactory),
-                new Module("PageListQo", "分页查询对象", pageListQoFactory)
+                new Module("PageListQo", "分页查询对象", pageListQoFactory),
+                new Module("Form", "表单", formFactory),
+                new Module("ControllerTest", "控制器测试", controllerTestFactory)
 
         );
 

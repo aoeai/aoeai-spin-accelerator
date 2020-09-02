@@ -2,29 +2,28 @@ package com.aoeai.spin.accelerator.themes1.customize.xy.wazhima.factory;
 
 import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate1.AbstractJavaFileFactory;
-import com.aoeai.spin.accelerator.generate1.IMapperFactory;
 import com.aoeai.spin.accelerator.generate1.IPoFactory;
 import com.aoeai.spin.accelerator.themes1.customize.xy.wazhima.XyWzmTools;
-import com.aoeai.spin.accelerator.themes1.customize.xy.wazhima.bean.XyWzmMapperServiceImpl;
+import com.aoeai.spin.accelerator.themes1.customize.xy.wazhima.bean.XyWzmServiceClass;
+import org.apache.commons.text.WordUtils;
 
 /**
- * MapperService类工厂
  * @author aoe
  * @date 2020/8/26
  */
-public class XyWzmMapperServiceImplFactory extends AbstractJavaFileFactory<XyWzmMapperServiceImpl> {
+public class XyWzmServiceFactory extends AbstractJavaFileFactory<XyWzmServiceClass> {
 
     private IPoFactory poFactory;
-
     private XyWzmMapperServiceFactory mapperServiceFactory;
+    private XyWzmVoFactory voFactory;
+    private XyWzmPageListQoFactory pageListQoFactory;
 
-    private IMapperFactory mapperFactory;
-
-    public XyWzmMapperServiceImplFactory(IPoFactory poFactory, XyWzmMapperServiceFactory mapperServiceFactory,
-                                         IMapperFactory mapperFactory) {
+    public XyWzmServiceFactory(IPoFactory poFactory, XyWzmMapperServiceFactory mapperServiceFactory,
+                               XyWzmVoFactory voFactory, XyWzmPageListQoFactory pageListQoFactory) {
         this.poFactory = poFactory;
         this.mapperServiceFactory = mapperServiceFactory;
-        this.mapperFactory = mapperFactory;
+        this.voFactory = voFactory;
+        this.pageListQoFactory = pageListQoFactory;
     }
 
     /**
@@ -34,8 +33,8 @@ public class XyWzmMapperServiceImplFactory extends AbstractJavaFileFactory<XyWzm
      * @return
      */
     @Override
-    public XyWzmMapperServiceImpl build(String tableName) {
-        return create(tableName, new XyWzmMapperServiceImpl());
+    public XyWzmServiceClass build(String tableName) {
+        return create(tableName, new XyWzmServiceClass());
     }
 
     /**
@@ -45,7 +44,7 @@ public class XyWzmMapperServiceImplFactory extends AbstractJavaFileFactory<XyWzm
      */
     @Override
     protected String configYaml() {
-        return "/themes/xy/wazhima1/config/mapper-service-impl.yaml";
+        return "/themes/xy/wazhima1/config/service.yaml";
     }
 
     @Override
@@ -61,11 +60,11 @@ public class XyWzmMapperServiceImplFactory extends AbstractJavaFileFactory<XyWzm
     @Override
     protected void manualCreate(String tableName) {
         Po po = poFactory.build(tableName);
-        builder.setPo(po);
-
-        builder.setClassComment(po.getTable().getComment() + "服务类");
         builder.setMapperService(mapperServiceFactory.build(tableName));
-        builder.setMapperClass(mapperFactory.build(tableName));
+        builder.setMapperServiceVariable(WordUtils.uncapitalize(builder.getMapperService().getClassName()));
+        builder.setClassComment(po.getClassComment() + "服务");
+        builder.setPageListQO(pageListQoFactory.build(tableName));
+        builder.setVo(voFactory.build(tableName));
     }
 
     @Override

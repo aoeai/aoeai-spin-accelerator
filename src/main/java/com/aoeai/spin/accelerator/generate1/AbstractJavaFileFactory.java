@@ -27,7 +27,7 @@ public abstract class AbstractJavaFileFactory<T extends BaseClassProperty> imple
      */
     protected  T create(String tableName, T builder) {
         this.builder = builder;
-        JavaConfig cfg = ConfigTools.getConfig(configYaml(), JavaConfig.class);
+        JavaConfig cfg = ConfigTools.getConfig(configYaml(), getConfigType());
         BeanUtils.copyProperties(cfg, builder);
         Po po = poFactory().build(tableName);
         builder.setClassComment(po.getTable().getComment());
@@ -47,6 +47,14 @@ public abstract class AbstractJavaFileFactory<T extends BaseClassProperty> imple
      * @param tableName
      */
     protected void doEnd(String tableName){}
+
+    /**
+     * 获得配置信息的类型
+     * @return
+     */
+    protected Class<JavaConfig> getConfigType(){
+        return JavaConfig.class;
+    }
 
     /**
      * 存放配置信息的yaml文件
