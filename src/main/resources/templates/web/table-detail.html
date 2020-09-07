@@ -24,7 +24,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>[[${theme.themeName}]] 💨 [[${tableName}]]</h1>
+                        <h1>[[${theme.name}]] 💨 [[${tableName}]]</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -94,7 +94,7 @@
 <script>
     function create(type) {
         $('#staticBackdrop').modal();
-        var url = '/create?tableName=[[${tableName}]]&theme=[[${theme.theme}]]' + "&type=" + type;
+        var url = '/create?tableName=[[${tableName}]]&theme=[[${theme.code}]]' + "&type=" + type;
         $.get( url, function( data ) {
             setTimeout(function() {
                 $('#staticBackdrop').modal('hide');
@@ -109,7 +109,7 @@
     }
 
     function preview(module) {
-        this.href='/preview?tableName=[[${tableName}]]&theme=[[${theme.theme}]]' + "&module=" + module;
+        this.href='/preview?tableName=[[${tableName}]]&theme=[[${theme.code}]]' + "&module=" + module;
         window.open(this.href, '_blank')
     }
 </script>

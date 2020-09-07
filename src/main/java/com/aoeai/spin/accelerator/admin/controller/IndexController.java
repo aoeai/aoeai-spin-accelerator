@@ -3,10 +3,10 @@ package com.aoeai.spin.accelerator.admin.controller;
 import com.aoeai.spin.accelerator.admin.service.FreemarkerService;
 import com.aoeai.spin.accelerator.generate.common.IGenerateProperty;
 import com.aoeai.spin.accelerator.refining.db.service.DBService;
-import com.aoeai.spin.accelerator.themes.*;
-import com.aoeai.spin.accelerator.themes.constant.ThemeTypeEnum;
+import com.aoeai.spin.accelerator.themes.frame.ThemeFactory;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author aoe
- * @date 2020/6/5
+ * @date 2020/8/24
  */
-//@Controller
+@Controller
 public class IndexController {
 
     @Resource
@@ -31,23 +30,24 @@ public class IndexController {
     private FreemarkerService freemarkerService;
 
     @Resource
-    private ThemeTools themeTools;
+    private ThemeFactory themeFactory;
 
     /**
      * 首页
      * @param tableName
+     * @param code 模板代码
      * @param model
-     * @return 数据库列表
+     * @return
      */
     @GetMapping("/")
-    public String index(@RequestParam(required = false) String tableName, @RequestParam(required = false) String theme, Model model){
+    public String index(@RequestParam(required = false) String tableName, @RequestParam(required = false) String code, Model model){
         List tableList =  dbService.getTableList(tableName);
         model.addAttribute("tableList", tableList);
-        model.addAttribute("themeList", ThemeTypeEnum.values());
+        model.addAttribute("themeList", themeFactory.getThemeTypes());
 
         // 搜索条件
         model.addAttribute("tableName", tableName);
-        model.addAttribute("themeHis", theme);
+        model.addAttribute("themeHis", code);
         return "web/index";
     }
 
@@ -60,24 +60,9 @@ public class IndexController {
      */
     @GetMapping("/detail")
     public String detail(String tableName, String theme, Model model) {
-        List<String> typeList = new ArrayList<>();
-        typeList.add("po");
-        typeList.add("mapperClass");
-        typeList.add("mapperXml");
-        typeList.add("mapperService");
-        typeList.add("mapperServiceImpl");
-        typeList.add("Iservice");
-        typeList.add("service");
-        typeList.add("pageListQO");
-        typeList.add("vo");
-        typeList.add("form");
-        typeList.add("Icontroller");
-        typeList.add("controller");
-        typeList.add("controllerTest");
-
-        model.addAttribute("typeList", typeList);
+        model.addAttribute("modules", themeFactory.getModules(theme));
         model.addAttribute("tableName", tableName);
-        model.addAttribute("theme", ThemeTypeEnum.toEnum(theme));
+        model.addAttribute("theme", themeFactory.getThemeType(theme));
 
         return "web/table-detail";
     }
@@ -85,78 +70,18 @@ public class IndexController {
     /**
      * 生成预览
      * @param tableName
-     * @param type
+     * @param module
      * @param theme
      * @param model
      * @return
      */
     @GetMapping("/preview")
-    public String preview(String tableName, String type, String theme, Model model) throws IOException, TemplateException {
+    public String preview(String tableName, String module, String theme, Model model) throws IOException, TemplateException {
         model.addAttribute("tableName", tableName);
-        model.addAttribute("type", type);
-        model.addAttribute("theme", ThemeTypeEnum.toEnum(theme));
+        model.addAttribute("module", module);
+        model.addAttribute("theme", themeFactory.getThemeType(theme));
 
-        IGenerateProperty content = null;
-        ThemeFactory themeFactory = themeTools.themeFactory(theme);
-        POThemesService poThemesService = themeFactory.buildPOThemesService();
-        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService();
-        ServiceThemesService iServiceThemesService = themeFactory.buildIServiceThemesService();
-        WebThemesService iwebThemesService = themeFactory.buildIWebThemesService();
-        WebThemesService webThemesService = themeFactory.buildWebThemesService();
-        TestThemesService testThemesService = themeFactory.buildTestThemesService();
-
-        switch (type) {
-            // dao
-            case "po":
-                content = poThemesService.getPO(tableName);
-                break;
-            case "mapperClass":
-                content = poThemesService.getMapperClass(tableName);
-                break;
-            case "mapperXml":
-                content = poThemesService.getMapperXml(tableName);
-                break;
-            case "mapperService":
-                content = poThemesService.getMapperService(tableName);
-                break;
-            case "mapperServiceImpl":
-                content = poThemesService.getMapperServiceImpl(tableName);
-                break;
-            // service
-            case "service":
-                content = serviceThemesService.getServiceClass(tableName);
-                break;
-            case "Iservice":
-                if (iServiceThemesService != null) {
-                    content = iServiceThemesService.getServiceClass(tableName);
-                }
-                break;
-
-            // web
-            case "pageListQO":
-                content = webThemesService.getPageListQO(tableName);
-                break;
-            case "vo":
-                content = webThemesService.getVO(tableName);
-                break;
-            case "form":
-                content = webThemesService.getForm(tableName);
-                break;
-            case "Icontroller":
-                if (iwebThemesService != null) {
-                    content = iwebThemesService.getController(tableName);
-                }
-                break;
-            case "controller":
-                content = webThemesService.getController(tableName);
-                break;
-
-            // Test
-            case "controllerTest":
-                content = testThemesService.getControllerTest(tableName);
-                break;
-        }
-
+        IGenerateProperty content = themeFactory.buildModule(theme, module, tableName);
         Template template = freemarkerService.getTemplate(content.getTemplates());
         StringWriter writer = new StringWriter();
         template.process(content, writer);

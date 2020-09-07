@@ -1,7 +1,0 @@
-# Mybatis Mapper XML 文件配置信息
-
-# 存储位置
-filePath: /Users/aoe/IdeaProjects/paqu/wazhima/src/main/resources/$MODEL_PATH/mapper/
-
-# 模板文件路径
-templates: xy/wazhima1/mapper_xml.ftl

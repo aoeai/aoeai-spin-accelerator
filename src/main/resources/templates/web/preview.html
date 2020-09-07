@@ -27,7 +27,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1>
-                            [[${theme.themeName}]]
+                            [[${theme.name}]]
                             <button type="button" class="btn btn-outline-primary"
                                     th:onclick="create([[${module}]])">生成
                             </button>
@@ -83,7 +83,7 @@
 <script>
     function create(type) {
         $('#staticBackdrop').modal();
-        var url = '/create?tableName=[[${tableName}]]&theme=[[${theme.theme}]]' + "&type=" + type;
+        var url = '/create?tableName=[[${tableName}]]&theme=[[${theme.code}]]' + "&type=" + type;
         $.get( url, function( data ) {
             setTimeout(function() {
                 $('#staticBackdrop').modal('hide');

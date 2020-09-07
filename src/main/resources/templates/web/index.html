@@ -16,12 +16,12 @@
         <form action="/" class="form-inline ml-3">
             <div class="input-group input-group-sm">
                 <!-- select -->
-                <select id="themeId" name="theme" class="form-control">
+                <select id="themeId" name="code" class="form-control">
                     <option>选择模板</option>
                     <option th:each="theme : ${themeList}"
-                            th:value="${theme.theme}"
-                            th:text="${theme.themeName}"
-                            th:selected="${themeHis == theme.theme}">
+                            th:value="${theme.code}"
+                            th:text="${theme.name}"
+                            th:selected="${themeHis == theme.code}">
                     </option>
                 </select>
                 &nbsp;&nbsp;

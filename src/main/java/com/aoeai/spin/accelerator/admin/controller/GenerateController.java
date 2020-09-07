@@ -1,130 +1,52 @@
 package com.aoeai.spin.accelerator.admin.controller;
 
-import com.aoeai.spin.accelerator.themes.*;
+import com.aoeai.spin.accelerator.admin.service.FreemarkerService;
+import com.aoeai.spin.accelerator.generate.common.IGenerateProperty;
+import com.aoeai.spin.accelerator.generate.utils.FileTools;
+import com.aoeai.spin.accelerator.themes.frame.ThemeFactory;
+import com.aoeai.spin.accelerator.themes.frame.bean.Module;
 import freemarker.template.TemplateException;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 生成文件
  * @author aoe
  * @date 2020/6/8
  */
-//@RestController
+@RestController
 public class GenerateController {
 
     @Resource
-    private ThemeTools themeTools;
+    private ThemeFactory themeFactory;
+
+    @Resource
+    private FreemarkerService freemarkerService;
 
     @RequestMapping("createAll")
     public String createPO(String tableName, String theme) throws IOException, TemplateException {
-        ThemeFactory themeFactory = themeTools.themeFactory(theme);
-        // dao
-        POThemesService poThemesService = themeFactory.buildPOThemesService();
-        poThemesService.createPOFile(tableName);
-        poThemesService.createMapperClassFile(tableName);
-        poThemesService.createMapperXmlFile(tableName);
-        poThemesService.createMapperServiceFile(tableName);
-        poThemesService.createMapperServiceImplFile(tableName);
-
-        // service
-        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService();
-        serviceThemesService.createServiceClassFile(tableName);
-
-        ServiceThemesService iServiceThemesService = themeFactory.buildIServiceThemesService();
-        if (iServiceThemesService != null) {
-            iServiceThemesService.createServiceClassFile(tableName);
+        List<Module> modules = themeFactory.getModules(theme);
+        for (Module module : modules) {
+            IGenerateProperty builder = module.getFactory().build(tableName);
+            FileTools.buildFile(builder.getFile(), freemarkerService.getTemplate(builder.getTemplates()), builder);
         }
-
-        // web
-        WebThemesService webThemesService = themeFactory.buildWebThemesService();
-        webThemesService.createPageListQOFile(tableName);
-        webThemesService.createVOFile(tableName);
-        webThemesService.createFormFile(tableName);
-        webThemesService.createControllerFile(tableName);
-
-        WebThemesService iwebThemesService = themeFactory.buildIWebThemesService();
-        if (iwebThemesService != null) {
-            iwebThemesService.createControllerFile(tableName);
-        }
-
-        // Test
-        TestThemesService testThemesService = themeFactory.buildTestThemesService();
-        testThemesService.createControllerTestFile(tableName);
-
         return "ok";
     }
 
     @RequestMapping("create")
     public String create(String tableName, String type, String theme) throws IOException, TemplateException {
-        ThemeFactory themeFactory = themeTools.themeFactory(theme);
-        POThemesService poThemesService = themeFactory.buildPOThemesService();
-        ServiceThemesService serviceThemesService = themeFactory.buildServiceThemesService();
-        ServiceThemesService iServiceThemesService = themeFactory.buildIServiceThemesService();
-        WebThemesService iwebThemesService = themeFactory.buildIWebThemesService();
-        WebThemesService webThemesService = themeFactory.buildWebThemesService();
-        TestThemesService testThemesService = themeFactory.buildTestThemesService();
-
-        switch (type) {
-            // dao
-            case "po":
-                poThemesService.createPOFile(tableName);
-                break;
-                case "mapperClass":
-                    poThemesService.createMapperClassFile(tableName);
-                break;
-            case "mapperXml":
-                poThemesService.createMapperXmlFile(tableName);
-                break;
-                case "mapperService":
-                    poThemesService.createMapperServiceFile(tableName);
-                break;
-                case "mapperServiceImpl":
-                    poThemesService.createMapperServiceImplFile(tableName);
-                break;
-
-            // service
-            case "service":
-                serviceThemesService.createServiceClassFile(tableName);
-                break;
-            case "Iservice":
-                if (iServiceThemesService == null) {
-                    return "没有iServiceThemesService模板";
-                }
-                iServiceThemesService.createServiceClassFile(tableName);
-                break;
-
-            // web
-            case "pageListQO":
-                webThemesService.createPageListQOFile(tableName);
-                break;
-            case "vo":
-                webThemesService.createVOFile(tableName);
-                break;
-            case "form":
-                webThemesService.createFormFile(tableName);
-                break;
-            case "Icontroller":
-                if (iwebThemesService == null) {
-                    return "没有iwebThemesService模板";
-                }
-                iwebThemesService.createControllerFile(tableName);
-                break;
-            case "controller":
-                webThemesService.createControllerFile(tableName);
-                break;
-
-            // Test
-            case "controllerTest":
-                testThemesService.createControllerTestFile(tableName);
-                break;
-
-            default:
-                return "没有选中生成对象";
+        List<Module> modules = themeFactory.getModules(theme);
+        for (Module module : modules) {
+            if (type.equals(module.getCode())) {
+                IGenerateProperty builder = module.getFactory().build(tableName);
+                FileTools.buildFile(builder.getFile(), freemarkerService.getTemplate(builder.getTemplates()), builder);
+                return "ok";
+            }
         }
-
-        return "ok";
+        return "fail";
     }
 }

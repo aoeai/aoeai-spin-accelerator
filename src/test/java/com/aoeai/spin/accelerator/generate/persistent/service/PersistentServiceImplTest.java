@@ -1,9 +1,7 @@
 package com.aoeai.spin.accelerator.generate.persistent.service;
 
-import com.aoeai.spin.accelerator.generate.config.GenerateRuleConfig;
-import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
-import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
+import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -11,15 +9,10 @@ import org.testng.annotations.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * 创建持久对象-默认实现 测试类
- */
 public class PersistentServiceImplTest {
 
     @Test
     public void allPOMapTest(){
-        GenerateRuleConfig grConfig = ConfigTools.getGenerateRuleConfig("/default-generate-rule-config.yml");
-
         Po po = null; // TODO poMap.get("satest_problem");
         Assert.assertEquals(po.getClassName(), "SatestProblemPO");
         Assert.assertEquals(po.getPackageName(), "com.aoeai.test.po");
