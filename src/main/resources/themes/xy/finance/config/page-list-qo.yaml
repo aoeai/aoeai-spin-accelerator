@@ -1,0 +1,12 @@
+# 配置信息
+# 包名
+packageName: com.starbuds.server.service.finance.pojo.qo
+
+# 类存储位置
+filePath: /Users/aoe/IdeaProjects/paqu/service-finance/src/main/java/com/starbuds/server/service/finance/pojo/qo/
+
+# 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
+suffix: PageListQO
+
+# 模板文件路径
+templates: xy/finance/page_list_qo.ftl
