@@ -9,6 +9,7 @@ public enum JavaTypeEnum {
     INTEGER("Integer", null),
     LONG("Long", null),
     DATE("Date", "java.util.Date"),
+    LOCAL_DATE_TIME("LocalDateTime", "java.time.LocalDateTime"),
     FLOAT("Float", null),
     DOUBLE("Double", null),
     BIG_DECIMAL("BigDecimal", "java.math.BigDecimal"),

@@ -21,9 +21,10 @@ public enum MySQLType2JavaTypeEnum {
     DOUBLE("double", JavaTypeEnum.DOUBLE),
     DECIMAL("decimal", JavaTypeEnum.BIG_DECIMAL),
 
-    DATE("date", JavaTypeEnum.DATE),
-    DATETIME("datetime", JavaTypeEnum.DATE),
+    // 使用 startWith 判断，顺序不能乱
+    DATETIME("datetime", JavaTypeEnum.LOCAL_DATE_TIME),
     TIMESTAMP("timestamp", JavaTypeEnum.DATE),
+    DATE("date", JavaTypeEnum.DATE),
     ;
 
     /**

@@ -64,7 +64,8 @@ public class DBServiceImpl implements DBService {
             String dbMaxLengthStr = "0";
             if (MySQLType2JavaTypeEnum.DECIMAL.dbType().equals(dataType)) {
                 dbMaxLengthStr = columnType.substring(8, columnType.indexOf(","));
-            }else if (MySQLType2JavaTypeEnum.DOUBLE.dbType().equals(dataType)){
+            }else if (MySQLType2JavaTypeEnum.DOUBLE.dbType().equals(dataType)
+            && columnType.length() > 7){
                 dbMaxLengthStr = columnType.substring(7, columnType.indexOf(","));
             }else {
                 if (columnType.contains("(")) {

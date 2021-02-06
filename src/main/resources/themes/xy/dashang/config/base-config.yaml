@@ -1,0 +1,5 @@
+# 自定义基础配置
+
+# 包名前缀
+$packagePrefix: com.dashang.vod.video
+$num: 10

@@ -49,6 +49,25 @@ public class FileTools {
         return FileUtils.readFileToString(file, UTF_8);
     }
 
+    /**
+     * 获得src/main/resources/目录下的文件路径
+     * @param filePath
+     * @return
+     */
+    public static String getMainResourcesFilePath(String filePath){
+        return getRootPath() + "/src/main/resources/" + filePath;
+    }
+
+    /**
+     * 获得项目根目录
+     * @return
+     */
+    private static String getRootPath(){
+        File file = new File(FileTools.class.getResource("/").getPath());
+        String rootPath = file.getParentFile().getParentFile().getPath();
+        return rootPath;
+    }
+
     public static void main(String[] args) throws IOException {
         /*String path = "/Users/aoe/IdeaProjects/paqu/wazhima-test/src/test/java/com/wazhima/mgt/statistics/MgtStatisticsest.java";
         File file = new File(path);
