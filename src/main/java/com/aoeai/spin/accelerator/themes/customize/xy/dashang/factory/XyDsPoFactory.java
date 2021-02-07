@@ -43,8 +43,7 @@ public class XyDsPoFactory implements IPoFactory {
     @Override
     public Po build(String tableName) {
         Po po = new Po();
-        PoConfig cfg = ConfigTools.getConfig("/themes/xy/dashang/config/base-config.yaml",
-                "/themes/xy/dashang/config/po.yaml", PoConfig.class);
+        PoConfig cfg = ConfigTools.getConfig("/themes/xy/dashang/config/po.yaml", PoConfig.class);
         BeanUtils.copyProperties(cfg, po);
 
         Table table = dbService.getTable(tableName);

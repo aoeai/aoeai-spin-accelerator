@@ -8,7 +8,7 @@ import ${classFullName};
 
 /**
  * ${classComment}
- *
+ * @author aoe
  */
 @Data
 public class ${className} {

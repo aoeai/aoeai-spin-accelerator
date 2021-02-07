@@ -26,6 +26,11 @@ public class ConfigTools {
      * @return
      */
     public static <T>T getConfig(String yamlName, Class<T> clazz) {
+        String configPath = yamlName.substring(0, yamlName.lastIndexOf("/")) + "/base-config.yaml";
+        File configFile = new File(getMainResourcesFilePath(configPath));
+        if (configFile.exists()) {
+            return getConfig(configPath, yamlName, clazz);
+        }
         Yaml yaml = new Yaml();
         return yaml.loadAs(ConfigTools.class.getResourceAsStream(yamlName), clazz);
     }
@@ -38,14 +43,13 @@ public class ConfigTools {
      * @param <T>
      * @return
      */
-    public static <T>T getConfig(String baseConfigYaml, String yamlName, Class<T> clazz) {
+    private static <T>T getConfig(String baseConfigYaml, String yamlName, Class<T> clazz) {
         Yaml yaml = new Yaml();
         Map<String, Object> baseCfgMap = yaml.loadAs(ConfigTools.class.getResourceAsStream(baseConfigYaml), Map.class);
 
         String yamlStr = null;
-        String cfgStr = null;
         try {
-            cfgStr = FileTools.readFileToString(new File(getMainResourcesFilePath(yamlName)));
+            yamlStr = FileTools.readFileToString(new File(getMainResourcesFilePath(yamlName)));
         } catch (IOException e) {
             log.error("获取配置文件失败", e);
         }
@@ -55,7 +59,7 @@ public class ConfigTools {
             String k = entry.getKey();
             Object v = entry.getValue();
             if (v instanceof String) {
-                yamlStr = cfgStr.replaceAll(Matcher.quoteReplacement(k), "" + v);
+                yamlStr = yamlStr.replaceAll(Matcher.quoteReplacement(k), "" + v);
             }
         }
 

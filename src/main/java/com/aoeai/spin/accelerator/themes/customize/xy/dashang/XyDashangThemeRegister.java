@@ -2,6 +2,8 @@ package com.aoeai.spin.accelerator.themes.customize.xy.dashang;
 
 import com.aoeai.spin.accelerator.generate.IMapperFactory;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
+import com.aoeai.spin.accelerator.themes.customize.xy.dashang.factory.XyDsMapperFactory;
+import com.aoeai.spin.accelerator.themes.customize.xy.dashang.factory.XyDsMapperXmlFactory;
 import com.aoeai.spin.accelerator.themes.customize.xy.finance.factory.*;
 import com.aoeai.spin.accelerator.themes.frame.AbstractThemeRegister;
 import com.aoeai.spin.accelerator.themes.frame.bean.Module;
@@ -34,7 +36,7 @@ public class XyDashangThemeRegister extends AbstractThemeRegister {
         themeType.setCode("xy-dashang");
         themeType.setName("星芽-达赏");
 
-        IMapperFactory mapperFactory = new XyFinMapperFactory(poFactory);
+        IMapperFactory mapperFactory = new XyDsMapperFactory(poFactory);
         XyFinVoFactory voFactory = new XyFinVoFactory(poFactory);
         XyFinFormFactory formFactory = new XyFinFormFactory(poFactory);
         XyFinPageListQoFactory pageListQoFactory = new XyFinPageListQoFactory(poFactory);
@@ -47,7 +49,7 @@ public class XyDashangThemeRegister extends AbstractThemeRegister {
         List<Module> modules = Arrays.asList(
                 new Module("PO", "持久化对象", poFactory),
                 new Module("MapperClass", "Mybatis Mapper", mapperFactory),
-                new Module("MapperXml", "Mybatis Mapper MXL", new XyFinMapperXmlFactory(mapperFactory)),
+                new Module("MapperXml", "Mybatis Mapper MXL", new XyDsMapperXmlFactory(mapperFactory)),
                 new Module("Provider", "服务实现", providerFactory),
                 new Module("PageListQO", "分页查询对象", pageListQoFactory)
                 /*,

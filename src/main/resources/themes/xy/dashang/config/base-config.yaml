@@ -1,5 +1,12 @@
-# 自定义基础配置
+# 自定义变量
 
 # 包名前缀
 $packagePrefix: com.dashang.vod.video
-$num: 10
+
+# 包名基础路径
+$packageBaseFilePath: /Users/aoe/IdeaProjects/dashang/dashang-vod/src/main/java/com/dashang/vod/video
+
+# 模板基础路径
+$templatesBasePath: xy/dashang
+
+$mapperXmlBasePath: /Users/aoe/IdeaProjects/dashang/dashang-vod/src/main/resources/mapper/video/
