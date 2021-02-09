@@ -11,16 +11,12 @@
     <insert id="insertBatch">
         INSERT INTO ${mapperClass.po.table.name}
             <trim prefix="(" suffix=")" suffixOverrides=",">
-            <#list mapperClass.po.table.columns as column>
-            ${column.name},
-		    </#list>
+                <include refid="ALL_COLUMNS_EXCEPT_PRIMARY_KEY_TEST_NULL" />
             </trim>
         VALUES
         <foreach collection="list" item="item" index="index" separator="," >
             <trim prefix="(" suffix=")" suffixOverrides=",">
-            <#list mapperClass.po.table.columns as column>
-            #${r'{'}item.${column.name}},
-		    </#list>
+                <include refid="ALL_VALUES_EXCEPT_PRIMARY_KEY_TEST_NULL" />
             </trim>
         </foreach>
     </insert>
@@ -41,15 +37,7 @@
         </if>
         <if test="count > 0">
             UPDATE ${mapperClass.po.table.name}
-            <set>
-            <#list mapperClass.po.table.columns as column>
-            <#if column.isPrimaryKey == false && column.name != 'createTime'>
-            <if test="${column.name} != null">
-                ${column.name} = #${r'{'}${column.name}},
-            </if>
-            </#if>
-            </#list>
-        </set>
+            <include refid="UPDATE_SET" />
             <#list mapperClass.po.table.columns as column>
                 <#if column.isPrimaryKey == true>
             WHERE ${column.name} = #${r'{'}${column.name}}
@@ -61,15 +49,7 @@
     <!-- 更新数据 -->
     <update id="update">
         UPDATE ${mapperClass.po.table.name}
-        <set>
-            <#list mapperClass.po.table.columns as column>
-            <#if column.isPrimaryKey == false && column.name != 'createTime'>
-            <if test="po.${column.name} != null">
-                ${column.name} = #${r'{'}po.${column.name}},
-            </if>
-            </#if>
-            </#list>
-        </set>
+        <include refid="UPDATE_SET" />
         <include refid="queryCondition" />
     </update>
 
@@ -103,8 +83,7 @@
         <include refid="ALL_COLUMNS" />
         FROM ${mapperClass.po.table.name}
         <include refid="queryCondition" />
-        ORDER BY createTime DESC
-        LIMIT #${r'{'}pageCursor} , #${r'{'}pageSize}
+        ORDER BY create_time DESC
     </select>
 
     <!-- 所有列 -->
@@ -159,19 +138,46 @@
     <sql id="insertSQL">
         INSERT INTO ${mapperClass.po.table.name}
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="ALL_COLUMNS_EXCEPT_PRIMARY_KEY_TEST_NULL" />
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <include refid="ALL_VALUES_EXCEPT_PRIMARY_KEY_TEST_NULL" />
+        </trim>
+    </sql>
+
+    <!-- 所有列是否为(不包含主键) null -->
+    <sql id="ALL_COLUMNS_EXCEPT_PRIMARY_KEY_TEST_NULL">
         <#list mapperClass.po.table.columns as column>
+            <#if column.isPrimaryKey == false>
             <if test="${column.name} != null">
                 ${column.name},
             </if>
-		</#list>
-        </trim>
-        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            </#if>
+        </#list>
+    </sql>
+
+    <!-- 所有列的值是否为(不包含主键) null -->
+    <sql id="ALL_VALUES_EXCEPT_PRIMARY_KEY_TEST_NULL">
         <#list mapperClass.po.table.columns as column>
+            <#if column.isPrimaryKey == false>
             <if test="${column.name} != null">
                 #${r'{'}${column.name}},
             </if>
-		</#list>
-        </trim>
+            </#if>
+        </#list>
+    </sql>
+
+    <!-- UPDATE语句所有列和值值是否为(不包含主键) null -->
+    <sql id="UPDATE_SET">
+        <set>
+        <#list mapperClass.po.table.columns as column>
+        <#if column.isPrimaryKey == false && column.name != 'create_time'>
+        <if test="po.${column.name} != null">
+            ${column.name} = #${r'{'}po.${column.name}},
+        </if>
+        </#if>
+        </#list>
+        </set>
     </sql>
 
 </mapper>

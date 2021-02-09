@@ -19,6 +19,7 @@
 
 - 1.1. XyDashangThemeRegister.java 自定义方法入口
 - 1.2. XyDsMapperFactory.java 
+- 1.3. XyDsMapperXmlFactory.java 
 
 ## 2. 各工厂配置信息
 

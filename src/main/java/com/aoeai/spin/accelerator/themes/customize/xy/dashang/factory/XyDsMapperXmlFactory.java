@@ -32,6 +32,7 @@ public class XyDsMapperXmlFactory implements IMapperXmlFactory {
         xml.setMapperClass(mapperClass);
 
         String fileName = StrUtil.format("{}{}.xml", cfg.getFilePath(), mapperClass.getClassName());
+        fileName = fileName.replaceFirst("DAO", "Mapper");
         xml.setFile(new File(fileName));
 
         return xml;
