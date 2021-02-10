@@ -10,15 +10,14 @@ import ${classFullName};
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * ${classComment}创建表单
+ * ${classComment}更新表单
  *
  */
 @Data
 public class ${className} {
 
 <#list fieldList as field>
-	<#if field.name !="id"
-      && field.name !="version"
+	<#if field.name !="version"
       && field.name !="isDelete"
       && field.name !="createTime"
       && field.name !="modifyTime">

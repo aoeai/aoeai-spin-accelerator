@@ -39,7 +39,8 @@
             column_type columnType,
             column_comment columnComment,
             column_key columnKey,
-            extra
+            extra,
+			IS_NULLABLE isNullable
         FROM
             information_schema.columns
         WHERE

@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateTime;
 import com.aoeai.spin.accelerator.admin.vo.ColumnVO;
 import com.aoeai.spin.accelerator.admin.vo.TableVO;
 import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
+import com.aoeai.spin.accelerator.generate.utils.ClassTools;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.refining.db.bean.Table;
 import com.aoeai.spin.accelerator.refining.db.mapper.DBMapper;
@@ -77,6 +78,7 @@ public class DBServiceImpl implements DBService {
             }
             Integer dbMaxLength = Integer.parseInt(dbMaxLengthStr);
             vo.setDbMaxLength(dbMaxLength);
+            vo.setNullable("YES".equals(columnPO.getIsNullable()));
 
             if ("bigint".equals(columnPO.getDataType())) {
                 vo.setIntegersLength(dbMaxLength);
@@ -100,6 +102,7 @@ public class DBServiceImpl implements DBService {
             Column column = new Column();
             BeanUtils.copyProperties(vo, column);
             column.setName(vo.getColumnName());
+            column.setHumpName(ClassTools.humpName(column.getName()));
             column.setComment(vo.getColumnComment());
             column.setType(vo.getDataType());
             column.setIsPrimaryKey("PRI".equals(vo.getColumnKey()));

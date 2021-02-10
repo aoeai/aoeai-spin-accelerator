@@ -3,7 +3,7 @@
 <mapper namespace="${mapperClass.packageName}.${mapperClass.className}">
 
     <!-- 插入数据 -->
-    <insert id="insert" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}">
+    <insert id="insert" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}" keyProperty="id" useGeneratedKeys="true">
         <include refid="insertSQL" />
     </insert>
 
@@ -149,7 +149,7 @@
     <sql id="ALL_COLUMNS_EXCEPT_PRIMARY_KEY_TEST_NULL">
         <#list mapperClass.po.table.columns as column>
             <#if column.isPrimaryKey == false>
-            <if test="${column.name} != null">
+            <if test="${column.humpName} != null">
                 ${column.name},
             </if>
             </#if>
@@ -160,8 +160,8 @@
     <sql id="ALL_VALUES_EXCEPT_PRIMARY_KEY_TEST_NULL">
         <#list mapperClass.po.table.columns as column>
             <#if column.isPrimaryKey == false>
-            <if test="${column.name} != null">
-                #${r'{'}${column.name}},
+            <if test="${column.humpName} != null">
+                #${r'{'}${column.humpName}},
             </if>
             </#if>
         </#list>
@@ -172,8 +172,8 @@
         <set>
         <#list mapperClass.po.table.columns as column>
         <#if column.isPrimaryKey == false && column.name != 'create_time'>
-        <if test="po.${column.name} != null">
-            ${column.name} = #${r'{'}po.${column.name}},
+        <if test="po.${column.humpName} != null">
+            ${column.name} = #${r'{'}po.${column.humpName}},
         </if>
         </#if>
         </#list>

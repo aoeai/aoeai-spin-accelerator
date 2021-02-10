@@ -1,0 +1,12 @@
+# 配置信息
+# 包名
+packageName: $packagePrefix.controller
+
+# 类存储位置
+filePath: $packageBaseFilePath/controller/
+
+# 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
+suffix: ApiController
+
+# 模板文件路径
+templates: $templatesBasePath/controller-api.ftl

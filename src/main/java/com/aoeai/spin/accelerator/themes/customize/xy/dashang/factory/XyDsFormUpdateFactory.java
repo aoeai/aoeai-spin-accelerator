@@ -19,11 +19,11 @@ import java.util.*;
  * @author aoe
  * @date 2020/8/26
  */
-public class XyDsFormCreateFactory extends AbstractJavaFileFactory<XyDsForm> {
+public class XyDsFormUpdateFactory extends AbstractJavaFileFactory<XyDsForm> {
 
     private IPoFactory poFactory;
 
-    public XyDsFormCreateFactory(IPoFactory poFactory) {
+    public XyDsFormUpdateFactory(IPoFactory poFactory) {
         this.poFactory = poFactory;
     }
 
@@ -45,7 +45,7 @@ public class XyDsFormCreateFactory extends AbstractJavaFileFactory<XyDsForm> {
      */
     @Override
     protected String configYaml() {
-        return "/themes/xy/dashang/config/form-create.yaml";
+        return "/themes/xy/dashang/config/form-update.yaml";
     }
 
     @Override

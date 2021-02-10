@@ -36,4 +36,9 @@ public class ColumnVO {
      * 数据库设置的最大长度
      */
     private Integer dbMaxLength;
+
+    /**
+     * 允许为空 true:是
+     */
+    private boolean isNullable;
 }

@@ -88,6 +88,12 @@
 			<version>2.7</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.75</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -14,6 +14,11 @@ public class Column {
     private String name;
 
     /**
+     * 驼峰格式的字段名称
+     */
+    private String humpName;
+
+    /**
      * 字段类型
      */
     private String type;

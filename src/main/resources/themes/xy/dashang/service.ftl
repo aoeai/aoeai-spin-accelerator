@@ -42,7 +42,7 @@ public class ${className} {
         po.setCreateTime(LocalDateTime.now());
 <#list po.fieldList as field>
     <#if field.name =="modifyTime">
-        po.setModifyTime(null);
+        po.setModifyTime(po.getCreateTime());
     </#if>
 </#list>
         boolean flag = ${mapperClassVariable}.insert(po) == 1;

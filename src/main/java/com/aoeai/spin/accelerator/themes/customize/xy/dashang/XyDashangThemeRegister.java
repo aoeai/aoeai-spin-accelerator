@@ -39,6 +39,12 @@ public class XyDashangThemeRegister extends AbstractThemeRegister {
         XyDsPageListQoFactory pageListQoFactory = new XyDsPageListQoFactory(poFactory);
         XyDsServiceFactory serviceFactory = new XyDsServiceFactory(poFactory, mapperFactory, voFactory, pageListQoFactory);
         XyDsFormCreateFactory formCreateFactory = new XyDsFormCreateFactory(poFactory);
+        XyDsFormUpdateFactory formUpdateFactory = new XyDsFormUpdateFactory(poFactory);
+        XyDsControllerApiFactory controllerApiFactory = new XyDsControllerApiFactory(poFactory, serviceFactory, formCreateFactory,
+                formUpdateFactory, pageListQoFactory);
+        XyDsControllerAppFactory controllerAppFactory = new XyDsControllerAppFactory(poFactory, serviceFactory, formCreateFactory,
+                formUpdateFactory, pageListQoFactory);
+        XyDsControllerTestFactory controllerTestFactory = new XyDsControllerTestFactory(poFactory, pageListQoFactory, formCreateFactory);
 
         List<Module> modules = Arrays.asList(
                 new Module("PO", "持久化对象", poFactory),
@@ -47,15 +53,12 @@ public class XyDashangThemeRegister extends AbstractThemeRegister {
                 new Module("VO", "Web层返回对象", voFactory),
                 new Module("PageListQO", "分页查询对象", pageListQoFactory),
                 new Module("Service", "服务实现", serviceFactory),
-                new Module("FormCreate", "创建表单", formCreateFactory)
+                new Module("FormCreate", "创建表单", formCreateFactory),
+                new Module("FormUpdate", "更新表单", formUpdateFactory),
+                new Module("ControllerApi", "Api控制器", controllerApiFactory),
+                new Module("ControllerApp", "App控制器", controllerAppFactory),
+                new Module("ControllerTest", "Test控制器", controllerTestFactory)
 
-                /*,
-                ,
-                new Module("Service", "服务接口", serviceClassFactory),
-                new Module("Facade", "门面控制器接口", facadeFactory),
-                new Module("FacadeImpl", "门面控制器实现类", facadeImplFactory),
-                ,
-                new Module("facadeTest", "门面控制器测试类", facadeTestFactory)*/
         );
 
         themeType.setModules(modules);

@@ -30,4 +30,6 @@ public class ColumnPO {
     private String columnKey;
 
     private String extra;
+
+    private String isNullable;
 }
