@@ -86,6 +86,17 @@
         ORDER BY create_time DESC
     </select>
 
+    <!-- id:DO Map -->
+    <select id="selectMap" resultType="java.util.Map">
+        SELECT
+        <include refid="ALL_COLUMNS" />
+        FROM ${mapperClass.po.table.name}
+        WHERE id IN
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            ${r'#{item}'}
+        </foreach>
+    </select>
+
     <!-- 所有列 -->
     <sql id="ALL_COLUMNS">
         <#list mapperClass.po.table.columns as column>

@@ -56,8 +56,8 @@ public class XyDashangThemeRegister extends AbstractThemeRegister {
                 new Module("FormCreate", "创建表单", formCreateFactory),
                 new Module("FormUpdate", "更新表单", formUpdateFactory),
                 new Module("ControllerApi", "Api控制器", controllerApiFactory),
-                new Module("ControllerApp", "App控制器", controllerAppFactory),
-                new Module("ControllerTest", "Test控制器", controllerTestFactory)
+                new Module("ControllerApp", "App控制器", controllerAppFactory)
+//                new Module("ControllerTest", "Test控制器", controllerTestFactory)
 
         );
 

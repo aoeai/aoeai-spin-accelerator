@@ -7,11 +7,12 @@ import ${pageListQO.packageName}.${pageListQO.className};
 
 import lombok.extern.slf4j.Slf4j;
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 import java.time.LocalDateTime;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.apache.commons.collections.CollectionUtils;
 
 import static com.dashang.vod.constant.sql.DbColumn.PRIMARY_KEY;
 import static com.dashang.vod.util.PageListUtil.buildPageListQueryWrapper;
@@ -25,7 +26,7 @@ import com.github.pagehelper.PageInfo;
 * ${classComment}
 * @author aoe
 */
-@Component
+@Service
 @Slf4j
 public class ${className} {
 
@@ -134,6 +135,18 @@ public class ${className} {
         PageHelper.startPage(qo.getPage(), qo.getSize());
         PageInfo<${po.className}> pageInfo = new PageInfo<>(${mapperClassVariable}.selectPageList(qw));
         return pageInfo;
+    }
+
+    /**
+     * id:DO Map
+     * @param ids id集合
+     * @return
+     */
+    public Map<Long, ${po.className}> getMap(Collection ids){
+        if (CollectionUtils.isEmpty(ids)) {
+            return Collections.EMPTY_MAP;
+        }
+        return ${mapperClassVariable}.selectMap(ids);
     }
 
     // 手动编码开始

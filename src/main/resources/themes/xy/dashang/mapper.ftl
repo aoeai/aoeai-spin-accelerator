@@ -4,10 +4,14 @@ import ${po.packageName}.${po.className};
 import com.dashang.vod.common.daoplus.QueryWrapper;
 import com.dashang.vod.common.daoplus.UpdateWrapper;
 
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  ${classComment}
@@ -56,5 +60,15 @@ public interface ${className} {
 	 * 查询列表(分页)
 	 */
 	List<${po.className}> selectPageList(QueryWrapper qw);
+
+	/**
+	 * id:DO Map
+	 * @param ids id集合
+	 * @return
+	 */
+	@MapKey("id")
+	Map<Long, ${po.className}> selectMap(@Param("ids") Collection ids);
+
+	// 手动编码开始
 
 }
