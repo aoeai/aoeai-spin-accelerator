@@ -32,10 +32,10 @@ public class ${className} extends PageQueryParam {
 </#list>
 
     @ApiModelProperty(value = "开始时间", required = false)
-    @QueryTag(column = "createTime", condition = ">=")
-    private Long startTime;
+    @QueryTag(column = "create_time", condition = ">=")
+    private String startTime;
 
     @ApiModelProperty(value = "结束时间", required = false)
-    @QueryTag(column = "createTime", condition = "<=")
-    private Long endTime;
+    @QueryTag(column = "create_time", condition = "<=")
+    private String endTime;
 }

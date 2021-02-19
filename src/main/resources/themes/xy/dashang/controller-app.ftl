@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import com.dashang.vod.common.result.ActionResult;
 
 import com.dashang.vod.common.result.ReturnCode;
+import com.dashang.vod.common.base.BaseController;
 
 /**
 *
@@ -25,7 +26,7 @@ import com.dashang.vod.common.result.ReturnCode;
 @RequestMapping("app/vod/${pathName}")
 @Api(value = "${className}", description = "${classComment}")
 @Slf4j
-public class ${className} {
+public class ${className} extends BaseController {
 
     @Resource
     private ${serviceClass.className} ${serviceClassVariable};
