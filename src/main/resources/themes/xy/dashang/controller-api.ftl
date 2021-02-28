@@ -24,7 +24,7 @@ import com.dashang.vod.common.base.BaseController;
 */
 @RestController
 @RequestMapping("api/vod/${pathName}")
-@Api(value = "${className}", description = "${classComment}")
+@Api(value = "${className}", tags = "${classComment}API")
 @Slf4j
 public class ${className} extends BaseController {
 

@@ -56,7 +56,7 @@
     <!-- 查询一条记录 -->
     <select id="selectOne" resultType="${mapperClass.po.packageName}.${mapperClass.po.className}">
         SELECT
-        <include refid="ALL_COLUMNS" />
+        <include refid="SELECT_ALL_COLUMNS" />
         FROM ${mapperClass.po.table.name}
         <include refid="queryCondition" />
         LIMIT 1
@@ -65,7 +65,7 @@
     <!-- 查询所有记录 -->
     <select id="selectList" resultType="${mapperClass.po.packageName}.${mapperClass.po.className}">
         SELECT
-        <include refid="ALL_COLUMNS" />
+        <include refid="SELECT_ALL_COLUMNS" />
         FROM ${mapperClass.po.table.name}
         <include refid="queryCondition" />
     </select>
@@ -80,7 +80,7 @@
     <!-- 查询列表(分页) -->
     <select id="selectPageList" resultType="${mapperClass.po.packageName}.${mapperClass.po.className}">
         SELECT
-        <include refid="ALL_COLUMNS" />
+        <include refid="SELECT_ALL_COLUMNS" />
         FROM ${mapperClass.po.table.name}
         <include refid="queryCondition" />
         ORDER BY create_time DESC
@@ -89,7 +89,7 @@
     <!-- id:DO Map -->
     <select id="selectMap" resultType="java.util.Map">
         SELECT
-        <include refid="ALL_COLUMNS" />
+        <include refid="SELECT_ALL_COLUMNS" />
         FROM ${mapperClass.po.table.name}
         WHERE id IN
         <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
@@ -98,9 +98,9 @@
     </select>
 
     <!-- 所有列 -->
-    <sql id="ALL_COLUMNS">
+    <sql id="SELECT_ALL_COLUMNS">
         <#list mapperClass.po.table.columns as column>
-            ${column.name}<#if column_has_next>,</#if>
+            ${column.name} ${column.humpName}<#if column_has_next>,</#if>
         </#list>
     </sql>
 
