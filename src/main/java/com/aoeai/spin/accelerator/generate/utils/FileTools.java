@@ -59,6 +59,15 @@ public class FileTools {
     }
 
     /**
+     * 获得src/test/resources/目录下的文件路径
+     * @param filePath
+     * @return
+     */
+    public static String getTestResourcesFilePath(String filePath){
+        return getRootPath() + "/src/test/resources/" + filePath;
+    }
+
+    /**
      * 获得项目根目录
      * @return
      */

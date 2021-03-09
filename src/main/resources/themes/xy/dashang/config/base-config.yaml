@@ -1,12 +1,16 @@
 # 自定义变量
 
+# 模块名称
+model: green
 # 包名前缀
-$packagePrefix: com.dashang.vod.video
+packagePrefix: com.dashang.vod.${model}
 
+# 工程根路径
+rootPath: /Users/aoe/IdeaProjects/dashang/dashang-vod
 # 包名基础路径
-$packageBaseFilePath: /Users/aoe/IdeaProjects/dashang/dashang-vod/src/main/java/com/dashang/vod/video
+packageBaseFilePath: ${rootPath}/src/main/java/com/dashang/vod/${model}
 
 # 模板基础路径
-$templatesBasePath: xy/dashang
+templatesBasePath: xy/dashang
 
-$mapperXmlBasePath: /Users/aoe/IdeaProjects/dashang/dashang-vod/src/main/resources/mapper/video/
+mapperXmlBasePath: ${rootPath}/src/main/resources/mapper/${model}/

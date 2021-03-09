@@ -1,0 +1,6 @@
+pkgName: com.pkg.${model}
+
+url: https//:www.google.com
+
+packageName: ${num}.model.db
+filePath: ${packageBaseFilePath}/model/db/

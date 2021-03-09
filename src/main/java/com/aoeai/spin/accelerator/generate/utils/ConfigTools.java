@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Map;
@@ -26,13 +27,24 @@ public class ConfigTools {
      * @return
      */
     public static <T>T getConfig(String yamlName, Class<T> clazz) {
+        String yamlPath = getMainResourcesFilePath(yamlName);
         String configPath = yamlName.substring(0, yamlName.lastIndexOf("/")) + "/base-config.yaml";
-        File configFile = new File(getMainResourcesFilePath(configPath));
-        if (configFile.exists()) {
-            return getConfig(configPath, yamlName, clazz);
+        configPath = getMainResourcesFilePath(configPath);
+        File configFile = new File(configPath);
+        boolean existsConfigFile = configFile.exists();
+        String yamlStr = null;
+        try {
+            if (existsConfigFile) {
+                yamlStr = YamlTools.mergeYaml(configPath, yamlPath);
+                yamlStr = YamlTools.removeElements(yamlStr, YamlTools.mergeYaml(configPath));
+            } else {
+                yamlStr = YamlTools.mergeYaml(yamlPath);
+            }
+        } catch (FileNotFoundException e) {
+            log.error("合并Yaml文件失败", e);
         }
         Yaml yaml = new Yaml();
-        return yaml.loadAs(ConfigTools.class.getResourceAsStream(yamlName), clazz);
+        return yaml.loadAs(yamlStr, clazz);
     }
 
     /**

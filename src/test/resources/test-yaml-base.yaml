@@ -1,0 +1,9 @@
+model: video
+# 包名前缀
+packagePrefix: com.dashang.vod.${model}
+packageBaseFilePath: /vod/${model}
+pkg: com.${model}
+path: aoe/${model}
+path1: ${model}/1/2${model}/${model}.${model}
+num: 1
+numPlus: ${num}+

@@ -1,15 +1,15 @@
 # 配置信息
 # 包名
-packageName: $packagePrefix.controller
+packageName: ${packagePrefix}.controller
 
 # 类存储位置
-filePath: $packageBaseFilePath/controller/
+filePath: ${packageBaseFilePath}/controller/
 
 # 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
 suffix: ControllerTest
 
 # 模板文件路径
-templates: $templatesBasePath/controller_test.ftl
+templates: ${templatesBasePath}/controller_test.ftl
 
 # 测试主机地址
 hostTest: http://localhost:8080/

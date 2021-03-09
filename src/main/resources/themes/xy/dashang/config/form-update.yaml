@@ -1,12 +1,12 @@
 # 配置信息
 # 包名
-packageName: $packagePrefix.model.form
+packageName: ${packagePrefix}.model.form
 
 # 类存储位置
-filePath: $packageBaseFilePath/model/form/
+filePath: ${packageBaseFilePath}/model/form/
 
 # 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
 suffix: FormUpdate
 
 # 模板文件路径
-templates: $templatesBasePath/form_update.ftl
+templates: ${templatesBasePath}/form_update.ftl

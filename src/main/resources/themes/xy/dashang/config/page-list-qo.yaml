@@ -1,12 +1,12 @@
 # 配置信息
 # 包名
-packageName: $packagePrefix.model.param
+packageName: ${packagePrefix}.model.param
 
 # 类存储位置
-filePath: $packageBaseFilePath/model/param/
+filePath: ${packageBaseFilePath}/model/param/
 
 # 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
 suffix: PageListParam
 
 # 模板文件路径
-templates: $templatesBasePath/page_list_qo.ftl
+templates: ${templatesBasePath}/page_list_qo.ftl
