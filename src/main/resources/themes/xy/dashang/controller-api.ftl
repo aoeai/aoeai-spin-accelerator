@@ -18,6 +18,9 @@ import com.dashang.vod.common.result.ActionResult;
 import com.dashang.vod.common.result.ReturnCode;
 import com.dashang.vod.common.base.BaseController;
 
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+
 /**
 *
 * ${classComment}
@@ -26,6 +29,7 @@ import com.dashang.vod.common.base.BaseController;
 @RequestMapping("api/vod/${pathName}")
 @Api(value = "${className}", tags = "${classComment}API")
 @Slf4j
+@Validated
 public class ${className} extends BaseController {
 
     @Resource
@@ -33,7 +37,7 @@ public class ${className} extends BaseController {
 
     @ApiOperation(value = "插入数据")
     @PostMapping(value = "create", produces = {"application/json;charset=UTF-8"})
-    public ActionResult create(@RequestBody ${formCreate.className} form){
+    public ActionResult create(@RequestBody @Valid ${formCreate.className} form){
         ${po.className} po = new ${po.className}();
         BeanUtils.copyProperties(form, po);
 
@@ -45,7 +49,7 @@ public class ${className} extends BaseController {
 
     @ApiOperation(value = "更新数据")
     @PostMapping(value = "update", produces = {"application/json;charset=UTF-8"})
-    public ActionResult update(@RequestBody ${formUpdate.className} form){
+    public ActionResult update(@RequestBody @Valid ${formUpdate.className} form){
         ${po.className} po = new ${po.className}();
         BeanUtils.copyProperties(form, po);
 
@@ -84,7 +88,7 @@ public class ${className} extends BaseController {
 
     @ApiOperation(value = "分页查询")
     @GetMapping(value = "getPageList", produces = {"application/json;charset=UTF-8"})
-    public ActionResult getPageList(@RequestBody ${pageListQO.className} qo){
+    public ActionResult getPageList(@RequestBody @Valid ${pageListQO.className} qo){
         return new ActionResult<>(${serviceClassVariable}.getPageList(qo));
     }
 

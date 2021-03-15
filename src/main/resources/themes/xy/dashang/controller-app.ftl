@@ -18,6 +18,9 @@ import com.dashang.vod.common.result.ActionResult;
 import com.dashang.vod.common.result.ReturnCode;
 import com.dashang.vod.common.base.BaseController;
 
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+
 /**
 *
 * ${classComment}
@@ -26,6 +29,7 @@ import com.dashang.vod.common.base.BaseController;
 @RequestMapping("app/vod/${pathName}")
 @Api(value = "${className}", tags = "${classComment}")
 @Slf4j
+@Validated
 public class ${className} extends BaseController {
 
     @Resource

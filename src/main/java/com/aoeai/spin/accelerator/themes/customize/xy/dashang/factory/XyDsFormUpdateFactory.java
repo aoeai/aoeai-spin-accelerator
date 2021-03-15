@@ -71,9 +71,9 @@ public class XyDsFormUpdateFactory extends AbstractJavaFileFactory<XyDsForm> {
             JavaTypeEnum javaType = MySQLType2JavaTypeEnum.javaType(column.getType(), column.getDbMaxLength());
             String comment = column.getComment();
             if (JavaTypeEnum.STRING == javaType) {
-                checkTagList.add(StrUtil.format("@NotBlank(msg = \"{}不能为空\")", comment));
+                checkTagList.add(StrUtil.format("@NotBlank(message = \"{}不能为空\")", comment));
             }else {
-                checkTagList.add(StrUtil.format("@NotNull(msg = \"{}不能为空\")", comment));
+                checkTagList.add(StrUtil.format("@NotNull(message = \"{}不能为空\")", comment));
             }
             checkTagListMap.put(column.getHumpName(), checkTagList);
         }

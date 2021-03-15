@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 public class FileTools {
 
-    private static final String UTF_8 = "UTF-8";
+    public static final String UTF_8 = "UTF-8";
 
     /**
      * 根据模板生成文件
@@ -78,13 +78,6 @@ public class FileTools {
     }
 
     public static void main(String[] args) throws IOException {
-        /*String path = "/Users/aoe/IdeaProjects/paqu/wazhima-test/src/test/java/com/wazhima/mgt/statistics/MgtStatisticsest.java";
-        File file = new File(path);
-        List<String> lines = FileUtils.readLines(file, CHARSET);
-        for (int i = 0; i < lines.size(); i++) {
-            System.out.println(StrUtil.format("{} {}", i + 1, lines.get(i)));
-        }*/
-
         String path = "/Users/aoe/IdeaProjects/paqu/wazhima-test/src/test/java/com";
         File dir = new File(path);
         Collection<File> files = FileUtils.listFiles(dir, new String[]{"java"}, true);

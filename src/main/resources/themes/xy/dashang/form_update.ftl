@@ -1,7 +1,7 @@
 package ${packageName};
 
 import lombok.Data;
-import com.dashang.vod.annotation.check.*;
+import javax.validation.constraints.*;
 
 <#list importList as classFullName>
 import ${classFullName};

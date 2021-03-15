@@ -1,7 +1,7 @@
 # 自定义变量
 
 # 模块名称
-model: green
+model: video
 # 包名前缀
 packagePrefix: com.dashang.vod.${model}
 
