@@ -24,6 +24,11 @@ public class POField {
     private String name;
 
     /**
+     * 数据库字段名称
+     */
+    private String column;
+
+    /**
      * 注释
      */
     private String comment;

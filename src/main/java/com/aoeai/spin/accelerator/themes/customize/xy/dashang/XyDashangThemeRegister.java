@@ -31,8 +31,8 @@ public class XyDashangThemeRegister extends AbstractThemeRegister {
     @Override
     protected ThemeType getThemeType() {
         ThemeType themeType = new ThemeType();
-        themeType.setCode("xy-dashang");
-        themeType.setName("星芽-达赏");
+        themeType.setCode("xy-dashang-video");
+        themeType.setName("星芽-达赏-视频");
 
         IMapperFactory mapperFactory = new XyDsMapperFactory(poFactory);
         XyDsVoFactory voFactory = new XyDsVoFactory(poFactory);

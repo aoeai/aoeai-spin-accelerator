@@ -10,6 +10,7 @@ import ${classFullName};
 </#if>
 </#list>
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -17,6 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
 * @author aoe
 */
 @Data
+@ApiModel("${classComment}分页查询参数")
 public class ${className} extends PageQueryParam {
 
 <#list po.fieldList as field>
@@ -24,8 +26,8 @@ public class ${className} extends PageQueryParam {
       && field.name !="isDelete"
       && field.name !="createTime"
       && field.name !="modifyTime">
-    @ApiModelProperty(value = "${field.comment}", required = false)
-    @QueryTag
+    @ApiModelProperty(value = "${field.comment}")
+    @QueryTag(column = "${field.column}")
     private ${field.classShortName} ${field.name};
 
     </#if>

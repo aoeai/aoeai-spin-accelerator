@@ -86,6 +86,7 @@ public class XyDsPoFactory implements IPoFactory {
         for (Column column : columns) {
             POField poField = new POField();
             poField.setName(ClassTools.humpName(column.getName()));
+            poField.setColumn(column.getName());
             JavaTypeEnum javaType =  MySQLType2JavaTypeEnum.javaType(column.getType(), column.getLength());
             poField.setClassShortName(javaType.shortName());
             poField.setClassFullName(javaType.fullName());
