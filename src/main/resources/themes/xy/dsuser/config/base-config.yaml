@@ -1,0 +1,17 @@
+# 自定义变量
+
+# 模块名称
+model: user
+# 包名前缀
+packagePrefix: com.dashang.${model}
+
+# 工程根路径
+rootPath: /Users/aoe/IdeaProjects/dashang/dashang-user
+# 包名基础路径
+packageBaseFilePath: ${rootPath}/src/main/java/com/dashang/${model}
+
+# 模板基础路径
+templatesBasePath: xy/dsuser
+
+# Mybatis XML 文件路径
+mapperXmlBasePath: ${rootPath}/src/main/resources/dal/
