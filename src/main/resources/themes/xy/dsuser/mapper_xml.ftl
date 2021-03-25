@@ -8,40 +8,13 @@
     </insert>
 
     <!-- 插入批量数据 -->
-    <insert id="insertBatch">
+    <insert id="insertBatch" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO ${mapperClass.po.table.name}
-               (<#list mapperClass.po.table.columns as column>${column.name}<#if column_has_next>, </#if></#list>)
+            (<#list mapperClass.po.table.columns as column><#if column.isPrimaryKey == false>${column.name}<#if column_has_next>, </#if></#if></#list>)
         VALUES
         <foreach collection="list" item="item" index="index" separator="," >
-            <trim prefix="(" suffix=")" suffixOverrides=",">
-                <#list mapperClass.po.table.columns as column><#if column.isPrimaryKey == false>#${r'{'}${column.humpName}}<#if column_has_next>, </#if></#if></#list>
-            </trim>
+            (<#list mapperClass.po.table.columns as column><#if column.isPrimaryKey == false>#${r'{'}item.${column.humpName}}<#if column_has_next>, </#if></#if></#list>)
         </foreach>
-    </insert>
-
-    <!-- 插入或更新数据 -->
-    <insert id="insertOrUpdate" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}">
-        <selectKey keyProperty="count" resultType="int" order="BEFORE">
-            SELECT COUNT(*)
-            FROM ${mapperClass.po.table.name}
-            <#list mapperClass.po.table.columns as column>
-                <#if column.isPrimaryKey == true>
-            WHERE ${column.name} = #${r'{'}${column.name}}
-                </#if>
-            </#list>
-        </selectKey>
-        <if test="count == 0">
-            <include refid="insertSQL" />
-        </if>
-        <if test="count > 0">
-            UPDATE ${mapperClass.po.table.name}
-            <include refid="UPDATE_SET" />
-            <#list mapperClass.po.table.columns as column>
-                <#if column.isPrimaryKey == true>
-            WHERE ${column.name} = #${r'{'}${column.name}}
-                </#if>
-            </#list>
-        </if>
     </insert>
 
     <!-- 更新数据 -->
@@ -140,7 +113,7 @@
         <if test="orderByList != null and orderByList.size() > 0">
             ORDER BY
             <foreach collection="orderByList" index="index" item="item" separator=",">
-                ${r'${item.column}'}
+                ${r'${item}'}
             </foreach>
         </if>
     </sql>
