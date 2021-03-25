@@ -1,6 +1,7 @@
 package com.aoeai.spin.accelerator.generate.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -29,6 +30,7 @@ public class ConfigTools {
     public static <T>T getConfig(String yamlName, Class<T> clazz) {
         String yamlPath = getMainResourcesFilePath(yamlName);
         String configPath = yamlName.substring(0, yamlName.lastIndexOf("/")) + "/base-config.yaml";
+        configPath = StringUtils.replace(configPath,"/", File.separator);
         configPath = getMainResourcesFilePath(configPath);
         File configFile = new File(configPath);
         boolean existsConfigFile = configFile.exists();
