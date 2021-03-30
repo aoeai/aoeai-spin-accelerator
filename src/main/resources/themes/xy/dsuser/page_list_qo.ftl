@@ -1,8 +1,8 @@
 package ${packageName};
 
 import lombok.Data;
-import com.dashang.user.model.query.PageQuery;
 import com.dashang.user.annotation.query.QueryTag;
+import java.time.LocalDateTime;
 
 <#list po.importList as classFullName>
 <#if classFullName !="java.time.LocalDateTime">

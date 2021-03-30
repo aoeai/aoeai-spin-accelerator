@@ -6,7 +6,7 @@ packageName: ${packagePrefix}.model.dto
 filePath: ${packageBaseFilePath}/model/dto/
 
 # PO(持久对象)类名后缀；不填写默认为空；生成后类名后缀与填写的一致
-suffix: DO
+suffix: BaseDO
 
 # 生成Java文件时需要过滤掉的表名前缀（,分割）；不填写默认为空
 tablePrefixFilter: vod

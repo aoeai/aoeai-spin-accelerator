@@ -6,7 +6,7 @@ packageName: ${packagePrefix}.dao
 filePath: ${packageBaseFilePath}/dao/
 
 # 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
-suffix: DAO
+suffix: BaseDAO
 
 # 模板文件路径
 templates: ${templatesBasePath}/mapper.ftl
