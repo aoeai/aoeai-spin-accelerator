@@ -26,7 +26,7 @@ import javax.validation.Valid;
 * ${classComment}
 */
 @RestController
-@RequestMapping("api/vod/${pathName}")
+@RequestMapping("api/user/${pathName}")
 @Api(value = "${className}", tags = "${classComment}API")
 @Slf4j
 @Validated

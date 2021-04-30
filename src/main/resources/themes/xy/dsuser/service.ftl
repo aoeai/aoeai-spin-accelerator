@@ -1,5 +1,6 @@
 package ${packageName};
 
+import com.dashang.user.common.base.BaseDAOPlus;
 import ${po.packageName}.${po.className};
 import ${mapperClass.packageName}.${mapperClass.className};
 import com.dashang.user.common.base.BaseServicePlus;
