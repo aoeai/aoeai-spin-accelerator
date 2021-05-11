@@ -8,16 +8,12 @@
     </insert>
 
     <!-- 插入批量数据 -->
-    <insert id="insertBatch">
+    <insert id="insertBatch" parameterType="${mapperClass.po.packageName}.${mapperClass.po.className}" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO ${mapperClass.po.table.name}
-            <trim prefix="(" suffix=")" suffixOverrides=",">
-                <include refid="ALL_COLUMNS_EXCEPT_PRIMARY_KEY_TEST_NULL" />
-            </trim>
+        (<#list mapperClass.po.table.columns as column><#if column.isPrimaryKey == false>${column.name}<#if column_has_next>, </#if></#if></#list>)
         VALUES
         <foreach collection="list" item="item" index="index" separator="," >
-            <trim prefix="(" suffix=")" suffixOverrides=",">
-                <include refid="ALL_VALUES_EXCEPT_PRIMARY_KEY_TEST_NULL" />
-            </trim>
+            (<#list mapperClass.po.table.columns as column><#if column.isPrimaryKey == false>#${r'{'}item.${column.humpName}}<#if column_has_next>, </#if></#if></#list>)
         </foreach>
     </insert>
 
