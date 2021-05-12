@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import lombok.extern.slf4j.Slf4j;
 
+import com.dashang.user.common.base.TokenCheck;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,7 @@ import javax.validation.Valid;
 */
 @RestController
 @RequestMapping("app/user/${pathName}")
+@TokenCheck
 @Api(value = "${className}", tags = "${classComment}")
 @Slf4j
 @Validated
