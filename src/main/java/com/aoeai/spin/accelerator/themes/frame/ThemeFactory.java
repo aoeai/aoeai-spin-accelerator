@@ -66,7 +66,7 @@ public class ThemeFactory {
      * @return
      */
     public List<Module> getModules(String themeCode) {
-        ThemeType themeType = themeTypeMap.get(themeCode);
+        var themeType = themeTypeMap.get(themeCode);
         return themeType.getModules();
     }
 

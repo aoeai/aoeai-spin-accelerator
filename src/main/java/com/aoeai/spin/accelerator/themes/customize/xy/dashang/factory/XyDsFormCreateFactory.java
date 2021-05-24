@@ -6,13 +6,15 @@ import com.aoeai.spin.accelerator.generate.IPoFactory;
 import com.aoeai.spin.accelerator.generate.constant.JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
-import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.themes.customize.xy.dashang.bean.XyDsForm;
 import com.aoeai.spin.accelerator.themes.customize.xy.dashang.bean.XyDsFormField;
 import org.springframework.beans.BeanUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 表单类工厂
@@ -60,7 +62,7 @@ public class XyDsFormCreateFactory extends AbstractJavaFileFactory<XyDsForm> {
      */
     @Override
     protected void manualCreate(String tableName) {
-        Po po = poFactory.build(tableName);
+        var po = poFactory.build(tableName);
         // 添加效验标签
         Map<String, List<String>> checkTagListMap = new HashMap<>();
         for (Column column : po.getTable().getColumns()) {
@@ -68,7 +70,7 @@ public class XyDsFormCreateFactory extends AbstractJavaFileFactory<XyDsForm> {
                 continue;
             }
             List<String> checkTagList = new ArrayList<>();
-            JavaTypeEnum javaType = MySQLType2JavaTypeEnum.javaType(column.getType(), column.getDbMaxLength());
+            var javaType = MySQLType2JavaTypeEnum.javaType(column.getType(), column.getDbMaxLength());
             String comment = column.getComment();
             if (JavaTypeEnum.STRING == javaType) {
                 checkTagList.add(StrUtil.format("@NotBlank(message = \"{}不能为空\")", comment));
@@ -80,7 +82,7 @@ public class XyDsFormCreateFactory extends AbstractJavaFileFactory<XyDsForm> {
 
         List<XyDsFormField> formFieldList = new ArrayList<>(po.getTable().getColumns().size());
         for (POField poField : po.getFieldList()) {
-            XyDsFormField formField = new XyDsFormField();
+            var formField = new XyDsFormField();
             BeanUtils.copyProperties(poField, formField);
             formField.setCheckTagList(checkTagListMap.get(formField.getName()));
             formFieldList.add(formField);

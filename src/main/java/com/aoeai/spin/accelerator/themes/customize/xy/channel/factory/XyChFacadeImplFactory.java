@@ -1,11 +1,8 @@
 package com.aoeai.spin.accelerator.themes.customize.xy.channel.factory;
 
-import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.AbstractJavaFileFactory;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
-import com.aoeai.spin.accelerator.themes.customize.xy.channel.bean.XyChFacade;
 import com.aoeai.spin.accelerator.themes.customize.xy.channel.bean.XyChFacadeImpl;
-import com.aoeai.spin.accelerator.themes.customize.xy.channel.bean.XyChServiceClass;
 import org.apache.commons.text.WordUtils;
 
 /**
@@ -58,14 +55,14 @@ public class XyChFacadeImplFactory extends AbstractJavaFileFactory<XyChFacadeImp
      */
     @Override
     protected void manualCreate(String tableName) {
-        Po po = poFactory.build(tableName);
+        var po = poFactory.build(tableName);
         builder.setPo(po);
-        XyChFacade facade = xyChFacadeFactory.build(tableName);
+        var facade = xyChFacadeFactory.build(tableName);
         builder.setFacade(facade);
         builder.setForm(facade.getForm());
         builder.setPageListQO(facade.getPageListQO());
 
-        XyChServiceClass serviceClass = xyChServiceClassFactory.build(tableName);
+        var serviceClass = xyChServiceClassFactory.build(tableName);
         builder.setServiceClass(serviceClass);
         builder.setServiceClassVariable(WordUtils.uncapitalize(serviceClass.getClassName()));
     }

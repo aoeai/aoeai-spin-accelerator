@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.aoeai.spin.accelerator.generate.IMapperFactory;
 import com.aoeai.spin.accelerator.generate.IMapperXmlFactory;
 import com.aoeai.spin.accelerator.generate.bean.config.JavaConfig;
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
 import com.aoeai.spin.accelerator.generate.persistent.bean.MapperXml;
 import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
 import org.springframework.beans.BeanUtils;
@@ -25,13 +24,13 @@ public class XyDsMapperXmlFactory implements IMapperXmlFactory {
 
     @Override
     public MapperXml build(String tableName) {
-        MapperXml xml = new MapperXml();
+        var xml = new MapperXml();
         JavaConfig cfg = ConfigTools.getConfig("/themes/xy/dashang/config/mapper-xml.yaml", JavaConfig.class);
         BeanUtils.copyProperties(cfg, xml);
-        MapperClass mapperClass = mapperFactory.build(tableName);
+        var mapperClass = mapperFactory.build(tableName);
         xml.setMapperClass(mapperClass);
 
-        String fileName = StrUtil.format("{}{}.xml", cfg.getFilePath(), mapperClass.getClassName());
+        var fileName = StrUtil.format("{}{}.xml", cfg.getFilePath(), mapperClass.getClassName());
         fileName = fileName.replaceFirst("DAO", "Mapper");
         xml.setFile(new File(fileName));
 

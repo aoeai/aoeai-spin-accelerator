@@ -1,6 +1,7 @@
 package com.aoeai.spin.accelerator.admin.controller;
 
 import com.aoeai.spin.accelerator.admin.service.FreemarkerService;
+import com.aoeai.spin.accelerator.admin.vo.TableVO;
 import com.aoeai.spin.accelerator.generate.common.IGenerateProperty;
 import com.aoeai.spin.accelerator.refining.db.service.DBService;
 import com.aoeai.spin.accelerator.themes.frame.ThemeFactory;
@@ -41,7 +42,7 @@ public class IndexController {
      */
     @GetMapping("/")
     public String index(@RequestParam(required = false) String tableName, @RequestParam(required = false) String code, Model model){
-        List tableList =  dbService.getTableList(tableName);
+        List<TableVO> tableList =  dbService.getTableList(tableName);
         model.addAttribute("tableList", tableList);
         model.addAttribute("themeList", themeFactory.getThemeTypes());
 

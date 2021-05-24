@@ -1,18 +1,17 @@
 package com.aoeai.spin.accelerator.themes.customize.xy.channel.factory;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.aoeai.spin.accelerator.generate.IPoFactory;
+import com.aoeai.spin.accelerator.generate.bean.config.PoConfig;
 import com.aoeai.spin.accelerator.generate.constant.JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
 import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.utils.ClassTools;
 import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
-import com.aoeai.spin.accelerator.generate.IPoFactory;
-import com.aoeai.spin.accelerator.generate.bean.config.PoConfig;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
-import com.aoeai.spin.accelerator.refining.db.bean.Table;
 import com.aoeai.spin.accelerator.refining.db.service.DBService;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -42,11 +41,11 @@ public class XyChPoFactory implements IPoFactory {
      */
     @Override
     public Po build(String tableName) {
-        Po po = new Po();
+        var po = new Po();
         PoConfig cfg = ConfigTools.getConfig("/themes/xy/channel/config/po.yaml", PoConfig.class);
         BeanUtils.copyProperties(cfg, po);
 
-        Table table = dbService.getTable(tableName);
+        var table = dbService.getTable(tableName);
         po.setClassName(ClassTools.buildClassName(table.getName(), cfg.getTablePrefixFilter(), cfg.getSuffix()));
         po.setClassNameWithoutSuffix(po.getClassName().substring(0, po.getClassName().length() - cfg.getSuffix().length()));
         po.setClassComment(table.getComment());
@@ -60,11 +59,11 @@ public class XyChPoFactory implements IPoFactory {
 
         // 用Long替换BigInteger
         Set<String> importList = po.getImportList();
-        if (!CollectionUtil.isEmpty(importList)) {
+        if (CollectionUtils.isNotEmpty(importList)) {
             importList.remove("java.math.BigInteger");
         }
         List<POField> fieldList = po.getFieldList();
-        if (!CollectionUtil.isEmpty(fieldList)) {
+        if (CollectionUtils.isNotEmpty(fieldList)) {
             for (POField field : fieldList) {
                 if ("BigInteger".equals(field.getClassShortName())) {
                     field.setClassShortName(JavaTypeEnum.LONG.shortName());
@@ -84,9 +83,9 @@ public class XyChPoFactory implements IPoFactory {
     private List<POField> buildFieldList(List<Column> columns){
         List<POField> result = new ArrayList<>();
         for (Column column : columns) {
-            POField poField = new POField();
+            var poField = new POField();
             poField.setName(ClassTools.humpName(column.getName()));
-            JavaTypeEnum javaType =  MySQLType2JavaTypeEnum.javaType(column.getType(), column.getLength());
+            var javaType =  MySQLType2JavaTypeEnum.javaType(column.getType(), column.getLength());
             poField.setClassShortName(javaType.shortName());
             poField.setClassFullName(javaType.fullName());
             poField.setComment(column.getComment());

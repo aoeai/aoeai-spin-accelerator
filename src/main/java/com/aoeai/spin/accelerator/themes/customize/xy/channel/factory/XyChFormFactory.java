@@ -1,12 +1,11 @@
 package com.aoeai.spin.accelerator.themes.customize.xy.channel.factory;
 
 import cn.hutool.core.util.StrUtil;
+import com.aoeai.spin.accelerator.generate.AbstractJavaFileFactory;
+import com.aoeai.spin.accelerator.generate.IPoFactory;
 import com.aoeai.spin.accelerator.generate.constant.JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.constant.MySQLType2JavaTypeEnum;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
-import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
-import com.aoeai.spin.accelerator.generate.AbstractJavaFileFactory;
-import com.aoeai.spin.accelerator.generate.IPoFactory;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.themes.customize.xy.channel.bean.XyChForm;
 import com.aoeai.spin.accelerator.themes.customize.xy.channel.bean.XyChFormField;
@@ -60,17 +59,17 @@ public class XyChFormFactory extends AbstractJavaFileFactory<XyChForm> {
      */
     @Override
     protected void manualCreate(String tableName) {
-        Po po = poFactory.build(tableName);
+        var po = poFactory.build(tableName);
         // 添加效验标签
         Map<String, List<String>> checkTagListMap = new HashMap<>();
         for (Column column : po.getTable().getColumns()) {
-            if (column.getIsPrimaryKey()) {
-                checkTagListMap.put(column.getName(), Collections.EMPTY_LIST);
+            if (Boolean.TRUE.equals(column.getIsPrimaryKey())) {
+                checkTagListMap.put(column.getName(), Collections.emptyList());
                 continue;
             }
 
             List<String> checkTagList = new ArrayList<>();
-            JavaTypeEnum javaType = MySQLType2JavaTypeEnum.javaType(column.getType(), column.getDbMaxLength());
+            var javaType = MySQLType2JavaTypeEnum.javaType(column.getType(), column.getDbMaxLength());
             String comment = column.getComment();
             if (JavaTypeEnum.STRING == javaType) {
                 checkTagList.add(StrUtil.format("@XyNotBlank(msg = \"{}不能为空\")", comment));
@@ -82,7 +81,7 @@ public class XyChFormFactory extends AbstractJavaFileFactory<XyChForm> {
 
         List<XyChFormField> formFieldList = new ArrayList<>(po.getTable().getColumns().size());
         for (POField poField : po.getFieldList()) {
-            XyChFormField formField = new XyChFormField();
+            var formField = new XyChFormField();
             BeanUtils.copyProperties(poField, formField);
             formField.setCheckTagList(checkTagListMap.get(formField.getName()));
             formFieldList.add(formField);

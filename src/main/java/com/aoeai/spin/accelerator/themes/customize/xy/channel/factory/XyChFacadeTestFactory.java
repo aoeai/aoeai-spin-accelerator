@@ -74,10 +74,10 @@ public class XyChFacadeTestFactory extends AbstractJavaFileFactory<XyChFacadeTes
             if ("tid".equals(field.getName())) {
                 continue;
             }
-            String value = "0";
-            String createOrUpdateValue = "3";
-            String updateValue = "5";
-            String classShortName = field.getClassShortName();
+            var value = "0";
+            var createOrUpdateValue = "3";
+            var updateValue = "5";
+            var classShortName = field.getClassShortName();
             if (JavaTypeEnum.STRING.shortName().equals(classShortName)) {
                 value = field.getComment();
                 createOrUpdateValue += createOrUpdateValue;

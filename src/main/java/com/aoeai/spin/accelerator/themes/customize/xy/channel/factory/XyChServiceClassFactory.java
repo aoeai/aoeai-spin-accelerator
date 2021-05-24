@@ -1,6 +1,5 @@
 package com.aoeai.spin.accelerator.themes.customize.xy.channel.factory;
 
-import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.AbstractJavaFileFactory;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
 import com.aoeai.spin.accelerator.themes.customize.xy.channel.bean.XyChServiceClass;
@@ -62,7 +61,7 @@ public class XyChServiceClassFactory extends AbstractJavaFileFactory<XyChService
      */
     @Override
     protected void manualCreate(String tableName) {
-        Po po = poFactory.build(tableName);
+        var po = poFactory.build(tableName);
         builder.setPo(po);
         builder.setPageListQO(xyChPageListQoFactory.build(tableName));
         builder.setVo(xyChVoFactory.build(tableName));

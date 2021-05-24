@@ -1,6 +1,5 @@
 package com.aoeai.spin.accelerator.themes.customize.xy.dashang;
 
-import com.aoeai.spin.accelerator.generate.IMapperFactory;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
 import com.aoeai.spin.accelerator.themes.customize.xy.dashang.factory.*;
 import com.aoeai.spin.accelerator.themes.frame.AbstractThemeRegister;
@@ -30,21 +29,20 @@ public class XyDashangThemeRegister extends AbstractThemeRegister {
      */
     @Override
     protected ThemeType getThemeType() {
-        ThemeType themeType = new ThemeType();
+        var themeType = new ThemeType();
         themeType.setCode("xy-dashang-video");
         themeType.setName("星芽-达赏-视频");
 
-        IMapperFactory mapperFactory = new XyDsMapperFactory(poFactory);
-        XyDsVoFactory voFactory = new XyDsVoFactory(poFactory);
-        XyDsPageListQoFactory pageListQoFactory = new XyDsPageListQoFactory(poFactory);
-        XyDsServiceFactory serviceFactory = new XyDsServiceFactory(poFactory, mapperFactory, voFactory, pageListQoFactory);
-        XyDsFormCreateFactory formCreateFactory = new XyDsFormCreateFactory(poFactory);
-        XyDsFormUpdateFactory formUpdateFactory = new XyDsFormUpdateFactory(poFactory);
-        XyDsControllerApiFactory controllerApiFactory = new XyDsControllerApiFactory(poFactory, serviceFactory, formCreateFactory,
+        var mapperFactory = new XyDsMapperFactory(poFactory);
+        var voFactory = new XyDsVoFactory(poFactory);
+        var pageListQoFactory = new XyDsPageListQoFactory(poFactory);
+        var serviceFactory = new XyDsServiceFactory(poFactory, mapperFactory, voFactory, pageListQoFactory);
+        var formCreateFactory = new XyDsFormCreateFactory(poFactory);
+        var formUpdateFactory = new XyDsFormUpdateFactory(poFactory);
+        var controllerApiFactory = new XyDsControllerApiFactory(poFactory, serviceFactory, formCreateFactory,
                 formUpdateFactory, pageListQoFactory);
-        XyDsControllerAppFactory controllerAppFactory = new XyDsControllerAppFactory(poFactory, serviceFactory, formCreateFactory,
+        var controllerAppFactory = new XyDsControllerAppFactory(poFactory, serviceFactory, formCreateFactory,
                 formUpdateFactory, pageListQoFactory);
-        XyDsControllerTestFactory controllerTestFactory = new XyDsControllerTestFactory(poFactory, pageListQoFactory, formCreateFactory);
 
         List<Module> modules = Arrays.asList(
                 new Module("PO", "持久化对象", poFactory),
@@ -57,8 +55,6 @@ public class XyDashangThemeRegister extends AbstractThemeRegister {
                 new Module("FormUpdate", "更新表单", formUpdateFactory),
                 new Module("ControllerApi", "Api控制器", controllerApiFactory),
                 new Module("ControllerApp", "App控制器", controllerAppFactory)
-//                new Module("ControllerTest", "Test控制器", controllerTestFactory)
-
         );
 
         themeType.setModules(modules);

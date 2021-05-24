@@ -1,6 +1,5 @@
 package com.aoeai.spin.accelerator.themes.customize.xy.dashang.factory;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
 import com.aoeai.spin.accelerator.generate.bean.config.PoConfig;
@@ -13,6 +12,7 @@ import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.refining.db.bean.Table;
 import com.aoeai.spin.accelerator.refining.db.service.DBService;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -60,11 +60,11 @@ public class XyDsPoFactory implements IPoFactory {
 
         // 用Long替换BigInteger
         Set<String> importList = po.getImportList();
-        if (!CollectionUtil.isEmpty(importList)) {
+        if (CollectionUtils.isNotEmpty(importList)) {
             importList.remove("java.math.BigInteger");
         }
         List<POField> fieldList = po.getFieldList();
-        if (!CollectionUtil.isEmpty(fieldList)) {
+        if (CollectionUtils.isNotEmpty(fieldList)) {
             for (POField field : fieldList) {
                 if ("BigInteger".equals(field.getClassShortName())) {
                     field.setClassShortName(JavaTypeEnum.LONG.shortName());

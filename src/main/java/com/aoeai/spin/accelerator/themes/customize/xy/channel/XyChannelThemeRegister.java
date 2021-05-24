@@ -32,19 +32,19 @@ public class XyChannelThemeRegister extends AbstractThemeRegister {
      */
     @Override
     protected ThemeType getThemeType() {
-        ThemeType themeType = new ThemeType();
+        var themeType = new ThemeType();
         themeType.setCode("xy-channel");
         themeType.setName("星芽-渠道");
 
         IMapperFactory mapperFactory = new XyChMapperFactory(poFactory);
-        XyChVoFactory voFactory = new XyChVoFactory(poFactory);
-        XyChFormFactory formFactory = new XyChFormFactory(poFactory);
-        XyChPageListQoFactory pageListQoFactory = new XyChPageListQoFactory(poFactory);
-        XyChServiceClassFactory serviceClassFactory = new XyChServiceClassFactory(poFactory, voFactory, pageListQoFactory);
-        XyChServiceImplClassFactory serviceImplClassFactory = new XyChServiceImplClassFactory(poFactory, serviceClassFactory, mapperFactory);
-        XyChFacadeFactory facadeFactory = new XyChFacadeFactory(poFactory, formFactory, pageListQoFactory);
-        XyChFacadeImplFactory facadeImplFactory = new XyChFacadeImplFactory(poFactory, facadeFactory, serviceClassFactory);
-        XyChFacadeTestFactory facadeTestFactory = new XyChFacadeTestFactory(poFactory, formFactory, pageListQoFactory);
+        var voFactory = new XyChVoFactory(poFactory);
+        var formFactory = new XyChFormFactory(poFactory);
+        var pageListQoFactory = new XyChPageListQoFactory(poFactory);
+        var serviceClassFactory = new XyChServiceClassFactory(poFactory, voFactory, pageListQoFactory);
+        var serviceImplClassFactory = new XyChServiceImplClassFactory(poFactory, serviceClassFactory, mapperFactory);
+        var facadeFactory = new XyChFacadeFactory(poFactory, formFactory, pageListQoFactory);
+        var facadeImplFactory = new XyChFacadeImplFactory(poFactory, facadeFactory, serviceClassFactory);
+        var facadeTestFactory = new XyChFacadeTestFactory(poFactory, formFactory, pageListQoFactory);
 
         List<Module> modules = Arrays.asList(
                 new Module("PO", "持久化对象", poFactory),

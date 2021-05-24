@@ -2,7 +2,6 @@ package com.aoeai.spin.accelerator.themes.customize.xy.dashang.factory;
 
 import com.aoeai.spin.accelerator.generate.AbstractJavaFileFactory;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
-import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.themes.customize.xy.dashang.bean.XyDsPageListQo;
 
 /**
@@ -51,7 +50,7 @@ public class XyDsPageListQoFactory extends AbstractJavaFileFactory<XyDsPageListQ
      */
     @Override
     protected void manualCreate(String tableName) {
-        Po po = poFactory.build(tableName);
+        var po = poFactory.build(tableName);
         builder.setPo(po);
     }
 }

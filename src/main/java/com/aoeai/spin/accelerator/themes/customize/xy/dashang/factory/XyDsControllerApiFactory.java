@@ -2,7 +2,6 @@ package com.aoeai.spin.accelerator.themes.customize.xy.dashang.factory;
 
 import com.aoeai.spin.accelerator.generate.AbstractJavaFileFactory;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
-import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.themes.customize.xy.dashang.bean.XyDsController;
 import com.aoeai.spin.accelerator.themes.customize.xy.dashang.bean.XyDsServiceClass;
 import org.apache.commons.text.WordUtils;
@@ -63,7 +62,7 @@ public class XyDsControllerApiFactory extends AbstractJavaFileFactory<XyDsContro
      */
     @Override
     protected void manualCreate(String tableName) {
-        Po po = poFactory.build(tableName);
+        var po = poFactory.build(tableName);
         builder.setPo(po);
         builder.setFormCreate(formCreateFactory.build(tableName));
         builder.setFormUpdate(formUpdateFactory.build(tableName));

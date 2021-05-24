@@ -1,12 +1,9 @@
 package com.aoeai.spin.accelerator.themes.customize.xy.channel.factory;
 
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
-import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
-import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.AbstractJavaFileFactory;
 import com.aoeai.spin.accelerator.generate.IMapperFactory;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
-import com.aoeai.spin.accelerator.themes.customize.xy.channel.bean.XyChServiceClass;
+import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
 import com.aoeai.spin.accelerator.themes.customize.xy.channel.bean.XyChServiceImplClass;
 import org.apache.commons.text.WordUtils;
 
@@ -67,19 +64,19 @@ public class XyChServiceImplClassFactory extends AbstractJavaFileFactory<XyChSer
      */
     @Override
     protected void manualCreate(String tableName) {
-        XyChServiceClass serviceClass = xyChServiceClassFactory.build(tableName);
+        var serviceClass = xyChServiceClassFactory.build(tableName);
         builder.setVo(serviceClass.getVo());
         builder.setPageListQO(serviceClass.getPageListQO());
         builder.setInterfaceClass(serviceClass);
-        Po po = poFactory.build(tableName);
+        var po = poFactory.build(tableName);
         builder.setPo(po);
-        MapperClass mapperClass = mapperFactory.build(tableName);
+        var mapperClass = mapperFactory.build(tableName);
         builder.setMapperClass(mapperClass);
         builder.setMapperClassVariable(WordUtils.uncapitalize(mapperClass.getClassName()));
 
-        String pkColumn = "";
+        var pkColumn = "";
         for (POField field : po.getFieldList()) {
-            if (field.getIsPrimaryKey()) {
+            if (Boolean.TRUE.equals(field.getIsPrimaryKey())) {
                 pkColumn = field.getName();
                 break;
             }
