@@ -51,11 +51,17 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">[[${file}]]</h3>
+                                <h3 class="card-title">
+                                    [[${file}]]
+                                </h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
+                                <button type="button" class="btn btn-outline-primary"
+                                        th:onclick="copy2Clipboard()">复制
+                                </button>
                                 <pre><code class="language-java">[[${writer}]]</code></pre>
+                                <textarea id="copyContent" class="form-control" rows="1" cols="1">[[${writer}]]</textarea>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -95,6 +101,21 @@
                 }
             } , 500);
         });
+    }
+
+    function copy2Clipboard(){
+        var copyText = $("#copyContent"); //获取对象
+        copyText.select();//选择
+        document.execCommand("Copy");//执行复制
+        copyText.blur();
+
+        Swal.fire({
+            position: 'auto',
+            icon: 'success',
+            title: '代码已复制到剪切板',
+            showConfirmButton: false,
+            timer: 1000
+        })
     }
 </script>
 </body>
