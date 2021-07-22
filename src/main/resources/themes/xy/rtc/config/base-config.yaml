@@ -1,0 +1,19 @@
+# 自定义变量
+
+# 模块名称
+model: rtc
+# 包名前缀
+packagePrefix: com.starbuds.server.service.${model}
+
+# 所有工程的根目录
+allRootPaht: /Users/aoe/IdeaProjects/paqu
+# 工程根路径
+rootPath: ${allRootPaht}/service-rtc
+# 包名基础路径
+packageBaseFilePath: ${rootPath}/src/main/java/com/starbuds/server/service/${model}
+
+# 模板基础路径
+templatesBasePath: xy/rtc
+
+# Mybatis XML 文件路径
+mapperXmlBasePath: ${rootPath}/src/main/resources/mapper/

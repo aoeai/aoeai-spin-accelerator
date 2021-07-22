@@ -1,4 +1,4 @@
-package com.aoeai.spin.accelerator.themes.customize.xy.finance.factory;
+package com.aoeai.spin.accelerator.themes.customize.xy.rtc.factory;
 
 import cn.hutool.core.util.StrUtil;
 import com.aoeai.spin.accelerator.generate.IMapperFactory;
@@ -16,18 +16,18 @@ import java.io.File;
  * @author aoe
  * @date 2020/8/25
  */
-public class XyFinMapperXmlFactory implements IMapperXmlFactory {
+public class XyRtcMapperXmlFactory implements IMapperXmlFactory {
 
     private IMapperFactory mapperFactory;
 
-    public XyFinMapperXmlFactory(IMapperFactory mapperFactory) {
+    public XyRtcMapperXmlFactory(IMapperFactory mapperFactory) {
         this.mapperFactory = mapperFactory;
     }
 
     @Override
     public MapperXml build(String tableName) {
         MapperXml xml = new MapperXml();
-        JavaConfig cfg = ConfigTools.getConfig("/themes/xy/finance/config/mapper-xml.yaml", JavaConfig.class);
+        JavaConfig cfg = ConfigTools.getConfig("/themes/xy/rtc/config/mapper-xml.yaml", JavaConfig.class);
         BeanUtils.copyProperties(cfg, xml);
         MapperClass mapperClass = mapperFactory.build(tableName);
         xml.setMapperClass(mapperClass);

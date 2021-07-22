@@ -7,7 +7,9 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author aoe
@@ -18,6 +20,7 @@ public class YamlTools {
 
     /**
      * 合并Yaml文件
+     *
      * @param yamlPaths yaml文件路径
      * @return 合并后的yaml文件
      * @throws FileNotFoundException
@@ -35,21 +38,33 @@ public class YamlTools {
             }
         }
 
-        Map<String, Object> resultMap = new HashMap<>(mergeMap.size());
+        Map<String, String> resultMap = new HashMap<>(mergeMap.size());
         for (Map.Entry<String, Object> entry : mergeMap.entrySet()) {
             String k = entry.getKey();
             Object v = entry.getValue();
             if (v instanceof String) {
-                String value = ((String)v);
-                for (Map.Entry<String, Object> replace : mergeMap.entrySet()){
+                String value = ((String) v);
+                for (Map.Entry<String, Object> replace : mergeMap.entrySet()) {
                     String yamlVar = String.format("${%s}", replace.getKey());
                     value = StringUtils.replace(value, yamlVar, "" + replace.getValue());
-//                    value = value.replaceAll(Matcher.quoteReplacement(yamlVar), "" + replace.getValue());
                 }
                 v = value;
+            } else {
+                continue;
             }
-            resultMap.put(k, v);
+            resultMap.put(k, (String) v);
         }
+
+        // 替换所有变量
+        List<String> keys = resultMap.keySet().stream().collect(Collectors.toList());
+        resultMap.entrySet().stream()
+                .forEach(entry -> {
+                    String v = entry.getValue();
+                    for (String key : keys) {
+                        v = StringUtils.replace(v, String.format("${%s}", key), resultMap.get(key));
+                    }
+                    resultMap.put(entry.getKey(), v);
+                });
 
         Yaml yaml = new Yaml();
         return yaml.dumpAsMap(resultMap);
@@ -57,7 +72,8 @@ public class YamlTools {
 
     /**
      * 删除Yaml中元素
-     * @param yamlStr Yaml内容
+     *
+     * @param yamlStr       Yaml内容
      * @param removeYamlStr 被删除的Yaml内容
      * @return
      */

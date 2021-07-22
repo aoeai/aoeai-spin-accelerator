@@ -9,6 +9,7 @@ import ${classFullName};
 </#list>
 
 import io.swagger.annotations.ApiModelProperty;
+import java.time.LocalDateTime;
 
 /**
 * ${classComment}
