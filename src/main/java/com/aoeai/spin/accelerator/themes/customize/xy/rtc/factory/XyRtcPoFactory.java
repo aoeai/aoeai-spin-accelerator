@@ -10,6 +10,7 @@ import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
 import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.generate.utils.ClassTools;
 import com.aoeai.spin.accelerator.generate.utils.ConfigTools;
+import com.aoeai.spin.accelerator.generate.utils.PoTools;
 import com.aoeai.spin.accelerator.refining.db.bean.Column;
 import com.aoeai.spin.accelerator.refining.db.bean.Table;
 import com.aoeai.spin.accelerator.refining.db.service.DBService;
@@ -73,7 +74,7 @@ public class XyRtcPoFactory implements IPoFactory {
             }
         }
 
-        return po;
+        return PoTools.setFirstPrimaryKey(po);
     }
 
     /**

@@ -40,13 +40,18 @@ public class XyRtcThemeRegister extends AbstractThemeRegister {
         XyRtcVoFactory voFactory = new XyRtcVoFactory(poFactory);
         XyRtcServiceClassFactory serviceClassFactory = new XyRtcServiceClassFactory(poFactory, voFactory, pageListQoFactory);
         XyRtcProviderFactory providerFactory = new XyRtcProviderFactory(poFactory, serviceClassFactory, mapperFactory);
+        XyRtcServiceClassFactory serviceFactory = new XyRtcServiceClassFactory(poFactory, voFactory, pageListQoFactory);
+        XyRtcServiceImplClassFactory serviceImplClassFactory = new XyRtcServiceImplClassFactory(poFactory, serviceClassFactory, providerFactory);
 
         List<Module> modules = Arrays.asList(
                 new Module("PO", "持久化对象", poFactory),
                 new Module("MapperClass", "Mybatis Mapper", mapperFactory),
                 new Module("MapperXml", "Mybatis Mapper MXL", mapperXmlFactory),
                 new Module("Provider", "服务实现", providerFactory),
-                new Module("PageListQO", "分页查询对象", pageListQoFactory)
+                new Module("PageListQO", "分页查询对象", pageListQoFactory),
+                new Module("VO", "视图对象", voFactory),
+                new Module("Service", "服务接口", serviceFactory),
+                new Module("ServiceImpl", "服务接口实现", serviceImplClassFactory)
         );
 
         themeType.setModules(modules);

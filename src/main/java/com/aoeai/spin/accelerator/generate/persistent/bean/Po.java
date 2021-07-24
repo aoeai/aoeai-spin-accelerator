@@ -33,4 +33,14 @@ public class Po extends BaseClassProperty {
      * 生成Java文件时需要过滤掉的表名前缀（,分割）；不填写默认为空
      */
     private String tablePrefixFilter = "";
+
+    /**
+     * 第一个出现的主键（变量名）
+     */
+    private String firstPrimaryKey;
+
+    /**
+     * 第一个出现的主键（列名）
+     */
+    private String firstPrimaryKeyColumn;
 }

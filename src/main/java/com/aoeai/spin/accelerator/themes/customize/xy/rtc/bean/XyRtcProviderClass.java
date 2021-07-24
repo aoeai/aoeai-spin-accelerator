@@ -1,16 +1,17 @@
 package com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean;
 
 import com.aoeai.spin.accelerator.generate.common.BaseClassProperty;
+import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
 import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
+import com.aoeai.spin.accelerator.themes.customize.xy.rtc.factory.XyRtcProviderFactory;
 import lombok.Data;
 
 /**
- * 服务实现类
  * @author aoe
- * @date 2020/6/22
+ * @date 2021/7/23
  */
 @Data
-public class XyRtcServiceImplClass extends BaseClassProperty {
+public class XyRtcProviderClass extends BaseClassProperty {
 
     /**
      * 分页查询对象类
@@ -21,12 +22,14 @@ public class XyRtcServiceImplClass extends BaseClassProperty {
 
     private Po po;
 
-    private XyRtcProviderClass providerClass;
+    private XyRtcProviderFactory providerFactory;
+
+    private MapperClass mapperClass;
 
     /**
-     * providerClass变量名称
+     * MapperClass变量名称
      */
-    private String providerClassVariable;
+    private String mapperClassVariable;
 
     private XyRtcServiceClass interfaceClass;
 

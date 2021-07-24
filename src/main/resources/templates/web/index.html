@@ -17,7 +17,7 @@
             <div class="input-group input-group-sm">
                 <!-- select -->
                 <select id="themeId" name="code" class="form-control">
-                    <option>选择模板</option>
+                    <option value="">选择模板</option>
                     <option th:each="theme : ${themeList}"
                             th:value="${theme.code}"
                             th:text="${theme.name}"
@@ -140,8 +140,12 @@
         // window.open(this.href, '_blank')
 
         $('#staticBackdrop').modal();
-        var theme = $("#themeId").val();
-        var url = '/createAll?tableName=' + tableName + "&theme=" + theme;
+        let theme = $("#themeId").val();
+        if (theme == '') {
+            alertChoiceTheme();
+            return;
+        }
+        let url = '/createAll?tableName=' + tableName + "&theme=" + theme;
         $.get( url, function( data ) {
             setTimeout(function() {
                 $('#staticBackdrop').modal('hide');
@@ -156,10 +160,23 @@
     }
 
     function detail(tableName) {
-        var theme = $("#themeId").val();
+        let theme = $("#themeId").val();
+        if (theme == '') {
+            alertChoiceTheme();
+            return;
+        }
         this.href='/detail?tableName=' + tableName + "&theme=" + theme;
         window.open(this.href, '_blank')
     }
+
+    function alertChoiceTheme(){
+        Swal.fire({
+            icon: 'error',
+            title: '🤪...',
+            text: '请先选择模板'
+        });
+    }
+
 </script>
 </body>
 </html>

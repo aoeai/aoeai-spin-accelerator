@@ -1,9 +1,9 @@
 # 配置信息
 # 包名
-packageName: ${packagePrefix}.pojo.qo
+packageName: com.starbuds.server.common.pojo.${model}.qo
 
 # 类存储位置
-filePath: ${packageBaseFilePath}/pojo/qo/
+filePath: ${allRootPaht}/common/src/main/java/com/starbuds/server/common/pojo/${model}/qo/
 
 # 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
 suffix: PageListQO

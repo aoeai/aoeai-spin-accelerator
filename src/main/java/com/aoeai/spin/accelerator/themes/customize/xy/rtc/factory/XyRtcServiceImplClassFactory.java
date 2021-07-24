@@ -1,13 +1,9 @@
 package com.aoeai.spin.accelerator.themes.customize.xy.rtc.factory;
 
 import com.aoeai.spin.accelerator.generate.AbstractJavaFileFactory;
-import com.aoeai.spin.accelerator.generate.IMapperFactory;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
-import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
-import com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean.XyRtcProviderClass;
-import com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean.XyRtcServiceClass;
+import com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean.XyRtcServiceImplClass;
 import org.apache.commons.text.WordUtils;
 
 /**
@@ -15,18 +11,18 @@ import org.apache.commons.text.WordUtils;
  * @author aoe
  * @date 2020/8/26
  */
-public class XyRtcProviderFactory extends AbstractJavaFileFactory<XyRtcProviderClass> {
+public class XyRtcServiceImplClassFactory extends AbstractJavaFileFactory<XyRtcServiceImplClass> {
 
     private IPoFactory poFactory;
 
     private XyRtcServiceClassFactory serviceClassFactory;
 
-    private IMapperFactory mapperFactory;
+    private XyRtcProviderFactory providerFactory;
 
-    public XyRtcProviderFactory(IPoFactory poFactory, XyRtcServiceClassFactory serviceClassFactory, IMapperFactory mapperFactory) {
+    public XyRtcServiceImplClassFactory(IPoFactory poFactory, XyRtcServiceClassFactory serviceClassFactory, XyRtcProviderFactory providerFactory) {
         this.poFactory = poFactory;
         this.serviceClassFactory = serviceClassFactory;
-        this.mapperFactory = mapperFactory;
+        this.providerFactory = providerFactory;
     }
 
     /**
@@ -36,8 +32,8 @@ public class XyRtcProviderFactory extends AbstractJavaFileFactory<XyRtcProviderC
      * @return
      */
     @Override
-    public XyRtcProviderClass build(String tableName) {
-        return create(tableName, new XyRtcProviderClass());
+    public XyRtcServiceImplClass build(String tableName) {
+        return create(tableName, new XyRtcServiceImplClass());
     }
 
     /**
@@ -47,7 +43,7 @@ public class XyRtcProviderFactory extends AbstractJavaFileFactory<XyRtcProviderC
      */
     @Override
     protected String configYaml() {
-        return "/themes/xy/rtc/config/provider.yaml";
+        return "/themes/xy/rtc/config/service-impl.yaml";
     }
 
     /**
@@ -67,19 +63,19 @@ public class XyRtcProviderFactory extends AbstractJavaFileFactory<XyRtcProviderC
      */
     @Override
     protected void manualCreate(String tableName) {
-        XyRtcServiceClass serviceClass = serviceClassFactory.build(tableName);
+        var serviceClass = serviceClassFactory.build(tableName);
         builder.setVo(serviceClass.getVo());
         builder.setPageListQO(serviceClass.getPageListQO());
         builder.setInterfaceClass(serviceClass);
-        Po po = poFactory.build(tableName);
+        var po = poFactory.build(tableName);
         builder.setPo(po);
-        MapperClass mapperClass = mapperFactory.build(tableName);
-        builder.setMapperClass(mapperClass);
-        builder.setMapperClassVariable(WordUtils.uncapitalize(mapperClass.getClassName()));
+        var providerClass = providerFactory.build(tableName);
+        builder.setProviderClass(providerClass);
+        builder.setProviderClassVariable(WordUtils.uncapitalize(providerClass.getClassName()));
 
-        String pkColumn = "";
+        var pkColumn = "";
         for (POField field : po.getFieldList()) {
-            if (field.getIsPrimaryKey()) {
+            if (Boolean.TRUE.equals(field.getIsPrimaryKey())) {
                 pkColumn = field.getName();
                 break;
             }

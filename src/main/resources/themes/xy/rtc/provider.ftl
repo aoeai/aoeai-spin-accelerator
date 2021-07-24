@@ -3,11 +3,14 @@ package ${packageName};
 import com.alibaba.fastjson.JSON;
 import ${po.packageName}.${po.className};
 import ${mapperClass.packageName}.${mapperClass.className};
+import com.starbuds.server.common.pojo.rtc.qo.RtcRoomAuctionPageListQO;
 
 import com.starbuds.server.common.pojo.api.PageList;
 import lombok.extern.slf4j.Slf4j;
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import com.starbuds.server.common.pojo.daoplus.UpdateWrapper;
 import com.starbuds.server.common.pojo.daoplus.QueryWrapper;
@@ -134,6 +137,15 @@ public class ${className} {
         page.setList(${mapperClassVariable}.selectPageList(qw));
         page.setTotal(${mapperClassVariable}.selectCount(qw));
         return page;
+    }
+
+	/**
+	 * 根据ids获得 DO Map
+	 * @param ids id集合
+	 * @return Map<主键, DO对象>
+	 */
+	public Map<Long, ${po.className}> getMapByIds(Collection ids){
+        return ${mapperClassVariable}.selectMapByIds(ids);
     }
 
     // 手动编码开始

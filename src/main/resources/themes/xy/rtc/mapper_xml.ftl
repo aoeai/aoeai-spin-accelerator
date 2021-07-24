@@ -107,6 +107,17 @@
         LIMIT #${r'{'}pageCursor} , #${r'{'}pageSize}
     </select>
 
+    <!-- 根据ids获得 DO Map -->
+    <select id="selectMapByIds" resultType="java.util.Map">
+        SELECT
+        <include refid="ALL_COLUMNS" />
+        FROM ${mapperClass.po.table.name}
+        WHERE ${mapperClass.po.firstPrimaryKeyColumn} IN
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            ${r'#{item}'}
+        </foreach>
+    </select>
+
     <!-- 所有列 -->
     <sql id="ALL_COLUMNS">
         <#list mapperClass.po.table.columns as column>

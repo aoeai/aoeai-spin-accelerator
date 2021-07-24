@@ -1,5 +1,6 @@
 package ${packageName};
 
+import com.starbuds.server.common.pojo.util.PageQO;
 import lombok.Data;
 import com.starbuds.server.common.annotation.query.QueryTag;
 
