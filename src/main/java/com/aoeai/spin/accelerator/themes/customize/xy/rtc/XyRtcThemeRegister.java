@@ -62,13 +62,13 @@ public class XyRtcThemeRegister extends AbstractThemeRegister {
                 new Module("Service", "服务接口", serviceFactory),
                 new Module("ServiceImpl", "服务接口实现", serviceImplClassFactory),
 
-                new Module("ManageMapperFactory", "管理后台 Mybatis Mapper", manageMapperFactory),
-                new Module("ManageMapperXmlFactory", "管理后台 Mybatis Mapper MXL", manageMapperXmlFactory),
-                new Module("ManageServiceClassFactory", "管理后台服务接口", manageServiceClassFactory),
-                new Module("ManageServiceImplClassFactory", "管理后台服务实现", manageServiceImplClassFactory),
-                new Module("ManageFormFactory", "管理后台Form", manageFormFactory),
-                new Module("ManageFacadeFactory", "管理后台 Facade", manageFacadeFactory),
-                new Module("ManageFacadeImplFactory", "管理后台 Facade Impl", manageFacadeImplFactory)
+                new Module("ManageMapperFactory", "🖥 管理后台 Mybatis Mapper", manageMapperFactory),
+                new Module("ManageMapperXmlFactory", "🖥 管理后台 Mybatis Mapper MXL", manageMapperXmlFactory),
+                new Module("ManageServiceClassFactory", "🖥 管理后台服务接口", manageServiceClassFactory),
+                new Module("ManageServiceImplClassFactory", "🖥 管理后台服务实现", manageServiceImplClassFactory),
+                new Module("ManageFormFactory", "🖥 管理后台Form", manageFormFactory),
+                new Module("ManageFacadeFactory", "🖥 管理后台 Facade", manageFacadeFactory),
+                new Module("ManageFacadeImplFactory", "🖥 管理后台 Facade Impl", manageFacadeImplFactory)
         );
 
         themeType.setModules(modules);
