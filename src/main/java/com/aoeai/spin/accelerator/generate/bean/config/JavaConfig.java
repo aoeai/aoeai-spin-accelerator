@@ -21,6 +21,11 @@ public class JavaConfig {
     private String filePath;
 
     /**
+     * 类名前缀；不填写默认为空；生成后类名后缀与填写的一致
+     */
+    private String prefix = "";
+
+    /**
      * 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
      */
     private String suffix = "";
@@ -29,4 +34,5 @@ public class JavaConfig {
      * 模板文件路径
      */
     private String templates;
+
 }

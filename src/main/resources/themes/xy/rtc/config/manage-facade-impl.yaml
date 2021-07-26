@@ -1,0 +1,15 @@
+# 配置信息
+# 包名
+packageName: ${managePkgPrefix}.v1.impl
+
+# 类存储位置
+filePath: ${managePath}/v1/impl/
+
+# 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
+suffix: FacadeImpl
+
+# 模板文件路径
+templates: ${templatesBasePath}/manage_facade_impl.ftl
+
+# url 请求后缀
+actionSuffix: ${model}

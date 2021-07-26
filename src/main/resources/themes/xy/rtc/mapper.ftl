@@ -5,7 +5,6 @@ import com.starbuds.server.common.pojo.daoplus.QueryWrapper;
 import com.starbuds.server.common.pojo.daoplus.UpdateWrapper;
 
 import org.apache.ibatis.annotations.MapKey;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

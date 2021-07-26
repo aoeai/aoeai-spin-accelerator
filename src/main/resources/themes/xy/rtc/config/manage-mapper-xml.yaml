@@ -1,0 +1,7 @@
+# Mybatis Mapper XML 文件配置信息
+
+# 存储位置
+filePath: ${allRootPaht}/api-manage/src/main/resources/mapper/
+
+# 模板文件路径
+templates: ${templatesBasePath}/manage_mapper_xml.ftl

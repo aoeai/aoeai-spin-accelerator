@@ -1,0 +1,12 @@
+# 配置信息
+# 包名
+packageName: ${managePkgPrefix}.common.pojo.${model}
+
+# 类存储位置
+filePath: ${managePath}/common/pojo/${model}/
+
+# 类名后缀；不填写默认为空；生成后类名后缀与填写的一致
+suffix: Form
+
+# 模板文件路径
+templates: ${templatesBasePath}/form.ftl

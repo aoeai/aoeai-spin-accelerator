@@ -31,7 +31,7 @@ public abstract class AbstractJavaFileFactory<T extends BaseClassProperty> imple
         BeanUtils.copyProperties(cfg, builder);
         Po po = poFactory().build(tableName);
         builder.setClassComment(po.getTable().getComment());
-        builder.setClassName(po.getClassNameWithoutSuffix() + cfg.getSuffix());
+        builder.setClassName(cfg.getPrefix() + po.getClassNameWithoutSuffix() + cfg.getSuffix());
 
         manualCreate(tableName);
 
@@ -52,7 +52,7 @@ public abstract class AbstractJavaFileFactory<T extends BaseClassProperty> imple
      * 获得配置信息的类型
      * @return
      */
-    protected Class<JavaConfig> getConfigType(){
+    protected Class<? extends JavaConfig> getConfigType(){
         return JavaConfig.class;
     }
 

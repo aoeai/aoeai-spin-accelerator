@@ -22,7 +22,7 @@ public class ConfigTools {
     /**
      * 从yaml文件中获取配置信息
      * @param yamlName （resources目录下）yaml文件名
-     * @param clazz
+     * @param clazz com.aoeai.spin.accelerator.generate.bean.config.JavaConfig 及其子类
      * @param <T>
      * @return
      */

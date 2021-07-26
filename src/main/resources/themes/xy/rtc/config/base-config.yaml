@@ -11,9 +11,13 @@ allRootPaht: /Users/aoe/IdeaProjects/paqu
 rootPath: ${allRootPaht}/service-rtc
 # 包名基础路径
 packageBaseFilePath: ${rootPath}/src/main/java/com/starbuds/server/service/${model}
+# api-manage 根目录
+managePath: ${allRootPaht}/api-manage/src/main/java/com/starbuds/server/api/manage
+# api-manage 包名前缀
+managePkgPrefix: com.starbuds.server.api.manage
 
 # 模板基础路径
-templatesBasePath: xy/rtc
+templatesBasePath: xy/${model}
 
 # Mybatis XML 文件路径
 mapperXmlBasePath: ${rootPath}/src/main/resources/mapper/
