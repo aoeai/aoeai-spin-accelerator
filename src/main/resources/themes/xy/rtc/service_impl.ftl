@@ -20,14 +20,14 @@ import com.starbuds.server.common.pojo.daoplus.QueryWrapper;
 import com.starbuds.server.common.service.core.IdentityService;
 import static com.starbuds.server.common.pojo.util.PageListUtil.buildPageListQueryWrapper;
 
-import org.springframework.stereotype.Service;
+import org.apache.dubbo.config.annotation.Service;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
 * ${classComment}
 */
-@Service
+@Service(version = "1.0.0")
 @Slf4j
 public class ${className} implements ${interfaceClass.className} {
 
