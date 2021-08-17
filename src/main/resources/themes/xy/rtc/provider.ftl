@@ -5,6 +5,7 @@ import ${po.packageName}.${po.className};
 import ${mapperClass.packageName}.${mapperClass.className};
 import ${pageListQO.packageName}.${pageListQO.className};
 
+import com.starbuds.server.common.constant.common.BoolIntVal;
 import com.starbuds.server.common.pojo.api.PageList;
 import lombok.extern.slf4j.Slf4j;
 import javax.annotation.Resource;
@@ -49,6 +50,7 @@ public class ${className} {
         po.${setPkMethod}(identityService.getId());
         po.setCreateTime(System.currentTimeMillis());
         po.setUpdateTime(po.getCreateTime());
+        po.setIsDeleted(BoolIntVal.False);
         boolean flag = ${mapperClassVariable}.insert(po) == 1;
 
         String json = JSON.toJSONString(po);
