@@ -46,6 +46,7 @@ public class XyRtcPoFactory implements IPoFactory {
         Po po = new Po();
         PoConfig cfg = ConfigTools.getConfig("/themes/xy/rtc/config/po.yaml", PoConfig.class);
         BeanUtils.copyProperties(cfg, po);
+        po.setTemplates("xy/rtc/po.ftl");
 
         Table table = dbService.getTable(tableName);
         po.setClassName(ClassTools.buildClassName(table.getName(), cfg.getTablePrefixFilter(), cfg.getSuffix()));

@@ -33,7 +33,9 @@ public class XyRtcServiceImplClassFactory extends AbstractJavaFileFactory<XyRtcS
      */
     @Override
     public XyRtcServiceImplClass build(String tableName) {
-        return create(tableName, new XyRtcServiceImplClass());
+        var clazz = create(tableName, new XyRtcServiceImplClass());
+        clazz.setTemplates("xy/rtc/service_impl.ftl");
+        return clazz;
     }
 
     /**

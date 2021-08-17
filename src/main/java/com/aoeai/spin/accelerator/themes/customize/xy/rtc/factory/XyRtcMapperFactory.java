@@ -22,7 +22,9 @@ public class XyRtcMapperFactory extends AbstractJavaFileFactory<MapperClass> imp
 
     @Override
     public MapperClass build(String tableName) {
-        return create(tableName, new MapperClass());
+        var mapperClass = create(tableName, new MapperClass());
+        mapperClass.setTemplates("xy/rtc/mapper.ftl");
+        return mapperClass;
     }
 
     @Override

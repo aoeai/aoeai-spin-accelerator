@@ -35,6 +35,7 @@ public class XyRtcManageMapperXmlFactory implements IMapperXmlFactory {
         String fileName = StrUtil.format("{}{}.xml", cfg.getFilePath(), mapperClass.getClassName());
         fileName = StringUtils.replace(fileName, "DAO.xml", "Mapper.xml");
         xml.setFile(new File(fileName));
+        xml.setTemplates("xy/rtc/manage_mapper_xml.ftl");
 
         return xml;
     }

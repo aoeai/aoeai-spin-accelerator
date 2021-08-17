@@ -37,7 +37,9 @@ public class XyRtcProviderFactory extends AbstractJavaFileFactory<XyRtcProviderC
      */
     @Override
     public XyRtcProviderClass build(String tableName) {
-        return create(tableName, new XyRtcProviderClass());
+        var provider = create(tableName, new XyRtcProviderClass());
+        provider.setTemplates("xy/rtc/provider.ftl");
+        return provider;
     }
 
     /**

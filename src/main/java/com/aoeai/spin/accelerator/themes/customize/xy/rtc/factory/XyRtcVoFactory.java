@@ -26,7 +26,9 @@ public class XyRtcVoFactory extends AbstractJavaFileFactory<XyRtcVO> {
      */
     @Override
     public XyRtcVO build(String tableName) {
-        return create(tableName, new XyRtcVO());
+        var vo = create(tableName, new XyRtcVO());
+        vo.setTemplates("xy/rtc/vo.ftl");
+        return vo;
     }
 
     /**

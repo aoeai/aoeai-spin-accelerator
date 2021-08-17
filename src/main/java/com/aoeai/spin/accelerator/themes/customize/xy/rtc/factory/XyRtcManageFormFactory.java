@@ -34,7 +34,9 @@ public class XyRtcManageFormFactory extends AbstractJavaFileFactory<XyRtcForm> {
      */
     @Override
     public XyRtcForm build(String tableName) {
-        return create(tableName, new XyRtcForm());
+        var clazz = create(tableName, new XyRtcForm());
+        clazz.setTemplates("xy/rtc/form.ftl");
+        return clazz;
     }
 
     /**

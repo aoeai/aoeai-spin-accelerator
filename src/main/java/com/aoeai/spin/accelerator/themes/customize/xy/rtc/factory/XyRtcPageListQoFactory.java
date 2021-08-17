@@ -26,7 +26,9 @@ public class XyRtcPageListQoFactory extends AbstractJavaFileFactory<XyRtcPageLis
      */
     @Override
     public XyRtcPageListQo build(String tableName) {
-        return create(tableName, new XyRtcPageListQo());
+        var bean = create(tableName, new XyRtcPageListQo());
+        bean.setTemplates("xy/rtc/page_list_qo.ftl");
+        return bean;
     }
 
     /**

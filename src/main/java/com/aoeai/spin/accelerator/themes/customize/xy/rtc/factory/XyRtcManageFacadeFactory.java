@@ -30,7 +30,9 @@ public class XyRtcManageFacadeFactory extends AbstractJavaFileFactory<XyRtcManag
      */
     @Override
     public XyRtcManageFacade build(String tableName) {
-        return create(tableName, new XyRtcManageFacade());
+        var clazz = create(tableName, new XyRtcManageFacade());
+        clazz.setTemplates("xy/rtc/manage_facade.ftl");
+        return clazz;
     }
 
     /**
