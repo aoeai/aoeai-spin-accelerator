@@ -3,7 +3,7 @@ package ${packageName};
 import com.alibaba.fastjson.JSON;
 import ${po.packageName}.${po.className};
 import ${mapperClass.packageName}.${mapperClass.className};
-import com.starbuds.server.common.pojo.rtc.qo.RtcRoomAuctionPageListQO;
+import ${pageListQO.packageName}.${pageListQO.className};
 
 import com.starbuds.server.common.pojo.api.PageList;
 import lombok.extern.slf4j.Slf4j;
