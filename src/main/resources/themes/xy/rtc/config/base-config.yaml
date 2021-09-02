@@ -1,12 +1,12 @@
 # 自定义变量
 
 # 模块名称
-model: data
+model: finance
 # 包名前缀
 packagePrefix: com.starbuds.server.service.${model}
 
 # 所有工程的根目录
-allRootPaht: /Users/aoe/IdeaProjects/paqu
+allRootPaht: /Users/aoe/IdeaProjects/paqu/fastFish
 # 工程根路径
 rootPath: ${allRootPaht}/service-data
 # 包名基础路径

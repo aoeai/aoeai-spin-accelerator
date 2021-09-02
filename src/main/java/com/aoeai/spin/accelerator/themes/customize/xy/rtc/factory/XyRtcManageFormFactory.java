@@ -74,9 +74,9 @@ public class XyRtcManageFormFactory extends AbstractJavaFileFactory<XyRtcForm> {
             var javaType = MySQLType2JavaTypeEnum.javaType(column.getType(), column.getDbMaxLength());
             String comment = column.getComment();
             if (JavaTypeEnum.STRING == javaType) {
-                checkTagList.add(StrUtil.format("@XyNotBlank(msg = \"{}不能为空\")", comment));
+                checkTagList.add(StrUtil.format("@NotBlank(message = \"{}不能为空\")", comment));
             }else {
-                checkTagList.add(StrUtil.format("@XyNotNull(msg = \"{}不能为空\")", comment));
+                checkTagList.add(StrUtil.format("@NotNull(message = \"{}不能为空\")", comment));
             }
             checkTagListMap.put(column.getName(), checkTagList);
         }
