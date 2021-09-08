@@ -13,10 +13,8 @@ import java.util.Map;
 
 import ${interfaceClass.packageName}.${interfaceClass.className};
 import com.starbuds.server.common.pojo.daoplus.UpdateWrapper;
-import com.starbuds.server.common.service.core.IdentityService;
 
 import org.apache.dubbo.config.annotation.Service;
-import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -25,14 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(version = "1.0.0")
 @Slf4j
 public class ${className} implements ${interfaceClass.className} {
-
-    /**
-     * 主键
-     */
-    private String PRIMARY_KEY = "${pkColumn}";
-
-    @Reference(version = "1.0.0")
-    private IdentityService identityService;
 
     @Resource
     private ${providerClass.className} ${providerClassVariable};

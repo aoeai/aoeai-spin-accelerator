@@ -18,6 +18,10 @@ import com.starbuds.server.common.constant.common.GlobalApiError;
 import org.apache.dubbo.rpc.protocol.rest.support.ContentType;
 import static com.starbuds.server.common.utils.CheckFormUtil.*;
 
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+
 /**
 *
 * ${classComment}
@@ -26,6 +30,7 @@ import static com.starbuds.server.common.utils.CheckFormUtil.*;
 @Produces(ContentType.APPLICATION_JSON_UTF_8)
 @Component
 @Slf4j
+@Validated
 public class ${className} extends BaseFacade implements ${facade.className} {
 
     @Resource
@@ -37,7 +42,7 @@ public class ${className} extends BaseFacade implements ${facade.className} {
     @POST
     @Path("create${po.classNameWithoutSuffix}")
     @Override
-    public Result create(@BeanParam ${form.className} form){
+    public Result create(@BeanParam @Valid ${form.className} form){
         String check = checkCreate(form);
         if (check != null) {
             return new Result(GlobalApiError.BadRequest, check);
@@ -58,7 +63,7 @@ public class ${className} extends BaseFacade implements ${facade.className} {
     @POST
     @Path("update${po.classNameWithoutSuffix}")
     @Override 
-    public Result update(@BeanParam ${form.className} form){
+    public Result update(@BeanParam @Valid ${form.className} form){
         String check = checkUpdate(form);
         if (check != null) {
             return new Result(GlobalApiError.BadRequest, check);
@@ -81,7 +86,7 @@ public class ${className} extends BaseFacade implements ${facade.className} {
     @GET
     @Path("get${po.classNameWithoutSuffix}ById")
     @Override 
-    public Result getInfo(@QueryParam("id") Long id){
+    public Result getInfo(@QueryParam("id") @Valid @NotNull(message = "id不能为空") Long id){
         if (id == null) {
             return new Result(GlobalApiError.BadRequest, "id不能为空");
         }
