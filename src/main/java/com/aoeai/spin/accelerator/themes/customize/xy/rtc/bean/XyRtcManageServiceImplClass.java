@@ -18,8 +18,6 @@ public class XyRtcManageServiceImplClass extends BaseClassProperty {
      */
     private XyRtcPageListQo pageListQO;
 
-    private XyRtcVO vo;
-
     private Po po;
 
     private MapperClass mapperClass;
@@ -30,16 +28,16 @@ public class XyRtcManageServiceImplClass extends BaseClassProperty {
     private String mapperClassVariable;
 
     /**
-     * serviceClass变量名称
+     * manageProvider变量名称
      */
-    private String serviceClassVariable;
+    private String manageProviderVariable;
+
+    private XyRtcManageProviderClass manageProviderClass;
 
     /**
      * 接口类
      */
     private XyRtcManageServiceClass interfaceClass;
-
-    private XyRtcServiceClass serviceClass;
 
     /**
      * 主键字段

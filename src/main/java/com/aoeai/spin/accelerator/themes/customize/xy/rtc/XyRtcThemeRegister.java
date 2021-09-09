@@ -39,15 +39,16 @@ public class XyRtcThemeRegister extends AbstractThemeRegister {
         XyRtcPageListQoFactory pageListQoFactory = new XyRtcPageListQoFactory(poFactory);
         XyRtcVoFactory voFactory = new XyRtcVoFactory(poFactory);
         XyRtcServiceClassFactory serviceClassFactory = new XyRtcServiceClassFactory(poFactory, voFactory, pageListQoFactory);
-        XyRtcProviderFactory providerFactory = new XyRtcProviderFactory(poFactory, serviceClassFactory, mapperFactory);
+        XyRtcProviderFactory providerFactory = new XyRtcProviderFactory(poFactory, mapperFactory, pageListQoFactory);
         XyRtcServiceClassFactory serviceFactory = new XyRtcServiceClassFactory(poFactory, voFactory, pageListQoFactory);
         XyRtcServiceImplClassFactory serviceImplClassFactory = new XyRtcServiceImplClassFactory(poFactory, serviceClassFactory, providerFactory);
 
         XyRtcManageServiceClassFactory manageServiceClassFactory = new XyRtcManageServiceClassFactory(poFactory, voFactory, pageListQoFactory);
         XyRtcManageMapperFactory manageMapperFactory = new XyRtcManageMapperFactory(poFactory);
         XyRtcManageMapperXmlFactory manageMapperXmlFactory = new XyRtcManageMapperXmlFactory(manageMapperFactory);
+        XyRtcManageProviderFactory manageProviderFactory = new XyRtcManageProviderFactory(poFactory, manageMapperFactory, pageListQoFactory);
         XyRtcManageServiceImplClassFactory manageServiceImplClassFactory = new XyRtcManageServiceImplClassFactory(poFactory,
-                manageServiceClassFactory, serviceClassFactory, manageMapperFactory);
+                 manageProviderFactory, manageMapperFactory, manageServiceClassFactory);
         XyRtcManageFormFactory manageFormFactory = new XyRtcManageFormFactory(poFactory);
         XyRtcManageFacadeFactory manageFacadeFactory = new XyRtcManageFacadeFactory(poFactory, manageFormFactory, pageListQoFactory);
         XyRtcManageFacadeImplFactory manageFacadeImplFactory = new XyRtcManageFacadeImplFactory(poFactory, manageFacadeFactory, manageServiceClassFactory);
@@ -64,6 +65,7 @@ public class XyRtcThemeRegister extends AbstractThemeRegister {
 
                 new Module("ManageMapperFactory", "🖥 管理后台 Mybatis Mapper", manageMapperFactory),
                 new Module("ManageMapperXmlFactory", "🖥 管理后台 Mybatis Mapper MXL", manageMapperXmlFactory),
+                new Module("ManageProvider", "🖥 管理后台 Provider", manageProviderFactory),
                 new Module("ManageServiceClassFactory", "🖥 管理后台服务接口", manageServiceClassFactory),
                 new Module("ManageServiceImplClassFactory", "🖥 管理后台服务实现", manageServiceImplClassFactory),
                 new Module("ManageFormFactory", "🖥 管理后台Form", manageFormFactory),

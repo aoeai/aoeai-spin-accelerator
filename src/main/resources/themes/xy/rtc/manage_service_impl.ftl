@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import ${interfaceClass.packageName}.${interfaceClass.className};
-import ${serviceClass.packageName}.${serviceClass.className};
+import ${manageProviderClass.packageName}.${manageProviderClass.className};
 import com.starbuds.server.common.pojo.daoplus.UpdateWrapper;
 import com.starbuds.server.common.service.core.IdentityService;
 
@@ -38,57 +38,57 @@ public class ${className} implements ${interfaceClass.className} {
     @Reference(version = "1.0.0")
     private IdentityService identityService;
 
-    @Reference(version = "1.0.0")
-    private ${serviceClass.className} ${serviceClassVariable};
+    @Resource
+    private ${manageProviderClass.className} ${manageProviderVariable};
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ${po.className} create(${po.className} po){
-        return ${serviceClassVariable}.create(po);
+        return ${manageProviderVariable}.create(po);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean createBatch(List<${po.className}> list){
-        return ${serviceClassVariable}.createBatch(list);
+        return ${manageProviderVariable}.createBatch(list);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean createOrUpdate(${po.className} po){
-        return ${serviceClassVariable}.createOrUpdate(po);
+        return ${manageProviderVariable}.createOrUpdate(po);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean updateById(${po.className} po) {
-        return ${serviceClassVariable}.updateById(po);
+        return ${manageProviderVariable}.updateById(po);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean update(UpdateWrapper uw){
-        return ${serviceClassVariable}.update(uw);
+        return ${manageProviderVariable}.update(uw);
     }
 
     @Override
     public ${po.className} getById(Long id){
-        return ${serviceClassVariable}.getById(id);
+        return ${manageProviderVariable}.getById(id);
     }
 
     @Override
     public boolean exist(Long id){
-        return ${serviceClassVariable}.exist(id);
+        return ${manageProviderVariable}.exist(id);
     }
 
     @Override
     public PageList<${po.className}> getPageList(${pageListQO.className} qo){
-        return ${serviceClassVariable}.getPageList(qo);
+        return ${manageProviderVariable}.getPageList(qo);
     }
 
 	@Override
 	public Map<Long, ${po.className}> getMapByIds(Collection ids){
-        return ${serviceClassVariable}.getMapByIds(ids);
+        return ${manageProviderVariable}.getMapByIds(ids);
     }
 
     // 手动编码开始

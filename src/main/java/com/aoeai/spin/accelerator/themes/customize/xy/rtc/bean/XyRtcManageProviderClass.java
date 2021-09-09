@@ -3,7 +3,7 @@ package com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean;
 import com.aoeai.spin.accelerator.generate.common.BaseClassProperty;
 import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
 import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
-import com.aoeai.spin.accelerator.themes.customize.xy.rtc.factory.XyRtcProviderFactory;
+import com.aoeai.spin.accelerator.themes.customize.xy.rtc.factory.XyRtcManageProviderFactory;
 import lombok.Data;
 
 /**
@@ -11,7 +11,7 @@ import lombok.Data;
  * @date 2021/7/23
  */
 @Data
-public class XyRtcProviderClass extends BaseClassProperty {
+public class XyRtcManageProviderClass extends BaseClassProperty {
 
     /**
      * 分页查询对象类
@@ -20,7 +20,7 @@ public class XyRtcProviderClass extends BaseClassProperty {
 
     private Po po;
 
-    private XyRtcProviderFactory providerFactory;
+    private XyRtcManageProviderFactory manageProviderFactory;
 
     private MapperClass mapperClass;
 

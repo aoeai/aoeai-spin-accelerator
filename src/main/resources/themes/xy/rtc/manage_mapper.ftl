@@ -49,7 +49,7 @@ public interface ${className} {
     /**
 	 * 查询所有记录
 	 */
-	${po.className} selectList(QueryWrapper qw);
+	List<${po.className}> selectList(QueryWrapper qw);
 
     /**
 	 * 查询总数

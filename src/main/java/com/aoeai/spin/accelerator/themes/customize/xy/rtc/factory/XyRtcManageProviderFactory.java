@@ -5,7 +5,8 @@ import com.aoeai.spin.accelerator.generate.IMapperFactory;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
 import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
-import com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean.XyRtcManageServiceImplClass;
+import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
+import com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean.XyRtcManageProviderClass;
 import org.apache.commons.text.WordUtils;
 
 /**
@@ -13,24 +14,19 @@ import org.apache.commons.text.WordUtils;
  * @author aoe
  * @date 2020/8/26
  */
-public class XyRtcManageServiceImplClassFactory extends AbstractJavaFileFactory<XyRtcManageServiceImplClass> {
+public class XyRtcManageProviderFactory extends AbstractJavaFileFactory<XyRtcManageProviderClass> {
 
     private IPoFactory poFactory;
 
-    private XyRtcManageProviderFactory manageProviderFactory;
-
     private IMapperFactory mapperFactory;
 
-    private XyRtcManageServiceClassFactory manageServiceClassFactory;
+    private XyRtcPageListQoFactory pageListQoFactory;
 
-    public XyRtcManageServiceImplClassFactory(IPoFactory poFactory,
-                                              XyRtcManageProviderFactory manageProviderFactory,
-                                              IMapperFactory mapperFactory,
-                                              XyRtcManageServiceClassFactory manageServiceClassFactory) {
+    public XyRtcManageProviderFactory(IPoFactory poFactory, IMapperFactory mapperFactory,
+                                      XyRtcPageListQoFactory pageListQoFactory) {
         this.poFactory = poFactory;
-        this.manageProviderFactory = manageProviderFactory;
         this.mapperFactory = mapperFactory;
-        this.manageServiceClassFactory = manageServiceClassFactory;
+        this.pageListQoFactory = pageListQoFactory;
     }
 
     /**
@@ -40,10 +36,10 @@ public class XyRtcManageServiceImplClassFactory extends AbstractJavaFileFactory<
      * @return
      */
     @Override
-    public XyRtcManageServiceImplClass build(String tableName) {
-        var clazz = create(tableName, new XyRtcManageServiceImplClass());
-        clazz.setTemplates("xy/rtc/manage_service_impl.ftl");
-        return clazz;
+    public XyRtcManageProviderClass build(String tableName) {
+        var provider = create(tableName, new XyRtcManageProviderClass());
+        provider.setTemplates("xy/rtc/provider.ftl");
+        return provider;
     }
 
     /**
@@ -53,7 +49,7 @@ public class XyRtcManageServiceImplClassFactory extends AbstractJavaFileFactory<
      */
     @Override
     protected String configYaml() {
-        return "/themes/xy/rtc/config/manage-service-impl.yaml";
+        return "/themes/xy/rtc/config/manage-provider.yaml";
     }
 
     /**
@@ -73,22 +69,16 @@ public class XyRtcManageServiceImplClassFactory extends AbstractJavaFileFactory<
      */
     @Override
     protected void manualCreate(String tableName) {
-        var manageProvider = manageProviderFactory.build(tableName);
-        builder.setPageListQO(manageProvider.getPageListQO());
-        var po = poFactory.build(tableName);
+        builder.setPageListQO(pageListQoFactory.build(tableName));
+        Po po = poFactory.build(tableName);
         builder.setPo(po);
-        builder.setManageProviderClass(manageProvider);
-        builder.setManageProviderVariable(WordUtils.uncapitalize(manageProvider.getClassName()));
-
         MapperClass mapperClass = mapperFactory.build(tableName);
         builder.setMapperClass(mapperClass);
         builder.setMapperClassVariable(WordUtils.uncapitalize(mapperClass.getClassName()));
 
-        builder.setInterfaceClass(manageServiceClassFactory.build(tableName));
-
-        var pkColumn = "";
+        String pkColumn = "";
         for (POField field : po.getFieldList()) {
-            if (Boolean.TRUE.equals(field.getIsPrimaryKey())) {
+            if (field.getIsPrimaryKey()) {
                 pkColumn = field.getName();
                 break;
             }

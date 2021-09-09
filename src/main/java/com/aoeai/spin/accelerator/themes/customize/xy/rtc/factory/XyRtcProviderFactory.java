@@ -7,7 +7,6 @@ import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
 import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean.XyRtcProviderClass;
-import com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean.XyRtcServiceClass;
 import org.apache.commons.text.WordUtils;
 
 /**
@@ -23,10 +22,13 @@ public class XyRtcProviderFactory extends AbstractJavaFileFactory<XyRtcProviderC
 
     private IMapperFactory mapperFactory;
 
-    public XyRtcProviderFactory(IPoFactory poFactory, XyRtcServiceClassFactory serviceClassFactory, IMapperFactory mapperFactory) {
+    private XyRtcPageListQoFactory pageListQoFactory;
+
+    public XyRtcProviderFactory(IPoFactory poFactory, IMapperFactory mapperFactory, XyRtcPageListQoFactory pageListQoFactory) {
         this.poFactory = poFactory;
         this.serviceClassFactory = serviceClassFactory;
         this.mapperFactory = mapperFactory;
+        this.pageListQoFactory = pageListQoFactory;
     }
 
     /**
@@ -69,10 +71,7 @@ public class XyRtcProviderFactory extends AbstractJavaFileFactory<XyRtcProviderC
      */
     @Override
     protected void manualCreate(String tableName) {
-        XyRtcServiceClass serviceClass = serviceClassFactory.build(tableName);
-        builder.setVo(serviceClass.getVo());
-        builder.setPageListQO(serviceClass.getPageListQO());
-        builder.setInterfaceClass(serviceClass);
+        builder.setPageListQO(pageListQoFactory.build(tableName));
         Po po = poFactory.build(tableName);
         builder.setPo(po);
         MapperClass mapperClass = mapperFactory.build(tableName);
