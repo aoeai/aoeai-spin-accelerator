@@ -8,7 +8,6 @@ import com.starbuds.server.common.annotation.query.QueryTag;
 import ${classFullName};
 </#list>
 
-import javax.ws.rs.FormParam;
 import javax.ws.rs.QueryParam;
 import java.io.Serializable;
 
@@ -25,7 +24,6 @@ public class ${className} extends PageQO implements Serializable {
     */
     @QueryTag
     @QueryParam("${field.name}")
-    @FormParam("${field.name}")
     private ${field.classShortName} ${field.name};
 
 </#list>

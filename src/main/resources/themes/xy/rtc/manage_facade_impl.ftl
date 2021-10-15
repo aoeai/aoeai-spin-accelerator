@@ -16,7 +16,6 @@ import com.starbuds.server.common.pojo.api.Result;
 import com.starbuds.server.common.constant.common.GlobalApiError;
 
 import org.apache.dubbo.rpc.protocol.rest.support.ContentType;
-import static com.starbuds.server.common.utils.CheckFormUtil.*;
 
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -43,9 +42,9 @@ public class ${className} extends BaseFacade implements ${facade.className} {
     @Path("create${po.classNameWithoutSuffix}")
     @Override
     public Result create(@BeanParam @Valid ${form.className} form){
-        String check = checkCreate(form);
-        if (check != null) {
-            return new Result(GlobalApiError.BadRequest, check);
+        String checkForm = checkForm(form);
+        if (checkForm != null) {
+            return Result.ofBadRequest(checkForm);
         }
 
         ${po.className} po = new ${po.className}();
@@ -64,9 +63,9 @@ public class ${className} extends BaseFacade implements ${facade.className} {
     @Path("update${po.classNameWithoutSuffix}")
     @Override 
     public Result update(@BeanParam @Valid ${form.className} form){
-        String check = checkUpdate(form);
-        if (check != null) {
-            return new Result(GlobalApiError.BadRequest, check);
+        String checkForm = checkForm(form);
+        if (checkForm != null) {
+            return Result.ofBadRequest(checkForm);
         }
 
         ${po.className} po = new ${po.className}();
@@ -101,6 +100,15 @@ public class ${className} extends BaseFacade implements ${facade.className} {
     @Override 
     public Result getPageList(@BeanParam ${pageListQO.className} qo){
         return new Result(${serviceClassVariable}.getPageList(qo));
+    }
+
+    /**
+     * 检查表单数据
+     * @param form
+     * @return null:数据正确；错误原因
+     */
+    private String checkForm(RtcRoomSuggestForm form) {
+        return null;
     }
 
     // 手动编码开始
