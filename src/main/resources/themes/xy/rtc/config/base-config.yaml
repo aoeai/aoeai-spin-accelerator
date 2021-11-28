@@ -1,14 +1,14 @@
 # 自定义变量
 
 # 模块名称
-model: rtc
+model: finance
 # 包名前缀
 packagePrefix: com.starbuds.server.service.${model}
 
 # 所有工程的根目录
 allRootPaht: /Users/aoe/IdeaProjects/paqu/fastFish
 # 工程根路径
-rootPath: ${allRootPaht}/service-rtc
+rootPath: ${allRootPaht}/service-${model}
 # 包名基础路径
 packageBaseFilePath: ${rootPath}/src/main/java/com/starbuds/server/service/${model}
 # api-manage 根目录
