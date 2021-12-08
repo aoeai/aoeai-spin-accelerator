@@ -35,6 +35,7 @@ public class XyRtcThemeRegister extends AbstractThemeRegister {
         themeType.setName("星芽-语音房");
 
         IMapperFactory mapperFactory = new XyRtcMapperFactory(poFactory);
+        IMapperFactory mapperTestFactory = new XyRtcMapperTestFactory(poFactory);
         XyRtcMapperXmlFactory mapperXmlFactory = new XyRtcMapperXmlFactory(mapperFactory);
         XyRtcPageListQoFactory pageListQoFactory = new XyRtcPageListQoFactory(poFactory);
         XyRtcVoFactory voFactory = new XyRtcVoFactory(poFactory);
@@ -56,6 +57,7 @@ public class XyRtcThemeRegister extends AbstractThemeRegister {
         List<Module> modules = Arrays.asList(
                 new Module("PO", "持久化对象", poFactory),
                 new Module("MapperClass", "Mybatis Mapper", mapperFactory),
+                new Module("MapperTestClass", "Mybatis Test Mapper", mapperTestFactory),
                 new Module("MapperXml", "Mybatis Mapper MXL", mapperXmlFactory),
                 new Module("Provider", "服务实现", providerFactory),
                 new Module("PageListQO", "分页查询对象", pageListQoFactory),
