@@ -35,7 +35,7 @@ public interface ${className} {
             "(<#list po.table.columns as column>${column.name}<#if column_has_next>,</#if></#list>) " +
             "VALUES " +
             "(<#list po.table.columns as column>#${r'{'}${column.name}}<#if column_has_next>,</#if></#list>)")
-    int insert(LotteryGameUserQualificationHisDO po);
+    int insert(${po.className} po);
 
 
 }
