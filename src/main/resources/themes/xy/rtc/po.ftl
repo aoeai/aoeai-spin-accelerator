@@ -1,6 +1,6 @@
 package ${packageName};
 
-import lombok.Data;
+import lombok.*;
 
 <#list importList as classFullName>
 import ${classFullName};
@@ -12,6 +12,9 @@ import java.io.Serializable;
  *
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ${className} implements Serializable {
 
 <#list fieldList as field>
