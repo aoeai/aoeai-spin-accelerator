@@ -49,7 +49,7 @@ public class XyRtcThemeRegister extends AbstractThemeRegister {
         XyRtcManageMapperXmlFactory manageMapperXmlFactory = new XyRtcManageMapperXmlFactory(manageMapperFactory);
         XyRtcManageProviderFactory manageProviderFactory = new XyRtcManageProviderFactory(poFactory, manageMapperFactory, pageListQoFactory);
         XyRtcManageServiceImplClassFactory manageServiceImplClassFactory = new XyRtcManageServiceImplClassFactory(poFactory,
-                 manageProviderFactory, manageMapperFactory, manageServiceClassFactory);
+                 manageProviderFactory, serviceClassFactory, manageServiceClassFactory);
         XyRtcManageFormFactory manageFormFactory = new XyRtcManageFormFactory(poFactory);
         XyRtcManageFacadeFactory manageFacadeFactory = new XyRtcManageFacadeFactory(poFactory, manageFormFactory, pageListQoFactory);
         XyRtcManageFacadeImplFactory manageFacadeImplFactory = new XyRtcManageFacadeImplFactory(poFactory, manageFacadeFactory, manageServiceClassFactory);

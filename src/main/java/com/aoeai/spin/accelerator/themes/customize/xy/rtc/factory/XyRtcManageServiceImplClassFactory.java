@@ -1,11 +1,10 @@
 package com.aoeai.spin.accelerator.themes.customize.xy.rtc.factory;
 
 import com.aoeai.spin.accelerator.generate.AbstractJavaFileFactory;
-import com.aoeai.spin.accelerator.generate.IMapperFactory;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
 import com.aoeai.spin.accelerator.generate.persistent.bean.POField;
 import com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean.XyRtcManageServiceImplClass;
+import com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean.XyRtcServiceClass;
 import org.apache.commons.text.WordUtils;
 
 /**
@@ -19,17 +18,17 @@ public class XyRtcManageServiceImplClassFactory extends AbstractJavaFileFactory<
 
     private XyRtcManageProviderFactory manageProviderFactory;
 
-    private IMapperFactory mapperFactory;
+    private XyRtcServiceClassFactory serviceClassFactory;
 
     private XyRtcManageServiceClassFactory manageServiceClassFactory;
 
     public XyRtcManageServiceImplClassFactory(IPoFactory poFactory,
                                               XyRtcManageProviderFactory manageProviderFactory,
-                                              IMapperFactory mapperFactory,
+                                              XyRtcServiceClassFactory serviceClassFactory,
                                               XyRtcManageServiceClassFactory manageServiceClassFactory) {
         this.poFactory = poFactory;
         this.manageProviderFactory = manageProviderFactory;
-        this.mapperFactory = mapperFactory;
+        this.serviceClassFactory = serviceClassFactory;
         this.manageServiceClassFactory = manageServiceClassFactory;
     }
 
@@ -80,9 +79,9 @@ public class XyRtcManageServiceImplClassFactory extends AbstractJavaFileFactory<
         builder.setManageProviderClass(manageProvider);
         builder.setManageProviderVariable(WordUtils.uncapitalize(manageProvider.getClassName()));
 
-        MapperClass mapperClass = mapperFactory.build(tableName);
-        builder.setMapperClass(mapperClass);
-        builder.setMapperClassVariable(WordUtils.uncapitalize(mapperClass.getClassName()));
+        XyRtcServiceClass serviceClass = serviceClassFactory.build(tableName);
+        builder.setServiceClass(serviceClass);
+        builder.setServiceClassVariable(WordUtils.uncapitalize(serviceClass.getClassName()));
 
         builder.setInterfaceClass(manageServiceClassFactory.build(tableName));
 

@@ -1,7 +1,6 @@
 package com.aoeai.spin.accelerator.themes.customize.xy.rtc.bean;
 
 import com.aoeai.spin.accelerator.generate.common.BaseClassProperty;
-import com.aoeai.spin.accelerator.generate.persistent.bean.MapperClass;
 import com.aoeai.spin.accelerator.generate.persistent.bean.Po;
 import lombok.Data;
 
@@ -20,12 +19,12 @@ public class XyRtcManageServiceImplClass extends BaseClassProperty {
 
     private Po po;
 
-    private MapperClass mapperClass;
+    private XyRtcServiceClass serviceClass;
 
     /**
-     * MapperClass变量名称
+     * XyRtcServiceClass变量名称
      */
-    private String mapperClassVariable;
+    private String serviceClassVariable;
 
     /**
      * manageProvider变量名称

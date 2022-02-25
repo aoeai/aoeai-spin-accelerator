@@ -53,7 +53,7 @@ public class ${className} extends BaseFacade implements ${facade.className} {
         if (${serviceClassVariable}.create(po) == null) {
             return new Result(GlobalApiError.OperationFailed, "创建失败");
         }
-        return new Result("创建成功");
+        return Result.ofSuccess("创建成功");
     }
 
     /**
@@ -75,7 +75,7 @@ public class ${className} extends BaseFacade implements ${facade.className} {
         if (!flag) {
             return new Result(GlobalApiError.OperationFailed, "更新失败");
         }
-        return new Result("更新成功");
+        return Result.ofSuccess("更新成功");
     }
 
     /**
@@ -86,10 +86,7 @@ public class ${className} extends BaseFacade implements ${facade.className} {
     @Path("get${po.classNameWithoutSuffix}ById")
     @Override 
     public Result getInfo(@QueryParam("id") @Valid @NotNull(message = "id不能为空") Long id){
-        if (id == null) {
-            return new Result(GlobalApiError.BadRequest, "id不能为空");
-        }
-        return new Result(${serviceClassVariable}.getById(id));
+        return Result.ofSuccess(${serviceClassVariable}.getById(id));
     }
 
     /**
@@ -99,7 +96,7 @@ public class ${className} extends BaseFacade implements ${facade.className} {
     @Path("get${po.classNameWithoutSuffix}PageList")
     @Override 
     public Result getPageList(@BeanParam ${pageListQO.className} qo){
-        return new Result(${serviceClassVariable}.getPageList(qo));
+        return Result.ofSuccess(${serviceClassVariable}.getPageList(qo));
     }
 
     /**
@@ -107,7 +104,7 @@ public class ${className} extends BaseFacade implements ${facade.className} {
      * @param form
      * @return null:数据正确；错误原因
      */
-    private String checkForm(RtcRoomSuggestForm form) {
+    private String checkForm(${form.className} form) {
         return null;
     }
 
