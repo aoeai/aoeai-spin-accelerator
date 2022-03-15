@@ -15,7 +15,6 @@ import java.util.Map;
 
 import com.starbuds.server.common.pojo.daoplus.UpdateWrapper;
 import com.starbuds.server.common.pojo.daoplus.QueryWrapper;
-import com.starbuds.server.common.service.core.IdentityService;
 import static com.starbuds.server.common.pojo.util.PageListUtil.buildPageListQueryWrapper;
 
 import org.springframework.stereotype.Component;
@@ -34,9 +33,6 @@ public class ${className} {
      */
     private String PRIMARY_KEY = "${pkColumn}";
 
-    @Reference(version = "1.0.0")
-    private IdentityService identityService;
-
     @Resource
     private ${mapperClass.className} ${mapperClassVariable};
 
@@ -47,7 +43,6 @@ public class ${className} {
 	 */
     @Transactional(rollbackFor = Exception.class)
     public ${mapperClass.po.className} create(${mapperClass.po.className} po){
-        po.${setPkMethod}(identityService.getId());
         po.setCreateTime(System.currentTimeMillis());
         po.setUpdateTime(po.getCreateTime());
         po.setIsDeleted(BoolIntVal.False);
