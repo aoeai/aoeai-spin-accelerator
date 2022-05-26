@@ -2,6 +2,8 @@ package com.aoeai.spin.accelerator.generate;
 
 import com.aoeai.spin.accelerator.generate.common.IGenerateProperty;
 
+//测试pr
+
 /**
  * 建造工厂
  * @author aoe
