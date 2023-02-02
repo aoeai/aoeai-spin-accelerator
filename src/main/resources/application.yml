@@ -5,7 +5,7 @@ spring:
   thymeleaf:
     cache: false
   freemarker:
-    cache: false    #页面不加载缓存，修改即时生效
+    cache: false    # 页面不加载缓存，修改即时生效
     prefer-file-system-access: false #不使用文件系统优先，而使用classpath下的资源文件优先，解决打jar包运行后，出现的异常问题
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
