@@ -11,5 +11,5 @@ import lombok.Data;
 @Data
 public class MapperClass extends BaseClassProperty {
 
-    private Po po;
+    protected Po po;
 }
