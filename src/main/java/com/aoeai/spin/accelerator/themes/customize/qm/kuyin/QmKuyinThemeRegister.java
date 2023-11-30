@@ -2,8 +2,7 @@ package com.aoeai.spin.accelerator.themes.customize.qm.kuyin;
 
 import com.aoeai.spin.accelerator.generate.IMapperFactory;
 import com.aoeai.spin.accelerator.generate.IPoFactory;
-import com.aoeai.spin.accelerator.themes.customize.qm.kuyin.factory.QmKuyinManagePageParamFactory;
-import com.aoeai.spin.accelerator.themes.customize.qm.kuyin.factory.QmKuyinMapperFactory;
+import com.aoeai.spin.accelerator.themes.customize.qm.kuyin.factory.*;
 import com.aoeai.spin.accelerator.themes.customize.xy.rtc.factory.XyRtcMapperFactory;
 import com.aoeai.spin.accelerator.themes.frame.AbstractThemeRegister;
 import com.aoeai.spin.accelerator.themes.frame.bean.Module;
@@ -20,6 +19,13 @@ public class QmKuyinThemeRegister extends AbstractThemeRegister {
     @Resource(name = "qmKunyinPoFactory")
     private IPoFactory poFactory;
 
+    @Resource
+    private QmKunyinSaveRpcParamFactory saveRpcParamFactory;
+    @Resource
+    private QmKunyinUpdateRpcParamFactory updateRpcParamFactory;
+    @Resource
+    private QmKunyinPageRpcDTOFactory pageRpcDTOFactory;
+
     @Override
     protected ThemeType getThemeType() {
         ThemeType themeType = new ThemeType();
@@ -33,6 +39,9 @@ public class QmKuyinThemeRegister extends AbstractThemeRegister {
                 new Module("DO", "持久化对象", poFactory)
                 , new Module("ManagePageParam", "Manage 层分页查询参数", managePageParamFactory)
                 , new Module("Mapper", "Mapper", manageQmKuyinMapperFactory)
+                , new Module("SaveRpcParam", "SaveRpcParam", saveRpcParamFactory)
+                , new Module("UpdateRpcParam", "UpdateRpcParam", updateRpcParamFactory)
+                , new Module("PageRpcDTO", "PageRpcDTO", pageRpcDTOFactory)
         );
 
         themeType.setModules(modules);

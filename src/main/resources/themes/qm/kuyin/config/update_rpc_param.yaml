@@ -1,0 +1,15 @@
+# PO（数据库对应的）持久对象 配置信息
+# 包名
+packageName: com.wazhima.$MODEL_PATH.dao.po
+
+# PO(持久对象)类存储位置
+filePath: /Users/aoe/IdeaProjects/paqu/wazhima/src/main/java/com/wazhima/$MODEL_PATH/dao/po/
+
+# PO(持久对象)类名后缀；不填写默认为空；生成后类名后缀与填写的一致
+suffix: UpdateRpcParam
+
+# 生成Java文件时需要过滤掉的表名前缀（,分割）；不填写默认为空
+tablePrefixFilter: tb
+
+# 模板文件路径
+templates: qm/kuyin/update_rpc_param.ftl
